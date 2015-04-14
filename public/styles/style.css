@@ -1,0 +1,114 @@
+body{
+	background-color:#d4e157;
+}
+h1{font-size:48px !important;}
+.paypal, .webmoney, .mastercard{
+	width:250px;
+	height:100px;
+}
+.paypal{
+	background: url(../images//PayPal.png) no-repeat;
+	
+}
+.webmoney{
+	background: url(../images/WebMoney.png) no-repeat;
+}
+.mastercard{
+	background: url(../images/MasterCard.png) no-repeat;
+}
+.amount{
+	border: 1px solid #e0f2f1 !important;
+	border-radius: 3px;
+	font-size:2rem !important;
+}
+.card_methods{
+	padding: 50px 0 0 0;
+	margin-top: 80px;
+}
+.amount_currency{padding: 30px 0; font-size:2rem !important; color:#78909c !important;}
+.pay_methods{
+	padding:30px 0;
+}
+.btn_count{height:47px; line-height:47px;}
+
+/*------------------Nav-bar---------------------------------------*/
+
+.left_navbar  a.button-collapse{left:250px; position:absolute;}
+.collection.left_navbar {overflow:visible;}
+
+//--------------------Profile---------------------------------------
+.section-title{
+  position: relative;
+  margin-bottom: 1em;
+  font-size: 22px;
+  font-weight: 400;
+  text-align: left;
+}
+
+/*.section-title:before {
+  content: "";
+  position: absolute;
+  top: 5%; 
+  width: 95%;
+  border-bottom: 1px solid #dddddd;
+}*/
+.section-title  span {
+  position: relative;
+  display: inline-block;
+  padding-right: 1.4em;
+  background-color:#546e7a;
+  }
+  
+.mdi-hardware-keyboard-alt:before {
+  content: "\e7b3";
+}
+/*.change_pass a{
+	right:52px !important;
+}*/
+.collection.profile_info .collection-item.avatar{
+	padding-left:20px;
+	height:60px;
+}
+.profile_img a{color:#01579b;}
+.profile_img a:hover{color:#ffab40;}
+.profile_title{color:#b0bec5; font-size:1rem;}
+
+.profile_balance, .count, .curency{color:#0d47a1;}
+.profile_info .input-field label{
+	color: #b0bec5;
+	left: 0;
+	top:0;
+}
+.profile_info .input-field input[type=text], input[type=password]{
+	height:20px;
+	width:80%;
+	border-bottom-color:#b3e5fc;
+}
+.profile_info .input-field input[type=text]:focus+label, input[type=password]:focus+label {color:#0d47a1;}
+.profile_info .input_pass.input-field label{top:1px;}
+.profile_info .input-field input[type=password]:focus+label{top:5px; color:#0d47a1;}
+.profile_info .input-field label.active {
+	transform:translateY(-100%);
+	-webkit-transform:translateY(-100%);
+	-moz-transform:translateY(-100%);
+	-ms-transform:translateY(-100%);
+	-o-transform:translateY(-100%);
+}
+.profile_info .input-field  input[type=password].valid{border-bottom-color:#0d47a1;}
+.profile_info .input-field input[type=text].valid{border-bottom-color:#0d47a1;}
+
+/*-----------------------Social networks-------------------*/
+.social_blocks{
+	background-color:#607d8b;
+	width:180px;
+	height:180px;
+	margin:20px auto;
+	}
+	
+	/*----------------Interface-------------*/
+.search_url .input-field input[type=search]{width:90%;}
+.search_line{height: 40px; margin-bottom:0px;}
+.search_line nav,.search_line nav .nav-wrapper i{height:34px; line-height:34px; margin-top:3px; background-color:#b0bec5;}
+.search_button nav{box-shadow:none; background-color:#0d47a1;}
+.sites{height:100%;}
+

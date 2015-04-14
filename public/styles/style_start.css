@@ -1,0 +1,16 @@
+html h1{
+	font-family: 'Overlock', cursive !important;
+	color:white;
+}
+body{
+	background-color:#d4e157;
+}
+.login_button{
+	margin:10px;
+}
+.start_btn{
+	margin-top: 50px;
+}
+.second_info, .third_info{height:500px;}
+.registration .registration-forma{padding:20px; margin-top:10%;}
+.social_link{margin-top:-7px; margin-bottom:0px; padding-bottom:8px;}
