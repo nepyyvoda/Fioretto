@@ -7,7 +7,7 @@ h1{font-size:48px !important;}
 	height:100px;
 }
 .paypal{
-	background: url(../images//PayPal.png) no-repeat;
+	background: url(../images/PayPal.png) no-repeat;
 	
 }
 .webmoney{
@@ -36,7 +36,7 @@ h1{font-size:48px !important;}
 .left_navbar  a.button-collapse{left:250px; position:absolute;}
 .collection.left_navbar {overflow:visible;}
 
-//--------------------Profile---------------------------------------
+/*--------------------Profile---------------------------------------*/
 .section-title{
   position: relative;
   margin-bottom: 1em;
@@ -98,12 +98,14 @@ h1{font-size:48px !important;}
 .profile_info .input-field input[type=text].valid{border-bottom-color:#0d47a1;}
 
 /*-----------------------Social networks-------------------*/
-.social_blocks{
-	background-color:#607d8b;
-	width:180px;
-	height:180px;
-	margin:20px auto;
+.social_btn .btn-large{
+	width:100px;
+	height:100px;
+	padding:0;
+	background-color:transparent;
+	box-shadow:none;
 	}
+.section_title {margin-bottom: 20px;}
 	
 	/*----------------Interface-------------*/
 .search_url .input-field input[type=search]{width:90%;}
