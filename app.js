@@ -5,7 +5,7 @@
  * Created by Anton on 28.02.2015.
  */
 var express = require('express');
-var partials = require('express-partials')
+var partials = require('express-partials');
 var path = require('path');
 var favicon = require('serve-favicon');
 var logger = require('morgan');

@@ -21,5 +21,5 @@ $('.dropdown-button').dropdown({
      
 
 window.onload=function() {
-document.getElementById("ifr").style.height=window.innerHeight+"px";
+//document.getElementById("ifr").style.height=window.innerHeight+"px";
 }	 
