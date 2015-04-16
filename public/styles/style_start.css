@@ -14,3 +14,13 @@ body{
 .second_info, .third_info{height:500px;}
 .registration .registration-forma{padding:20px; margin-top:10%;}
 .social_link{margin-top:-7px; margin-bottom:0px; padding-bottom:8px;}
+/*-----------------------Social networks-------------------*/
+.social_btn .btn-large{
+    width:100px;
+    height:100px;
+    padding:0;
+    background-color:transparent;
+    box-shadow:none;
+}
+.section_title {margin-bottom: 20px;}
+.social_networks .card{margin-top:20%;}

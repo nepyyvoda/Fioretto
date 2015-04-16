@@ -31,7 +31,7 @@ router.get('/new_pass', function(req, res) {
     res.render('index/new_pass', { title: 'new password', layout: false});
 });
 router.get('/social_networks', function(req, res) {
-    res.render('index/social_networks', { title: 'social networks'});
+    res.render('index/social_networks', { title: 'social networks', layout: false});
 });
 
 router.get('/interface', function(req, res) {
