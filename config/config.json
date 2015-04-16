@@ -1,3 +1,12 @@
 {
-  "port": 3011
+    "port": 3010,
+    "db": {
+        "host": "192.168.2.101",
+        "port": "3306",
+        "user": "fioretto",
+        "password": "T6sJb8bzLipo",
+        "database": "fioretto",
+        "queryTimeout": 30000
+    },
+    "loglvl": "info"
 }

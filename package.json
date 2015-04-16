@@ -18,6 +18,7 @@
     "ejs": "^2.3.1",
     "express": "^4.12.3",
     "express-partials": "^0.3.0",
+    "jsonwebtoken": "^5.0.0",
     "morgan": "^1.5.2",
     "mysql": "^2.6.1",
     "mysql-model": "0.0.2",
