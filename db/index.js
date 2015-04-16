@@ -48,10 +48,11 @@ function execute(query, inserts, callback) {
     sql = mysql.format(sql, inserts);
     connection.query({sql: sql, timeout: config.get('db:queryTimeout')}, function(err, data) {
         if(err) {
+            callback(err);
             log.warn('DB error. ' + err.code + ': ' + err.stack);
         } else {
             log.info('DB req: '+ sql + ' returned' + JSON.stringify(data));
-            callback(data);
+            callback(err, data);
         }
     })
 }

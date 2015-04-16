@@ -4,8 +4,6 @@
 var express = require('express');
 var router = express.Router();
 
-var execute = require('../../db').execute;
-
 /* GET home page. */
 router.get('/', function(req, res) {
     res.render('index/index', { title: 'Fioretto', layout: false});
@@ -21,25 +19,6 @@ router.get('/pay_methods', function(req, res) {
 
 router.get('/registration', function(req, res) {
     res.render('index/registration', { title: 'Registration', layout: false});
-});
-
-router.post('/registration', function(req, res) {
-    execute('SELECT * FROM users WHERE `email` = ? OR `login` = ?', [req.body.email, req.body.login], function(data) {
-        console.log(JSON.stringify(data));
-        if(data.length > 0) {
-            res.send({
-                status: 1,
-                message: 'User already exit.'
-            });
-        } else {
-            execute('INSERT INTO users (login, password, email) VALUES (?, ?, ?)', [req.body.login, req.body.password, req.body.email], function(data) {
-                res.send({
-                    status: 0,
-                    message: 'Success.'
-                });
-            });
-        }
-    });
 });
 
 router.get('/login', function(req, res) {
