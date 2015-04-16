@@ -4,16 +4,29 @@
 var express = require('express');
 var router = express.Router();
 
+var jwt = require('jsonwebtoken');
+
+function checkAuth(req, res, next) {
+    var token = req.cookies.sid;
+    jwt.verify(token, 'secret', function(err, decoded) {
+        if(err || !decoded) {
+            res.redirect('/login');
+            return;
+        }
+        next();
+    });
+}
+
 /* GET home page. */
 router.get('/', function(req, res) {
     res.render('index/index', { title: 'Fioretto', layout: false});
 });
 
-router.get('/profile', function(req, res) {
+router.get('/profile', checkAuth, function(req, res) {
     res.render('index/profile', { title: 'Profile'});
 });
 
-router.get('/pay_methods', function(req, res) {
+router.get('/pay_methods', checkAuth, function(req, res) {
     res.render('index/pay_methods', { title: 'Pay methods'});
 });
 
@@ -37,11 +50,11 @@ router.get('/social_networks', function(req, res) {
     res.render('index/social_networks', { title: 'Social networks', layout: false});
 });
 
-router.get('/interface', function(req, res) {
+router.get('/interface', checkAuth, function(req, res) {
     res.render('index/interface', { title: 'interface'});
 });
 
-router.get('/client_payment', function(req, res) {
+router.get('/client_payment', checkAuth, function(req, res) {
     res.render('index/client_payment', { title: 'client_payment'});
 });
 module.exports = router;
