@@ -41,7 +41,7 @@ app.use(function(req, res, next) {
     //err.status = 404;
     //next(err);
 
-    res.render('404', {title: 'Not Found'});
+    res.render('404', {title: 'Not Found', layout: false});
 });
 
 // error handlers
@@ -53,7 +53,8 @@ if (app.get('env') === 'development') {
         res.status(err.status || 500);
         res.render('error', {
             message: err.message,
-            error: err
+            error: err,
+            layout: false
         });
     });
 }
@@ -64,7 +65,8 @@ app.use(function(err, req, res, next) {
     res.status(err.status || 500);
     res.render('error', {
         message: err.message,
-        error: {}
+        error: {},
+        layout: false
     });
 });
 

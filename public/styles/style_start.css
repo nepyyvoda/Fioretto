@@ -3,7 +3,7 @@ html h1{
 	color:white;
 }
 body{
-	background-color:#d4e157;
+	background-color:#b2dfdb;
 }
 .login_button{
 	margin:10px;
@@ -24,3 +24,10 @@ body{
 }
 .section_title {margin-bottom: 20px;}
 .social_networks .card{margin-top:20%;}
+
+
+/*--------------404------------*/
+.page_error h1{font-size: 125px; margin:100px 0 50px; }
+.page_error h2{margin-top: 10%;}
+.page_error h4{margin-bottom: 30px;}
+.page_error p{margin-bottom: 50px;}
