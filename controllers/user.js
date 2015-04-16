@@ -7,11 +7,11 @@ var jwt = require('jsonwebtoken');
 function getResponse(code) {
     var codes = {
         USER_ALREADY_EXIST: {
-            status: 1,
+            status: 3,
             message: 'User already exist'
         },
         USER_NOT_FOUND: {
-            status: 2,
+            status: 4,
             message: 'User not found'
         }
     };
@@ -26,11 +26,18 @@ function getResponse(code) {
 
 function login(req, res) {
     UserModel.login(req.body.login, req.body.password, function(err, data) {
-        console.log('logine', arguments);
         if(err) {
             res.send(getResponse(data));
             return;
         }
+        var profile = {
+            login: data.login,
+            password: data.password,
+            email: data.email,
+            id: data.id
+        };
+        var token = jwt.sign(profile, 'secret', { expiresInMinutes: 60*5 });
+        res.cookie('sid', token, { httpOnly: true });
         res.send(getResponse(data));
     });
 }
@@ -42,25 +49,17 @@ function register(req, res) {
             return;
         }
         console.log(data);
-        //TODO validate req.body.username and req.body.password
-        //if is invalid, return 401
-        //if (!(req.body.username === 'john.doe' && req.body.password === 'foobar')) {
-        //    res.send(401, 'Wrong user or password');
-        //    return;
-        //}
-        //var profile = {
-        //    first_name: 'John',
-        //    last_name: 'Doe',
-        //    email: 'john@doe.com',
-        //    id: 123
-        //};
-        //
-        //// We are sending the profile inside the token
-        //var token = jwt.sign(profile, 'secret', { expiresInMinutes: 60*5 });
-        //res.cookie('sid', token, { httpOnly: true });
-        //res.json({ token: token });
     });
+}
+
+function logout(req, res) {
+    res.cookie('sid', '', { httpOnly: true });
+    res.send({
+        status: 0,
+        message: 'Logged out'
+    })
 }
 
 module.exports.login = login;
 module.exports.register = register;
+module.exports.logout = logout;
