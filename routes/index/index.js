@@ -34,10 +34,14 @@ router.get('/new_pass', function(req, res) {
 });
 
 router.get('/social_networks', function(req, res) {
-    res.render('index/social_networks', { title: 'Social networks'});
+    res.render('index/social_networks', { title: 'Social networks', layout: false});
 });
 
 router.get('/interface', function(req, res) {
-    res.render('index/interface', { title: 'Interface'});
+    res.render('index/interface', { title: 'interface'});
+});
+
+router.get('/client_payment', function(req, res) {
+    res.render('index/client_payment', { title: 'client_payment'});
 });
 module.exports = router;
