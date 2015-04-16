@@ -8,7 +8,6 @@ function checkAuth(req, res, next) {
     var token = req.cookies.sid;
     console.log('checkAuth', token);
     jwt.verify(token, 'secret', function(err, decoded) {
-        console.log('checkAuth', err, decoded);
         if(err) {
             res.send({
                 status: 1,
