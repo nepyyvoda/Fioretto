@@ -27,5 +27,25 @@ function login(login, password, callback) {
     });
 }
 
+function remove(id, callback){
+    execute('UPDATE users SET deleted = 1 WHERE `id` = ?', [id], function(err, data){
+        if(data.length > 0){
+            callback (false, data);
+        } else {
+            callback (true, 'USER_NOT_FOUND')
+        }
+    });
+}
+
+function update(id, parametr, value, callback){
+    execute('UPDATE users SET ?? = ? WHERE `id` = ?', [parametr, value, id], function(err, data){
+        if(data.length > 0){
+            callback (false, data);
+        } else {
+            callback (true, 'USER_NOT_FOUND');
+        }
+    });
+}
+
 module.exports.register = register;
 module.exports.login = login;
