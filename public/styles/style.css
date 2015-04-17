@@ -1,5 +1,5 @@
 body{
-	background-color:#d4e157;
+	background-color:#b2dfdb ;
 }
 h1{font-size:48px;}
 .paypal, .webmoney, .mastercard{
@@ -70,7 +70,7 @@ h1{font-size:48px;}
 	height:60px;
 }
 .profile_img a{color:#01579b;}
-.profile_img a:hover{color:#ffab40;}
+.profile_img a:hover{color:#e0f2f1;}
 .profile_title{color:#b0bec5; font-size:1rem;}
 
 .profile_balance, .count, .curency{color:#0d47a1;}
@@ -96,6 +96,8 @@ h1{font-size:48px;}
 }
 .profile_info .input-field  input[type=password].valid{border-bottom-color:#0d47a1;}
 .profile_info .input-field input[type=text].valid{border-bottom-color:#0d47a1;}
+.profile_info a, .links_profile a{color:#01579b;}
+.profile_info a:hover, .links_profile a:hover {color:#e0f2f1;}
 
 
 	
@@ -106,7 +108,14 @@ h1{font-size:48px;}
 .search_button nav{box-shadow:none; background-color:#0d47a1;}
 .sites{height:100%;}
 
-/*--------------404------------*/
-.page_error h1{font-size: 125px; margin: 50px; 0}
-.page_error h4{margin-bottom: 30px;}
-.page_error p{margin-bottom: 50px;}
+/*-----------------------------------Client Payment---------------------*/
+.table_history table {padding: 0 20px 20px; background-color: #78909c ;}
+.table_history table.striped tbody tr:nth-child(odd){background-color: #90a4ae;}
+.table_history table th, .table_history table td{text-align: center;}
+.sum .btn{margin: 20px 0 0 0;}
+.row.date{margin-bottom:0;}
+.card-content.claent_payment{padding: 10px 0 0 15px;}
+
+/*----------------------------------Modal Window-----------*/
+.close_btn{margin-top: -20px; margin-right: -15px; color: #ef5350;}
+.close_btn i:hover{box-shadow: 0 0 10px rgba(0,0,0,0.5); color: #f44336;}
