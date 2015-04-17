@@ -4,6 +4,8 @@
 var express = require('express');
 var router = express.Router();
 
+var User = require('../../controllers/user');
+
 var jwt = require('jsonwebtoken');
 
 function checkAuth(req, res, next) {
@@ -51,10 +53,15 @@ router.get('/social_networks', function(req, res) {
 });
 
 router.get('/interface', checkAuth, function(req, res) {
-    res.render('index/interface', { title: 'interface'});
+    res.render('index/interface', { title: 'Interface'});
 });
 
 router.get('/client_payment', checkAuth, function(req, res) {
-    res.render('index/client_payment', { title: 'client_payment'});
+    res.render('index/client_payment', { title: 'Client Payment'});
 });
+
+router.get('/registration/:hash', function(req, res) {
+    User.registerConfirm(req, res);
+});
+
 module.exports = router;

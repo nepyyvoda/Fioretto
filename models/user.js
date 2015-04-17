@@ -8,7 +8,7 @@ function register(login, email, password, callback) {
         if(data.length > 0) {
             callback(true, 'USER_ALREADY_EXIST');
         } else {
-            execute('INSERT INTO users (email, login, password) VALUES (?, ?, ?)', [email, login, password], function(data) {
+            execute('INSERT INTO users (email, login, password, active) VALUES (?, ?, ?, 0)', [email, login, password], function(data) {
                 callback(false, data);
             });
         }
@@ -16,8 +16,7 @@ function register(login, email, password, callback) {
 }
 
 function login(login, password, callback) {
-    execute('SELECT * FROM users WHERE `email` = ? OR `login` = ? AND `password` = ?', [login, login, password], function(err, data) {
-        console.log('LOGIN', arguments);
+    execute('SELECT * FROM users WHERE `email` = ? OR `login` = ? AND `password` = ? AND `active` = 1', [login, login, password], function(err, data) {
         var queryData = data || [];
         if(queryData.length > 0) {
             callback(false, queryData);
@@ -27,5 +26,29 @@ function login(login, password, callback) {
     });
 }
 
+function activateUser(email, callback) {
+    execute('UPDATE users SET `active` = 1 WHERE `email` = ?', [email], function(err, data) {
+        var queryData = data || [];
+        if(!err) {
+            callback(false, queryData);
+        } else {
+            callback(true, 'USER_NOT_FOUND');
+        }
+    });
+}
+
+function deactivateUser(email, callback) {
+    execute('UPDATE users SET (`active` = 0) WHERE `email` = ?', [email], function(err, data) {
+        var queryData = data || [];
+        if(!err) {
+            callback(false, queryData);
+        } else {
+            callback(true, 'USER_NOT_FOUND');
+        }
+    });
+}
+
 module.exports.register = register;
 module.exports.login = login;
+module.exports.activateUser = activateUser;
+module.exports.deactivateUser = deactivateUser;

@@ -42,9 +42,9 @@ function send(options, callback) {
 }
 //example
 //send({
-//    to: ['poison766@gmail.com', 'a.nepyyvoda@gmail.com'],
+//    to: ['entony1111@gmail.com'],
 //    subject: 'Registration in Fioretto',
-//    html: '<h2>You registration confirm code:</h2>'//text:
+//    html: '<a href="http://localhost:3010/registration/7d707f49-8270-4b0d-b2a5-4bd9abda9192">You registration confirm code:</a>'//text:
 //}, function(error, info) {
 //    if(error) {
 //        console.log('error', error);

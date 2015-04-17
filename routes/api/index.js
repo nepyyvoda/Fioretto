@@ -29,11 +29,11 @@ function checkAuth(req, res, next) {
 router.post('/logout', checkAuth, function(req, res) {
     User.logout(req, res);
 });
-
 router.post('/login', function (req, res) {
     User.login(req, res);
 });
 router.post('/registration', function(req, res) {
     User.register(req, res);
 });
+
 module.exports = router;

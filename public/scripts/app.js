@@ -61,7 +61,7 @@ $(document).ready(function() {
             },
             success: function(res) {
                 if(res.status === 0) {
-                    window.location.pathname = '/login';
+                    alert('We have send email with confirmation lint to you email. Please check your email box and verify your account');
                 }
             },
             complete: function() {
