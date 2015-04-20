@@ -55,10 +55,7 @@ if (app.get('env') === 'development') {
         res.render('error', {
             message: err.message,
             error: err,
-<<<<<<< HEAD
             layout: false,
-=======
->>>>>>> f3caa3a1bb26f8ec939a11ebef949bd89326dad1
             title: 'Internal server error'
         });
     });
@@ -71,10 +68,7 @@ app.use(function(err, req, res, next) {
     res.render('error', {
         message: err.message,
         error: {},
-<<<<<<< HEAD
         layout: false,
-=======
->>>>>>> f3caa3a1bb26f8ec939a11ebef949bd89326dad1
         title: 'Internal server error'
     });
 });
