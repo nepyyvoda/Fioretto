@@ -81,16 +81,20 @@ function register(req, res) {
 function registerConfirm(req, res) {
     memoryStorage.get(req.params.hash, function(err, reply) {
         if(!err){
-            var email = reply.toString();
-            if(email) {
-                UserModel.activateUser(email, function(err, data) {
-                    console.log(err, data);
-                    if(err) {
-                        res.render('index/registration_success', { title: 'Registration confirm', status: 1, layout: false});
-                        return;
-                    }
-                    res.render('index/registration_success', { title: 'Registration confirm', status: 0, email: email, layout: false});
-                });
+            if(reply) {
+                var email = reply.toString();
+                if(email) {
+                    UserModel.activateUser(email, function(err, data) {
+                        console.log(err, data);
+                        if(err) {
+                            res.render('index/registration_success', { title: 'Registration confirm', status: 1, layout: false});
+                            return;
+                        }
+                        res.render('index/registration_success', { title: 'Registration confirm', status: 0, email: email, layout: false});
+                    });
+                }
+            } else {
+                res.render('index/registration_success', { title: 'Registration confirm', status: 1, layout: false});
             }
         } else {
             res.render('index/registration_success', { title: 'Registration confirm', status: 1, layout: false});
