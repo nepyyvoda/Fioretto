@@ -27,7 +27,7 @@
 				</div>
 				<form id="register" method="POST" action="/api/registration">
 					<div class="row">
-						<div class="registration-forma white z-depth-3 col s12 m4 offset-m4">
+						<div class="registration-forma white z-depth-3 col s12 m4 offset-m4 center">
 
 							<h5 class="center-align">Registration</h5>
 							<div class="input-field col s12">
@@ -35,6 +35,10 @@
 								<input id="icon_prefix" name="login" type="text" class="validate">
 								<label for="icon_prefix">Login</label>
 							</div>
+                            <div class="toast registration_error">
+                                This field must be filled!!!
+                            </div>
+
 							<div class="input-field col s12">
 								<i class="mdi-communication-email prefix"></i>
 								<input id="email" name="email" type="email" class="validate">
