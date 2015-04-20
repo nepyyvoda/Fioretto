@@ -18,26 +18,31 @@
     </head>
     <body>
         <%- include('header'); %>
+
+            <!-- Materialize.toast-->
+            <div id="toast-container" style="display: none">
+                <div class="toast toast_error">
+                    Wrong action!!!
+                </div>
+            </div>
+
+        <!-- Modal Structure -->
+
+        <div id="modal1" class="modal modal-window" style="display: none">
+            <div class="modal-content">
+                <a href="#!" class="right modal-close close_btn"> <i class="small  mdi-content-clear"></i></a>
+                <h4>Modal Header</h4>
+                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum</p>
+            </div>
+            <div class="modal-footer">
+                <a href="#!" class=" modal-action modal-close waves-effect waves-red btn-flat">Cancel</a>
+                <a href="#!" class=" modal-action modal-close waves-effect waves-teal btn-flat">Agree</a>
+            </div>
+        </div>
         <%- body %>
 
-                <!-- Modal Trigger -->
-                <a class="waves-effect waves-light btn modal-trigger" href="#modal1">Modal</a>
 
-                <!-- Modal Structure -->
-                <div id="modal1" class="modal ">
-                    <div class="modal-content">
-                        <a href="#!" class="right modal-close close_btn"> <i class="small  mdi-content-clear"></i></a>
-                        <h4>Modal Header</h4>
-                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum</p>
-                    </div>
-                    <div class="modal-footer">
-                        <a href="#!" class=" modal-action modal-close waves-effect waves-red btn-flat">Cancel</a>
-                        <a href="#!" class=" modal-action modal-close waves-effect waves-teal btn-flat">Agree</a>
-                    </div>
-                </div>
 
-                <!-- Materialize.toast-->
-                <a class="btn" onclick="Materialize.toast('I am a toast', 4000)">Toast!</a>
         <%- include('footer'); %>
 		
 		 <!--  Scripts-->

@@ -1,5 +1,43 @@
-<% if(status === 0) { %>
-    <p>You have successfuly registred, <a href="/login">sign in now</a></p>
-<% } else { %>
-    <p>Error occurred while registration confirm, try again.</p>
-<% } %>
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <!-- mobile settings -->
+    <meta name="viewport" content="width=device-width, maximum-scale=1, initial-scale=1, user-scalable=0" />
+
+    <!-- Favicon -->
+    <link rel="shortcut icon" href="/images/favicon.ico" />
+
+    <!-- Materializecss -->
+    <link type="text/css" rel="stylesheet" href="/styles/materialize.min.css"  media="screen,projection"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+    <link href="/styles/style_start.css" type="text/css" rel="stylesheet" media="screen,projection"/>
+
+
+</head>
+
+<body>
+<!-- Materializecss -->
+<script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+<script type="text/javascript" src="/scripts/materialize.min.js"></script>
+
+<div class="container">
+    <div class="valign-wrapper reg_success">
+
+            <% if(status === 0) { %>
+                <h5 class="valign center" style="width: 100%;">You have successfuly registred,<br> <a href="/login">sign in now</a></h5>
+            <% } else { %>
+                <h5 class="valign center red-text" style="width: 100%;">Error occurred while registration confirm, try again.</h5>
+            <% } %>
+
+    </div>
+</div>
+
+
+<!--  Scripts-->
+<!-- Materializecss -->
+<script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+<script src="/scripts/materialize.js"></script>
+<script src="/scripts/init.js"></script>
+</body>
+</html>

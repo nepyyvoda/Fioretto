@@ -31,3 +31,6 @@ body{
 .page_error h2{margin-top: 10%;}
 .page_error h4{margin-bottom: 30px;}
 .page_error p{margin-bottom: 50px;}
+
+/*------------registration success----------*/
+.reg_success{margin-top: 20%;}

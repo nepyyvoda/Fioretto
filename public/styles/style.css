@@ -119,3 +119,11 @@ h1{font-size:48px;}
 /*----------------------------------Modal Window-----------*/
 .close_btn{margin-top: -20px; margin-right: -15px; color: #ef5350;}
 .close_btn i:hover{box-shadow: 0 0 10px rgba(0,0,0,0.5); color: #f44336;}
+.modal-window {display: block;}
+
+/*--------------------------------Toast-------------*/
+.toast_error{
+    margin-right: 10px;
+    background-color: #f44336;
+    opacity: 0.6;
+}
