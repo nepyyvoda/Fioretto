@@ -33,10 +33,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.use(function(req, res, next) {
-    app.locals.mode = config.get('mode');
-    next();
-});
+app.locals.mode = config.get('mode');
 app.use('/api', api);
 app.use('/', index);
 
