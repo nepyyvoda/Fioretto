@@ -104,10 +104,7 @@ function registerConfirm(req, res) {
 
 function logout(req, res) {
     res.cookie('sid', '', { httpOnly: true });
-    res.send({
-        status: 0,
-        message: 'Logged out'
-    })
+    res.redirect('/login');
 }
 
 module.exports.login = login;

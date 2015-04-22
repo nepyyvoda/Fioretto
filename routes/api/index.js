@@ -25,10 +25,6 @@ function checkAuth(req, res, next) {
         next();
     });
 }
-
-router.post('/logout', checkAuth, function(req, res) {
-    User.logout(req, res);
-});
 router.post('/login', function (req, res) {
     User.login(req, res);
 });

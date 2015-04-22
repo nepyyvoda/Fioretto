@@ -65,4 +65,8 @@ router.get('/registration/:hash', function(req, res) {
     User.registerConfirm(req, res);
 });
 
+router.get('/logout', checkAuth, function(req, res) {
+    User.logout(req, res);
+});
+
 module.exports = router;
