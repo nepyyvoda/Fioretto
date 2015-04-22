@@ -14,7 +14,7 @@ var bodyParser = require('body-parser');
 
 var index = require('./routes/index');
 var api = require('./routes/api');
-
+var config = require('./config');
 var app = express();
 
 // view engine setup
@@ -33,6 +33,10 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
+app.use(function(req, res, next) {
+    app.locals.mode = config.get('mode');
+    next();
+});
 app.use('/api', api);
 app.use('/', index);
 
@@ -44,13 +48,13 @@ app.use(function(req, res, next) {
 
     res.render('404', {title: 'Not Found', layout: false});
 });
-
 // error handlers
 
 // development error handler
 // will print stacktrace
 if (app.get('env') === 'development') {
     app.use(function(err, req, res, next) {
+        console.log(err.message);
         res.status(err.status || 500);
         res.render('error', {
             message: err.message,
@@ -64,6 +68,7 @@ if (app.get('env') === 'development') {
 // production error handler
 // no stacktraces leaked to user
 app.use(function(err, req, res, next) {
+    console.log(err.message);
     res.status(err.status || 500);
     res.render('error', {
         message: err.message,

@@ -2,7 +2,7 @@
 <html>
 <head>
     <meta charset="utf-8" />
-
+    <title><%= title %></title>
     <!-- mobile settings -->
     <meta name="viewport" content="width=device-width, maximum-scale=1, initial-scale=1, user-scalable=0" />
 
@@ -20,7 +20,11 @@
 <section>
     <div class="row center  page_error grey-text">
         <h2 class="white-text">Internal error!</h2>
-        <p>Looks like the page you're trying to visit doesn't exist.<br />Please check the URL and try again.</p>
+        <% if(mode !== 'debug') { %>
+            <p>Something went wrong... Try later</p>
+        <% } else { %>
+            <p><%= message %></p>
+        <% } %>
         <a href="/index" class="waves-effect waves-light btn-large">Back Home</a>
     </div>
 
