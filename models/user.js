@@ -69,8 +69,7 @@ function update(id, parametr, value, callback){
 }
 
 function get(id, callback) {
-    execute('SELECT id, login, email, balance FROM users WHERE `id` = ?', [id], function(err, data){
-        console.log();
+    execute('SELECT login, email, balance FROM users WHERE `id` = ?', [id], function(err, data){
         if(!err){
             callback (false, data);
         } else {

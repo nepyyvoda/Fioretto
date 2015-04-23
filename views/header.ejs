@@ -4,7 +4,7 @@
 		<div class="nav-wrapper">
 			  
 		<ul id="nav-mobile" class="right">
-		 	<li class="balance"><span>0</span>$</li>
+		 	<li class="balance"><a href="/pay_methods"><span></span></a>$</li>
 			<li><a href="/logout">Log out</a></li>
 			<!--<li><a class='right dropdown-button' href='#' data-activates='dropdown1'>English</a>-->
 		<!--&lt;!&ndash; Dropdown Structure &ndash;&gt;-->
@@ -20,10 +20,7 @@
 		 </a>
 			<li class="collection-item avatar">
 				  <i class="mdi-social-person circle teal lighten-1"></i>
-					<span class="title">Title</span>
-					<p>Name <br>
-					 Surname
-					</p>
+					<span id="user-login" class="title">Title</span>
 			</li>
 			<li class="<% if(name === '/profile'){ %>active<% } %>"><a href="/profile" class="collapsible-header">Profile</a></li>
 			<li class="<% if(name === '/pay_methods'){ %>active<% } %>"><a href="/pay_methods" class="collapsible-header">Refill</a></li>

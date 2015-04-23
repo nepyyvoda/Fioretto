@@ -3,6 +3,16 @@
  */
 'use strict';
 $(document).ready(function() {
+    if($.cookie('userId')) {
+        $.getJSON('/api/user/' + $.cookie('userId'), function(res) {
+            if(res.status === 0) {
+                var userDeposit = res.data.balance/100;
+                $('.balance span').text(userDeposit.toFixed(2));
+                $('#user-login').text(res.data.login);
+            }
+            //email
+        });
+    }
     $('#login').submit(function(event) {
         event.preventDefault();
         var $form = $(event.currentTarget);
@@ -26,6 +36,7 @@ $(document).ready(function() {
             },
             success: function(res) {
                 if(res.status === 0) {
+                    $.cookie('userId', res.data.id);
                     window.location.pathname = '/profile';
                 }
             },

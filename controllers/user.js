@@ -23,7 +23,9 @@ function login(req, res) {
         };
         var token = jwt.sign(profile, 'secret', { expiresInMinutes: 60*5 });
         res.cookie('sid', token, { httpOnly: true });
-        res.send(response('SUCCESS', data));
+        res.send(response('SUCCESS', {
+            id: data[0].id
+        }));
     });
 }
 
@@ -77,13 +79,14 @@ function registerConfirm(req, res) {
 
 function logout(req, res) {
     res.cookie('sid', '', { httpOnly: true });
+    res.cookie('userId', '');
     res.redirect('/login');
 }
 
 function get(req, res) {
     UserModel.get(req.params.id, function(err, data) {
         if(!err) {
-            res.send(response('SUCCESS', data));
+            res.send(response('SUCCESS', data[0]));
         } else {
             res.send(response('INTERNAL_SERVER_ERROR', data));
         }
