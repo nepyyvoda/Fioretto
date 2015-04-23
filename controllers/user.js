@@ -36,10 +36,10 @@ function login(req, res) {
             return;
         }
         var profile = {
-            login: data.login,
-            password: data.password,
-            email: data.email,
-            id: data.id
+            login: data[0].login,
+            password: data[0].password,
+            email: data[0].email,
+            id: data[0].id
         };
         var token = jwt.sign(profile, 'secret', { expiresInMinutes: 60*5 });
         res.cookie('sid', token, { httpOnly: true });
@@ -107,7 +107,17 @@ function logout(req, res) {
     res.redirect('/login');
 }
 
+function get(req, res) {
+    UserModel.get(req.params.id, function(err, data) {
+        res.send({
+            status: 0,
+            data: data
+        });
+    })
+}
+
 module.exports.login = login;
 module.exports.register = register;
 module.exports.logout = logout;
 module.exports.registerConfirm = registerConfirm;
+module.exports.get = get;

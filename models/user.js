@@ -68,9 +68,21 @@ function update(id, parametr, value, callback){
     });
 }
 
+function get(id, callback) {
+    execute('SELECT id, login, email, balance FROM users WHERE `id` = ?', [id], function(err, data){
+        console.log();
+        if(!err){
+            callback (false, data);
+        } else {
+            callback (true, 'USER_NOT_FOUND');
+        }
+    });
+}
+
 module.exports.register = register;
 module.exports.login = login;
 module.exports.activateUser = activateUser;
 module.exports.deactivateUser = deactivateUser;
 module.exports.remove = remove;
 module.exports.update = update;
+module.exports.get = get;
