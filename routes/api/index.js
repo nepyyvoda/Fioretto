@@ -1,6 +1,7 @@
 var express = require('express');
 var router = express.Router();
 var jwt = require('jsonwebtoken');
+var response = require('../../response');
 
 var User = require('../../controllers/user');
 
@@ -8,17 +9,12 @@ function checkAuth(req, res, next) {
     var token = req.cookies.sid;
     jwt.verify(token, 'secret', function(err, decoded) {
         if(err) {
-            res.send({
-                status: 1,
-                message: 'Internal server error'
-            });
+            res.send(response('INTERNAL_SERVER_ERROR'));
             return;
         }
         if(!decoded) {
-            res.send({
-                status: 2,
-                message: 'Authorization failed'
-            });
+            res.cookie('sid', '', { httpOnly: true });
+            res.send(response('AUTHORIZATION_FAILED'));
         }
     });
     next();
@@ -27,10 +23,7 @@ function checkPermission(req, res, next) {
     var token = req.cookies.sid;
     var result = jwt.verify(token, 'secret');
     if(result.id !== parseInt(req.params.id, 10)) {
-        res.send({
-            status: 5,
-            message: 'Permission denied'
-        });
+        res.send(response('PERMISSION_DENIED'));
         return;
     }
     next();

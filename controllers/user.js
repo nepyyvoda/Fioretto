@@ -3,36 +3,16 @@
  */
 var UserModel = require('../models/user');
 var jwt = require('jsonwebtoken');
-
+var response = require('../response');
 var memoryStorage = require('../memory_storage');
 var mailer = require('../mailer');
 var uuid = require('uuid');
 var config = require('../config');
 
-function getResponse(code) {
-    var codes = {
-        USER_ALREADY_EXIST: {
-            status: 3,
-            message: 'User already exist'
-        },
-        USER_NOT_FOUND: {
-            status: 4,
-            message: 'User not found'
-        }
-    };
-    if(code in codes) {
-        return codes[code];
-    }
-    return {
-        status: 0,
-        message: 'Success'
-    };
-}
-
 function login(req, res) {
     UserModel.login(req.body.login, req.body.password, function(err, data) {
         if(err) {
-            res.send(getResponse(data));
+            res.send(response('AUTHORIZATION_FAILED', data));
             return;
         }
         var profile = {
@@ -43,18 +23,14 @@ function login(req, res) {
         };
         var token = jwt.sign(profile, 'secret', { expiresInMinutes: 60*5 });
         res.cookie('sid', token, { httpOnly: true });
-        res.send(getResponse(data));
+        res.send(response('SUCCESS', data));
     });
 }
 
 function register(req, res) {
     UserModel.register(req.body.login, req.body.email, req.body.password, function(err, data) {
-        console.log(err, data);
         if(err) {
-            res.send(getResponse({
-                status: 1,
-                message: 'Completed registration first step'
-            }));
+            res.send(response('INTERNAL_SERVER_ERROR'));
             return;
         }
         var uid = uuid.v4();
@@ -67,14 +43,12 @@ function register(req, res) {
             html: '<a href="' + config.get('host') + '/registration/' + uid + '">Confirm your registration at Fioretto</a>, or just ignore this mail.'//text:
         }, function(error, info) {
             if(error) {
-                console.log('error', error);
+                res.send(response('INTERNAL_SERVER_ERROR'));
             }
-            console.log('info', info)
+            res.send(response('SUCCESS', {
+                message: 'Completed registration first step'
+            }));
         });
-        res.send(getResponse({
-            status: 0,
-            message: 'Completed registration first step'
-        }));
     });
 }
 
@@ -85,7 +59,6 @@ function registerConfirm(req, res) {
                 var email = reply.toString();
                 if(email) {
                     UserModel.activateUser(email, function(err, data) {
-                        console.log(err, data);
                         if(err) {
                             res.render('index/registration_success', { title: 'Registration confirm', status: 1, layout: false});
                             return;
@@ -109,11 +82,12 @@ function logout(req, res) {
 
 function get(req, res) {
     UserModel.get(req.params.id, function(err, data) {
-        res.send({
-            status: 0,
-            data: data
-        });
-    })
+        if(!err) {
+            res.send(response('SUCCESS', data));
+        } else {
+            res.send(response('INTERNAL_SERVER_ERROR', data));
+        }
+    });
 }
 
 module.exports.login = login;

@@ -13,6 +13,7 @@ function checkAuth(req, res, next) {
     var token = req.cookies.sid;
     jwt.verify(token, 'secret', function(err, decoded) {
         if(err || !decoded) {
+            res.cookie('sid', '', { httpOnly: true });
             res.redirect('/login');
             return;
         }
