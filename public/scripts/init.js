@@ -21,7 +21,9 @@ $('.dropdown-button').dropdown({
      
 
 window.onload=function() {
-//document.getElementById("ifr").style.height=window.innerHeight+"px";
+    if(document.getElementById("ifr")) {
+        document.getElementById("ifr").style.height=window.innerHeight+"px";
+    }
 }
 
 $('.datepicker').pickadate({

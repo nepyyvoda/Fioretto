@@ -102,10 +102,10 @@ h1{font-size:48px;}
 
 	
 	/*----------------Interface-------------*/
-.search_url .input-field input[type=search]{width:90%;}
+.search_url .input-field input[type=search]{width:90%; color: #000;}
 .search_line{height: 40px; margin-bottom:0px;}
-.search_line nav,.search_line nav .nav-wrapper i{height:34px; line-height:34px; margin-top:3px; background-color:#b0bec5;}
-.search_button nav{box-shadow:none; background-color:#0d47a1;}
+.search_line nav,.search_line nav .nav-wrapper i{height:34px; line-height:34px; margin-top:3px; background-color: #FFF; color: #000;}
+.search_button nav{box-shadow:none;}
 .sites{height:100%;}
 
 /*-----------------------------------Client Payment---------------------*/

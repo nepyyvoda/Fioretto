@@ -5,6 +5,9 @@ var express = require('express');
 var router = express.Router();
 var config = require('../../config');
 
+var url = require('url');
+var replaceAllRelByAbs = require('../../utils').replaceAllRelByAbs;
+var request = require('request');
 var User = require('../../controllers/user');
 
 var jwt = require('jsonwebtoken');
@@ -54,7 +57,7 @@ router.get('/social_networks', function(req, res) {
     res.render('index/social_networks', { title: 'Social networks', layout: false, name: req.path});
 });
 
-router.get('/interface', checkAuth, function(req, res) {
+router.get('/interface', function(req, res) {
     res.render('index/interface', { title: 'Interface', name: req.path});
 });
 
@@ -68,6 +71,14 @@ router.get('/registration/:hash', function(req, res) {
 
 router.get('/logout', checkAuth, function(req, res) {
     User.logout(req, res);
+});
+
+router.get('/proxy/:host', function(req, res) {
+    var http = require('http');
+    var google = http.createClient(3128, 'your.proxy.host');
+    var request = google.request('GET', '/',
+        {'host': 'www.google.com'});
+    request.end();
 });
 
 module.exports = router;

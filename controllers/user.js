@@ -8,6 +8,7 @@ var memoryStorage = require('../memory_storage');
 var mailer = require('../mailer');
 var uuid = require('uuid');
 var config = require('../config');
+var log = require('../logger')(module);
 
 function login(req, res) {
     UserModel.login(req.body.login, req.body.password, function(err, data) {
@@ -46,10 +47,11 @@ function register(req, res) {
         }, function(error, info) {
             if(error) {
                 res.send(response('INTERNAL_SERVER_ERROR'));
+            } else {
+                res.send(response('SUCCESS', {
+                    message: 'Completed registration first step'
+                }));
             }
-            res.send(response('SUCCESS', {
-                message: 'Completed registration first step'
-            }));
         });
     });
 }
