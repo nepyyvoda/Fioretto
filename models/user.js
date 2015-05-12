@@ -16,7 +16,9 @@ function register(login, email, password, callback) {
 }
 
 function login(login, password, callback) {
+    console.log(login, password);
     execute('SELECT * FROM users WHERE `email` = ? OR `login` = ? AND `password` = ? AND `active` = 1', [login, login, password], function(err, data) {
+        console.log(arguments);
         var queryData = data || [];
         if(queryData.length > 0) {
             callback(false, queryData);

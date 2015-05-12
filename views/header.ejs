@@ -4,15 +4,15 @@
 		<div class="nav-wrapper">
 			  
 		<ul id="nav-mobile" class="right">
-		 	<li class="balance"><a href="/pay_methods"><span></span></a>$</li>
+		 	<li class="balance"><a href="/pay_methods"><span></span></a></li>
+			<li><a href="/logout"><i class="mdi-action-wallet-giftcard"></i></a></li>
+			<li class="language"><a class='right dropdown-button' href='#' data-activates='dropdown1'><i class="mdi-navigation-arrow-drop-down right"></i>Eng</a>
+				<ul id='dropdown1' class='dropdown-content'>
+					<li><a href="#!">Ru</a></li>
+					<li><a href="#!">Ua</a></li>
+				</ul></li>
 			<li><a href="/logout">Log out</a></li>
-			<!--<li><a class='right dropdown-button' href='#' data-activates='dropdown1'>English</a>-->
-		<!--&lt;!&ndash; Dropdown Structure &ndash;&gt;-->
-			  <!--<ul id='dropdown1' class='dropdown-content'>-->
-				<!--<li><a href="#!">Ru</a></li>-->
-				<!--<li><a href="#!">Ua</a></li>-->
-			<!--</ul></li>-->
-		 </ul>
+		</ul>
 		
 		 <ul id="nav-mobile-dropdown" class="side-nav fixed collection left_navbar" style="width: 240px; color: black; left: -250px;">
 		  <a href="#"  class="button-collapse show-on-large" data-activates="nav-mobile-dropdown" > 
@@ -22,10 +22,25 @@
 				  <i class="mdi-social-person circle teal lighten-1"></i>
 					<span id="user-login" class="title">Title</span>
 			</li>
-			<li class="<% if(name === '/profile'){ %>active<% } %>"><a href="/profile" class="collapsible-header">Profile</a></li>
-			<li class="<% if(name === '/pay_methods'){ %>active<% } %>"><a href="/pay_methods" class="collapsible-header">Refill</a></li>
-			<li class="<% if(name === '/interface'){ %>active<% } %>"><a href="/interface" class="collapsible-header">Browser</a></li>
-			<li class="<% if(name === '/client_payment'){ %>active<% } %>"><a href="/client_payment" class="collapsible-header">Payments</a></li>
+			<li class="no-padding <% if(name === '/profile'){ %>active<% } %>"><a href="/profile" class="collapsible-header">Profile</a></li>
+			<li class="no-padding <% if(name === '/pay_methods'){ %>active<% } %>"><a href="/pay_methods" class="collapsible-header">Refill</a></li>
+			 <li class="no-padding">
+				 <ul class="collapsible collapsible-accordion">
+					 <li>
+						 <a class="collapsible-header" href="#!">Brousers<i class="mdi-navigation-arrow-drop-down right"></i></a>
+						 <div class="collapsible-body">
+							 <ul>
+								 <li><a href="/interface" class="<% if(name === '/interface'){ %>active<% } %>">Vote Manager</a></li>
+								 <li><a href="/scenaries">Scenaries</a></li>
+								 <li><a href="#!">Third</a></li>
+								 <li><a href="#!">Fourth</a></li>
+							 </ul>
+						 </div>
+					 </li>
+					 </ul>
+			 </li>
+
+			<li class="no-padding <% if(name === '/client_payment'){ %>active<% } %>"><a href="/client_payment" class="collapsible-header">Payments</a></li>
 		 </ul>
 		 	
 		</div>

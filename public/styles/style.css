@@ -1,5 +1,7 @@
+html{height: 100%}
 body{
 	background-color:#b2dfdb ;
+	height: 100%;
 }
 h1{font-size:48px;}
 .paypal, .webmoney, .mastercard{
@@ -30,6 +32,7 @@ h1{font-size:48px;}
 	padding:30px 0;
 }
 .btn_count{height:47px; line-height:47px;}
+.language i.right{margin-left: 0;}
 
 /*------------------Nav-bar---------------------------------------*/
 
@@ -62,9 +65,7 @@ h1{font-size:48px;}
 .mdi-hardware-keyboard-alt:before {
   content: "\e7b3";
 }
-/*.change_pass a{
-	right:52px !important;
-}*/
+
 .collection.profile_info .collection-item.avatar{
 	padding-left:20px;
 	height:60px;
@@ -75,14 +76,14 @@ h1{font-size:48px;}
 
 .profile_balance, .count, .curency{color:#0d47a1;}
 .profile_info .input-field label{
-	color: #b0bec5;
+	color: #546e7a;
 	left: 0;
 	top:0;
 }
+
 .profile_info .input-field input[type=text], input[type=password]{
 	height:20px;
-	width:80%;
-	border-bottom-color:#b3e5fc;
+	margin-bottom: 0px;
 }
 .profile_info .input-field input[type=text]:focus+label, input[type=password]:focus+label {color:#0d47a1;}
 .profile_info .input_pass.input-field label{top:1px;}
@@ -94,24 +95,37 @@ h1{font-size:48px;}
 	-ms-transform:translateY(-100%);
 	-o-transform:translateY(-100%);
 }
-.profile_info .input-field  input[type=password].valid{border-bottom-color:#0d47a1;}
-.profile_info .input-field input[type=text].valid{border-bottom-color:#0d47a1;}
+.profile_info .input-field  input[type=password].valid{border-bottom:none; box-shadow: none; -webkit-box-shadow: none;}
+.profile_info .input-field input[type=text].valid{border-bottom:none; box-shadow: none; -webkit-box-shadow: none;}
 .profile_info a, .links_profile a{color:#01579b;}
 .profile_info a:hover, .links_profile a:hover {color:#e0f2f1;}
+.profile_info {padding: 10px;}
+.input-field input {color: #004d40;}
+.profile_info li {border: 1px solid #FFFFFF; border-radius: 5px; padding: 5px 10px; margin: 10px 0; background-color: #e0f2f1;}
+.input-field input[type=text]{border-bottom: none; box-shadow: none; -webkit-box-shadow: none;}
+.input-field input[type=text]:focus {border-bottom: none; box-shadow: none; -webkit-box-shadow: none;}
+.input-field input[type=password] {border-bottom: none; box-shadow: none; -webkit-box-shadow: none;}
+.input-field input[type=password]:focus {border-bottom: none; box-shadow: none; -webkit-box-shadow: none;}
+
 
 
 	
 	/*----------------Interface-------------*/
-.search_url .input-field input[type=search]{width:90%;}
+.search_url .input-field input[type=search]{padding-right: 30px;}
 .search_line{height: 40px; margin-bottom:0px;}
-.search_line nav,.search_line nav .nav-wrapper i{height:34px; line-height:34px; margin-top:3px; background-color:#b0bec5;}
-.search_button nav{box-shadow:none; background-color:#0d47a1;}
+.search_line nav,.search_line nav .nav-wrapper i{height:34px; line-height:34px; margin-top:3px; background-color:#b0bec5; border-radius: 5px;}
+.search_button nav{box-shadow:none; background-color:transparent;}
 .sites{height:100%;}
+.search_form.col.m11{padding-left: 0;}
+.search_url .mdi-navigation-close:before {float: right; margin-top: -42px;}
+.search_button ul li a{padding: 0 7px;}
 
 /*-----------------------------------Client Payment---------------------*/
-.table_history table {padding: 0 20px 20px; background-color: #78909c ;}
+.table_history table {padding: 0 20px 20px; background-color: #b2dfdb; border-radius: 0px;}
 .table_history table.striped tbody tr:nth-child(odd){background-color: #90a4ae;}
-.table_history table th, .table_history table td{text-align: center;}
+.table_history table th, .table_history table td{text-align: center; }
+.table_history table th{border-radius: 0;}
+.table_history table thead{background-color: #009688;}
 .sum .btn{margin: 20px 0 0 0;}
 .row.date{margin-bottom:0;}
 .card-content.claent_payment{padding: 10px 0 0 15px;}

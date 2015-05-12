@@ -70,4 +70,8 @@ router.get('/logout', checkAuth, function(req, res) {
     User.logout(req, res);
 });
 
+router.get('/scenaries', checkAuth, function(req, res) {
+    res.render('index/scenaries', { title: 'Scenaries', name: req.path});
+});
+
 module.exports = router;
