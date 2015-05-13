@@ -129,6 +129,8 @@ h1{font-size:48px;}
 .sum .btn{margin: 20px 0 0 0;}
 .row.date{margin-bottom:0;}
 .card-content.claent_payment{padding: 10px 0 0 15px;}
+.date label{position: absolute;}
+.date input[type=text]{padding-left: 35px;}
 
 /*----------------------------------Modal Window-----------*/
 .close_btn{margin-top: -20px; margin-right: -15px; color: #ef5350;}
@@ -141,3 +143,24 @@ h1{font-size:48px;}
     background-color: #f44336;
     opacity: 0.6;
 }
+
+/*-------------------Scenaries--------------------------*/
+.progress.progress_persent{height: 20px; border-radius: 0;}
+.table_scenary a{margin-right: 0; color: #0d47a1;}
+.delete_scenarie a{color: #ef5350;}
+
+
+.settings_window_modal input, .settings_window_modal .select-wrapper input, .table_scenaries textarea{border: 1px solid #546e7a; border-radius: 2px; height: 30px; box-shadow: none;}
+.settings_window_modal .input-field input[type=text].valid, .settings_window_modal .input-field input[type=text]{border-bottom:1px solid #546e7a; }
+.modal.settings_window_modal{max-height: 100%; width: 35%;}
+.table_scenaries textarea.materialize-textarea{padding: 0; margin: 0; min-height: 30px;}
+.price_bonuses{max-width: 120px;}
+.table_scenaries td{padding: 0;}
+.table_bonuses.col.s2:before{content: " / ";}
+.table_scenaries table.input-field{margin-top: 10px; height: 30px;}
+
+.table_scenaries .select-wrapper{margin-top: 10px;}
+.settings_window_modal .select-wrapper input.select-dropdown{line-height: 2rem;}
+.table_scenaries th{text-align: center;}
+.settings_window_modal .input-field{margin-top: 0;}
+.modal_select .select-wrapper{margin-top: 0px;}
