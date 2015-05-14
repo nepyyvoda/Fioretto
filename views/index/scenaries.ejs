@@ -13,18 +13,20 @@
                 </div>
                 <div class="card-action ">
                     <div class="row">
-                        List of target resources
-                        <a class="btn-floating btn-small waves-effect waves-light red right"><i class="mdi-content-add"></i></a>
+                        <p class="scenaries_head">List of target resources</p>
+                        <a href="http://193.110.162.230:3000/" class="waves-effect waves-circle waves-light btn-floating secondary-content tooltipped" data-position="bottom" data-delay="50" data-tooltip="Add">
+                            <i class="mdi-content-add"></i>
+                        </a>
                     </div>
 
                     <div class="row table_scenary">
 
-                        <table>
+                        <table class="centered bordered">
                             <thead>
                             <tr>
                                 <th data-field="id">Address of the target site</th>
                                 <th data-field="name">Script parameters</th>
-                                <th data-field="price">Start / Installation</th>
+                                <th data-field="price">Start / Stop</th>
                                 <th data-field="price">Progress</th>
                                 <th data-field="price">Delete</th>
                             </tr>
@@ -33,26 +35,34 @@
                             <tbody>
                             <tr>
                                 <td>adress1</td>
-                                <td><a href="#"> setting</a></td>
-                                <td>start</td>
-                                <td></td>
-                                <td><a href="#"> <i class="mdi-navigation-close"></i></a></td>
+                                    <td><a href="#settings_window" class="waves-effect waves-light btn modal-trigger">setting</a></td>
+                                    <td><a href="http://193.110.162.230:3000/" class="waves-effect waves-light btn">start</a></td>
+                                <td>
+                                    <div class="progress progress_persent">
+                                        <div class="determinate center-align" style="width: 70%">70%</div>
+                                    </div></td>
+                                <td class="delete_scenarie"><a href="#" > <i class="small mdi-navigation-close"></i></a></td>
                             </tr>
                             <tr>
                                 <td>adress1</td>
-                                <td>setting</td>
-                                <td>start</td>
-                                <td></td>
-                                <td></td>
+                                    <td><a href="#settings_window" class="waves-effect waves-light btn modal-trigger">setting</a></td>
+                                    <td><a href="http://193.110.162.230:3000/" class="waves-effect waves-light btn">start</a></td>
+                                <td>
+                                    <div class="progress progress_persent">
+                                        <div class="determinate center-align" style="width: 70%">70%</div>
+                                    </div></td>
+                                <td class="delete_scenarie"><a href="#" > <i class="small mdi-navigation-close"></i></a></td>
                             </tr>
                             <tr>
                                 <td>adress1</td>
-                                <td>setting</td>
-                                <td>start</td>
-                                <td></td>
-                                <td></td>
+                                    <td><a href="#settings_window" class="waves-effect waves-light btn modal-trigger">setting</a></td>
+                                    <td><a href="http://193.110.162.230:3000/" class="waves-effect waves-light btn">start</a></td>
+                                <td>
+                                    <div class="progress progress_persent">
+                                        <div class="determinate center-align" style="width: 70%">70%</div>
+                                    </div></td>
+                                <td class="delete_scenarie"><a href="#" > <i class="small mdi-navigation-close"></i></a></td>
                             </tr>
-
                             </tbody>
                         </table>
                 </div>
@@ -61,3 +71,125 @@
         </div>
     </div>
 </div>
+
+    <div id="settings_window" class="modal settings_window_modal">
+        <div class="modal-content ">
+            <h4>Window parameter input script</h4>
+            <div class="row">
+                <div class="col s4 m4">
+                    <h6>Internet resource</h6>
+                </div>
+                <div class="col s4 m8 input-field">
+                    <input value="wwww" id="first_name2" type="text" class="validate">
+                </div>
+            </div>
+            <div class="row modal_select">
+                <div class="col s4 m4">
+                    <h6>Scenarios visit</h6>
+                </div>
+                <div class="col s8 m8 input-field">
+                    <select>
+                        <option value="" disabled selected>Choose your option</option>
+                        <option value="1">Option 1</option>
+                        <option value="2">Option 2</option>
+                        <option value="3">Option 3</option>
+                    </select>
+                </div>
+                </div>
+            <div class="row">
+                <form action="#">
+                    <p>
+                        <input type="checkbox" id="test5" />
+                        <label for="test5">Select the sample script</label>
+                    </p>
+                </form>
+            </div>
+
+            <div class="row">
+                <div class="table_scenaries">
+                    <table>
+                        <thead>
+                        <tr>
+                            <th data-field="id">Number of visits</th>
+                            <th data-field="name">Country visits</th>
+                            <th data-field="price">price / bonuses</th>
+                        </tr>
+                        </thead>
+
+                        <tbody>
+                        <tr>
+                            <td>
+                                <div class="input-field col s12">
+                                    <textarea id="textarea1" class="materialize-textarea"></textarea>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="input-field col s12">
+                                    <select>
+                                        <option value="" disabled selected></option>
+                                        <option value="1">Option 1</option>
+                                        <option value="2">Option 2</option>
+                                        <option value="3">Option 3</option>
+                                    </select>
+                                </div>
+                            </td>
+                            <td class="price_bonuses">
+                                <div class="input-field col s12">
+                                    <textarea id="textarea1" class="materialize-textarea col s5 m5"></textarea>
+                                    <div class="col m1 s1 center">/</div>
+                                    <textarea id="textarea1" class="materialize-textarea table_bonuses col s5 m5"></textarea>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <div class="input-field col s12">
+                                    <textarea id="textarea1" class="materialize-textarea"></textarea>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="input-field col s12">
+                                    <select>
+                                        <option value="" disabled selected></option>
+                                        <option value="1">Option 1</option>
+                                        <option value="2">Option 2</option>
+                                        <option value="3">Option 3</option>
+                                    </select>
+                                </div>
+                            </td>
+                            <td class="price_bonuses">
+                                <div class="input-field col s12">
+                                    <textarea id="textarea1" class="materialize-textarea col s5 m5"></textarea>
+                                    <div class="col m1 s1 center">/</div>
+                                    <textarea id="textarea1" class="materialize-textarea table_bonuses col s5 m5"></textarea>
+                                </div>
+                            </td>
+                        </tr>
+
+                        </tbody>
+                    </table>
+
+                </div>
+            </div>
+            <div class="row">
+                <h6><a href="#"><i class="mdi-content-add-circle"></i> Add a country</a></h6>
+                <div class="col s4 m4">
+                    <h6>Payment scheme</h6>
+                </div>
+                <div class="col s8 m86 input-field modal_select">
+                    <select>
+                        <option value="" disabled selected>Choose your option</option>
+                        <option value="1">Option 1</option>
+                        <option value="2">Option 2</option>
+                        <option value="3">Option 3</option>
+                    </select>
+                </div>
+
+            </div>
+        </div>
+        <div class="modal-footer modal-footer-scenaries">
+            <a href="#!" class="waves-effect waves-light btn modal-action modal-close  red darken-1">Cansell</a>
+            <a href="#!" class="waves-effect waves-light btn modal-action modal-close">OK</a>
+
+        </div>
+    </div>
