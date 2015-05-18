@@ -85,4 +85,8 @@ router.get('/scenaries', checkAuth, function(req, res) {
     res.render('index/scenaries', { title: 'Scenaries', name: req.path});
 });
 
+router.get('/rental_numbers', checkAuth, function(req, res) {
+    res.render('index/rental_numbers', { title: 'Rental numbers', name: req.path});
+});
+
 module.exports = router;
