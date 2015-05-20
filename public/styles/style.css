@@ -202,3 +202,12 @@ h1{font-size:48px;}
 .filter_settings .row{margin-left: 0;}
 
 .filter_settings_table table{border: 1px solid black; border-radius: 5px;}
+.filter_settings_table table form p{text-align: center;}
+
+
+/*----------------------sms srnt----------------*/
+.sms_sent input, .sms_sent textarea{ border: 1px solid black; background-color: #FFFFFF; border-radius: 5px; height: 34px; margin: 0 10px 0 0;}
+.sms_sent textarea {min-height: 200px;}
+.sms_sent .input-field label.active{transform: none; color: #9e9e9e; font-size: 1rem; top: 0.6rem;}
+.sms_sent .input-field label{font-size: 2rem;}
+.sms_sent .row .col.s12{padding-left: 5px;}
