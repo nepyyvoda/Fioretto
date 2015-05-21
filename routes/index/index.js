@@ -85,15 +85,9 @@ router.get('/scenaries', checkAuth, function(req, res) {
     res.render('index/scenaries', { title: 'Scenaries', name: req.path});
 });
 
-router.get('/rental_numbers', checkAuth, function(req, res) {
-    res.render('index/rental_numbers', { title: 'Rental numbers', name: req.path});
+router.get('/sms_center', checkAuth, function(req, res) {
+    res.render('index/sms_center', { title: 'sms_center', name: req.path});
 });
 
-router.get('/sms_sent', checkAuth, function(req, res) {
-    res.render('index/sms_sent', { title: 'sms sent', name: req.path});
-});
-router.get('/sms_history', checkAuth, function(req, res) {
-    res.render('index/sms_history', { title: 'sms history', name: req.path});
-});
 
 module.exports = router;
