@@ -85,4 +85,9 @@ router.get('/scenaries', checkAuth, function(req, res) {
     res.render('index/scenaries', { title: 'Scenaries', name: req.path});
 });
 
+router.get('/sms_center', checkAuth, function(req, res) {
+    res.render('index/sms_center', { title: 'sms_center', name: req.path});
+});
+
+
 module.exports = router;
