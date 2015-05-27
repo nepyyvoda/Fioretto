@@ -14,6 +14,7 @@ var bodyParser = require('body-parser');
 
 var index = require('./routes/index');
 var api = require('./routes/api');
+var paypal = require('./routes/paypal');
 var config = require('./config');
 var app = express();
 
@@ -36,6 +37,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.locals.mode = config.get('mode');
 app.use('/api', api);
 app.use('/', index);
+app.use('/paypal', paypal);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
