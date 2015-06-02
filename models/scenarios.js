@@ -16,7 +16,7 @@ var allowedUpdateColumns = [
 ];
 
 function create(nameScenario, scriptScenario, URL_target, mode, resolution, userID, callback){
-    execute('INSERT INTO userscenarios (nameScenario, scriptScenario, URL_target, mode, resolution, userID) VALUES (?, ?, ?, ?)',
+    execute('INSERT INTO userscenarios (nameScenario, scriptScenario, URL_target, mode, resolution, userID) VALUES (?, ?, ?, ?, ?, ?)',
         [nameScenario, scriptScenario, URL_target, mode, resolution, userID],
         function(data) {
             callback(false, data);
