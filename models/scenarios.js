@@ -5,19 +5,19 @@ var execute = require('../db').execute;
 var formatter = require('./formatter/update');
 
 var allowedUpdateColumns = [
-    'name',
-    'url',
-    'iterations',
-    'status',
-    'events_chain',
+    'nameScenario',
+    'scriptScenario',
+    'URL_target',
+    'countTotal',
+    'deleted',
     'mode',
     'resolution',
     'userID'
 ];
 
-function create(name, url, iterations, events_chain, mode, resolution, userID){
-    execute('INSERT INTO nodes (name, url, iterations, events_chain, mode, resolution, userID) VALUES (?, ?, ?, ?)',
-        [name, url, iterations, events_chain, mode, resolution, userID],
+function create(nameScenario, scriptScenario, URL_target, mode, resolution, userID, callback){
+    execute('INSERT INTO userscenarios (nameScenario, scriptScenario, URL_target, mode, resolution, userID) VALUES (?, ?, ?, ?)',
+        [nameScenario, scriptScenario, URL_target, mode, resolution, userID],
         function(data) {
             callback(false, data);
         }
@@ -31,21 +31,21 @@ function update(id, data, callback){
     }
     var queryTemplate = formattedData.template || '';
     var queryData = formattedData.data || [];
-    execute('UPDATE scenarios SET ' + queryTemplate + ' WHERE `id` = ?', queryData, function(err, data){
+    execute('UPDATE userscenarios SET ' + queryTemplate + ' WHERE `id` = ?', queryData, function(err, data){
         if(data.length > 0){
             callback (false, data);
         } else {
-            callback (true, 'NODE_NOT_FOUND');
+            callback (true, 'SCENARIO_NOT_FOUND');
         }
     });
 }
 
 function remove(id, callback){
-    execute('UPDATE nodes SET deleted = 1 WHERE `id` = ?', [id], function(err, data){
+    execute('UPDATE userscenarios SET deleted = 1 WHERE `id` = ?', [id], function(err, data){
         if(data.length > 0){
             callback (false, data);
         } else {
-            callback (true, 'NODE_NOT_FOUND');
+            callback (true, 'SCENARIO_NOT_FOUND');
         }
     });
 }
