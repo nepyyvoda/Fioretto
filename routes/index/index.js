@@ -89,6 +89,10 @@ router.get('/sms_center', checkAuth, function(req, res) {
     res.render('index/sms_center', { title: 'sms_center', name: req.path});
 });
 
+router.get('/scenario/generator', checkAuth, function(req, res) {
+    res.render('scenario/generator', { title: 'Generator', name: req.path});
+});
+
 router.post('/vpn',function(req, res) {
 
     var http = require('http');
