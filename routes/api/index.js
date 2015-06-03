@@ -38,4 +38,9 @@ router.get('/user/:id', checkAuth, checkPermission, function(req, res) {
     User.get(req, res);
 });
 
+router.put('/user/:id', checkAuth, checkPermission, function(req, res) {
+    User.update(req, res);
+});
+
+
 module.exports = router;
