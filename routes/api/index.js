@@ -4,6 +4,7 @@ var jwt = require('jsonwebtoken');
 var response = require('../../response');
 
 var User = require('../../controllers/user');
+var Scenarios = require('../../controllers/scenarios');
 
 function checkAuth(req, res, next) {
     var token = req.cookies.sid;
@@ -36,6 +37,27 @@ router.post('/registration', function(req, res) {
 });
 router.get('/user/:id', checkAuth, checkPermission, function(req, res) {
     User.get(req, res);
+});
+
+router.get('/scenarios', checkAuth, function(req, res) {
+    //get user scenarios
+    Scenarios.getScenarios(req, res);
+});
+//todo check permissions
+router.get('/scenarios/:id', checkAuth, function(req, res) {
+    //get user scenario by id
+});
+
+router.post('/scenarios', checkAuth, function(req, res) {
+    //create scenario
+});
+
+router.put('/scenarios/:id', checkAuth, function(req, res) {
+    //update scenario
+});
+
+router.delete('/scenarios/:id', checkAuth, function(req, res) {
+    //remove scenario
 });
 
 module.exports = router;

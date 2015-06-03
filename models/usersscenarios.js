@@ -3,18 +3,56 @@
  */
 
 var execute = require('../db').execute;
+var formatter = require('./formatter/update');
 
-function create(userid, namescen, scriptscen, url, count){
-    execute('INSERT INTO usersscenarios (usersID, nameScenario, scriptScenario, URL_target, countTotal) VALUES (?, ?, ?, ?, ?)',
-        [userid, namescen, scriptscen, url, count],
-        function(data) {
+var allowedUpdateColumns = [
+    'nameScenario',
+    'scriptScenario',
+    'URL_target',
+    'countTotal',
+    'deleted',
+    'mode',
+    'resolution',
+    'usersID'
+];
+
+function create(nameScenario, scriptScenario, URL_target, mode, resolution, userID, callback){
+    execute('INSERT INTO usersscenarios (nameScenario, scriptScenario, URL_target, mode, resolution, usersID) VALUES (?, ?, ?, ?, ?, ?)',
+        [nameScenario, scriptScenario, URL_target, mode, resolution, userID],
+        function(err, data) {
             callback(false, data);
         }
     );
 }
 
-function update(id, parametr, value, callback){
-    execute('UPDATE usersscenarios SET ?? = ? WHERE `id` = ?', [parametr, value, id], function(err, data){
+function getUserScenarios(userID, callback){
+    console.log('EXECUTE');
+    execute('SELECT * FROM usersscenarios WHERE `usersID` = ?',
+        [userID],
+        function(err, data) {
+            console.log('DATA ARGUMENTS', arguments);
+            callback(false, data);
+        }
+    );
+}
+
+function getScenario(id, callback) {
+    execute('SELECT * FROM usersscenarios WHERE `id` = ?',
+        [id],
+        function(err, data) {
+            callback(false, data);
+        }
+    );
+}
+
+function update(id, data, callback){
+    var formattedData = formatter(id, data, allowedUpdateColumns);
+    if(!formattedData) {
+        callback (true, 'ILLEGAL_COLUMNS');
+    }
+    var queryTemplate = formattedData.template || '';
+    var queryData = formattedData.data || [];
+    execute('UPDATE usersscenarios SET ' + queryTemplate + ' WHERE `id` = ?', queryData, function(err, data){
         if(data.length > 0){
             callback (false, data);
         } else {
@@ -28,7 +66,7 @@ function remove(id, callback){
         if(data.length > 0){
             callback (false, data);
         } else {
-            callback (true, 'SCENARIO_NOT_FOUND')
+            callback (true, 'SCENARIO_NOT_FOUND');
         }
     });
 }
@@ -36,3 +74,5 @@ function remove(id, callback){
 module.exports.create = create;
 module.exports.update = update;
 module.exports.remove = remove;
+module.exports.getUserScenarios = getUserScenarios;
+module.exports.getScenario = getScenario;

@@ -14,7 +14,7 @@ var allowedUpdateColumns = [
 function create(name, ip, port, cores, callback){
     execute('INSERT INTO nodes (name, ip, port, threads) VALUES (?, ?, ?, ?)',
         [name, ip, port, cores],
-        function(data) {
+        function(err, data) {
             callback(false, data);
         }
     );

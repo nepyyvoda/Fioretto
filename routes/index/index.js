@@ -158,9 +158,8 @@ router.post('/vpn',function(req, res) {
         vpnReq.on('error', function(err) {
             callback(err);
         });
-    }   
+    };
     var url = new URL(req.body.url);
-    console.log()
     requestWithEncoding(getOptions(url.protocol, url.host), function(err, data, headers) {
         res.end(replaceAllRelByAbs(data,url.href));
     })
