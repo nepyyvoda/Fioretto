@@ -21,7 +21,9 @@ $('.dropdown-button').dropdown({
      
 
 window.onload=function() {
-//document.getElementById("ifr").style.height=window.innerHeight+"px";
+    if(document.getElementById("ifr")) {
+        document.getElementById("ifr").style.height=window.innerHeight+"px";
+    }
 }
 
 $('.datepicker').pickadate({
@@ -32,5 +34,9 @@ $('.datepicker').pickadate({
 $(document).ready(function(){
     // the "href" attribute of .modal-trigger must specify the modal ID that wants to be triggered
     $('.modal-trigger').leanModal();
+});
+
+$(document).ready(function() {
+    $('select').material_select();
 });
 

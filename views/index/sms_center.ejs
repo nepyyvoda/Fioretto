@@ -1,0 +1,261 @@
+<div class="container">
+    <div class="row">
+        <div class="col s12 m12">
+            <div class="card card-number blue-grey darken-1">
+                <div class="card-content claent_payment white-text">
+                    <ul class="tabs">
+                        <li class="tab col s3"><a class="active" href="#arenda"><i class="mdi-device-sd-storage"> </i>Rental numbers</a></li>
+                        <li class="tab col s3"><a  href="#send_sms"><i class="mdi-communication-email"> </i>Send sms</a></li>
+                        <li class="tab col s3"><a href="#sms_history"><i class="mdi-communication-comment"> </i>SMS history</a></li>
+                    </ul>
+                </div>
+
+
+                    <div id="arenda">
+                        <div class="card-action ">
+                            <div class="row">
+                                <div class="filter_search right">
+                                    <form>
+                                        <div class="input-field">
+                                            <input id="search" type="search" required>
+                                            <label for="search"><i class="mdi-action-search"></i></label>
+                                            <i class="mdi-navigation-close"></i>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                            <h5>Filter settings</h5>
+                            <div class="col s12 m4 l3 filter_settings_left_block">
+                                <div class="filter_settings">
+                                    <h6>Country</h6>
+                                    <select>
+                                        <option value="" disabled selected></option>
+                                        <option value="1">Ukraine</option>
+                                        <option value="2">USA</option>
+                                        <option value="3">Italy</option>
+                                    </select>
+                                    <h6>Rental period</h6>
+                                    <div class="row">
+                                        <div class="filter_date_text col s6 m3 l2">from </div> <div class="filter_date col s6 m3 l4"><input type="date" class="datepicker"></div>
+                                        <div class="filter_date_text col s5 m2 l1">to </div> <div class="filter_date filter_date_right col s7 m3 l4"><input type="date" class="datepicker"></div>
+                                    </div>
+                                    <h6>Tarif</h6>
+                                    <div class="row">
+                                        <div class="filter_date_text col s6 m3 l2">from </div> <div class="filter_date col s6 m3 l4"><input type="text" size="40"></div>
+                                        <div class="filter_date_text col s5 m2 l1">to </div> <div class="filter_date filter_date_right col s7 m3 l4"><input type="text" size="40"></div>
+                                    </div>
+                                    <h6>Rent price</h6>
+                                    <div class="row">
+                                        <div class="filter_date_text col s6 m3 l2">from </div> <div class="filter_date col s6 m3 l4"><input type="text" size="40"></div>
+                                        <div class="filter_date_text col s5 m2 l1">to</div>  <div class="filter_date filter_date_right col s7 m3 l4"><input type="text" size="40"></div>
+                                    </div>
+                                    <h6>Provider type</h6>
+                                    <select>
+                                        <option value="" disabled selected></option>
+                                        <option value="1">first</option>
+                                        <option value="2">second</option>
+                                        <option value="3">third</option>
+                                    </select>
+                                    <div class="row center filter_button">
+                                        <a class="waves-effect waves-light btn">OK</a>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col s12 m8 l9 filter_settings_table">
+                                <table class="centered">
+                                    <thead>
+                                    <tr>
+                                        <th data-field="id">#</th>
+                                        <th data-field="name">Number</th>
+                                        <th data-field="price">Rent termin</th>
+                                        <th data-field="price">Tariff</th>
+                                        <th data-field="price"> Provider type</th>
+                                        <th data-field="price"> Web Service URL</th>
+                                        <th data-field="price"> Rental price</th>
+                                        <th data-field="price"> Rental</th>
+                                    </tr>
+                                    </thead>
+
+                                    <tbody>
+                                    <tr>
+                                        <td>1</td>
+                                        <td>+123456789</td>
+                                        <td>1</td>
+                                        <td>12</td>
+                                        <td>Receive</td>
+                                        <td>www.sendsms.ru</td>
+                                        <td>12</td>
+                                        <td>
+                                            <form action="#">
+                                                <p>
+                                                    <input type="checkbox" class="filled-in" id="filled-in-box" />
+                                                    <label for="filled-in-box"></label>
+                                                </p>
+                                            </form>
+                                        </td>
+
+                                    </tr>
+                                    <tr>
+                                        <td>1</td>
+                                        <td>+123456789</td>
+                                        <td>1</td>
+                                        <td>12</td>
+                                        <td>Receive</td>
+                                        <td>www.sendsms.ru</td>
+                                        <td>12</td>
+                                        <td>
+                                            <form action="#">
+                                                <p>
+                                                    <input type="checkbox" class="filled-in" id="filled-in-box2"  />
+                                                    <label for="filled-in-box2"></label>
+                                                </p>
+                                            </form>
+                                        </td>
+
+                                    </tr>
+                                    <tr>
+                                        <td>1</td>
+                                        <td>+123456789</td>
+                                        <td>1</td>
+                                        <td>12</td>
+                                        <td>Receive</td>
+                                        <td>www.sendsms.ru</td>
+                                        <td>12</td>
+                                        <td>
+                                            <form action="#">
+                                                <p>
+                                                    <input type="checkbox" class="filled-in" id="filled-in-box3"  />
+                                                    <label for="filled-in-box3"></label>
+                                                </p>
+                                            </form>
+                                        </td>
+
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div id="send_sms">
+                        <div class="card-action sms_sent filter_settings">
+                            <div class="row">
+                                <div class="col s5 m4">
+                                    <h6>Recipient's number</h6>
+                                    <input type="text" size="40">
+                                </div>
+                                <div class="col s4 m4 offset-m4">
+                                    <h6>sender number</h6>
+                                    <select>
+                                        <option value="" disabled selected></option>
+                                        <option value="1">1</option>
+                                        <option value="2">2</option>
+                                        <option value="3">3</option>
+                                    </select>
+                                </div>
+
+                                <form class="col s12">
+                                    <div class="row">
+                                        <div class="input-field col s12">
+                                            <textarea id="textarea1" class="materialize-textarea"></textarea>
+                                            <label for="textarea1">Text of sms</label>
+                                        </div>
+                                    </div>
+                                </form>
+
+                                <div class="col s5 m4">
+                                    <form action="#">
+                                        <p>
+                                            <input name="group1" type="radio" id="test1" />
+                                            <label for="test1">Paid with</label>
+                                        </p>
+                                        <select>
+                                            <option value="" disabled selected></option>
+                                            <option value="Приват24">1</option>
+                                            <option value="2">2</option>
+                                            <option value="3">3</option>
+                                        </select>
+                                        <p>
+                                            <input name="group1" type="radio" id="test1" />
+                                            <label for="test1">Paid with bonuses</label>
+                                        </p>
+                                    </form>
+                                </div>
+                                <div class="col s4 m4 offset-m4">
+                                    <h6>Payment amount: 128 grn</h6>
+                                    <h6>100 bonuses</h6>
+                                </div>
+                            </div>
+                            <div class="row right">
+                                <a class="waves-effect waves-light btn-large">Send sms</a>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <div id="sms_history">
+                        <div class="card-action">
+                            <div class="row">
+                                <form action="#">
+                                    <p>
+                                        <input name="group1" type="radio" id="test1" />
+                                        <label for="test1">Incoming</label>
+                                        <input name="group1" type="radio" id="test1" />
+                                        <label for="test1">Outcoming</label>
+                                        <input name="group1" type="radio" id="test1" />
+                                        <label for="test1">All</label>
+                                    </p>
+                                </form>
+                            </div>
+
+                            <div class="row">
+
+                                <table class="centered">
+                                    <thead>
+                                    <tr>
+                                        <th data-field="name">Number</th>
+                                        <th data-field="price">Type</th>
+                                        <th data-field="price">Status</th>
+                                        <th data-field="price"> Date</th>
+                                        <th data-field="price"> Price</th>
+                                    </tr>
+                                    </thead>
+
+                                    <tbody>
+                                    <tr>
+                                        <td>+123456789</td>
+                                        <td>Incoming</td>
+                                        <td>Delivered</td>
+                                        <td>12.03.2015</td>
+                                        <td>12</td>
+
+                                    </tr>
+                                    <tr>
+                                        <td>+123456789</td>
+                                        <td>Incoming</td>
+                                        <td>Delivered</td>
+                                        <td>12.03.2015</td>
+                                        <td>12</td>
+
+                                    </tr>
+                                    <tr>
+                                        <td>+123456789</td>
+                                        <td>Incoming</td>
+                                        <td>Delivered</td>
+                                        <td>12.03.2015</td>
+                                        <td>12</td>
+
+                                    </tr>
+                                    </tbody>
+                                </table>
+
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+        </div>
+    </div>
+</div>

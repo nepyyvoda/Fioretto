@@ -1,5 +1,7 @@
+html{height: 100%}
 body{
 	background-color:#b2dfdb ;
+	height: 100%;
 }
 h1{font-size:48px;}
 .paypal, .webmoney, .mastercard{
@@ -30,6 +32,7 @@ h1{font-size:48px;}
 	padding:30px 0;
 }
 .btn_count{height:47px; line-height:47px;}
+.language i.right{margin-left: 0;}
 
 /*------------------Nav-bar---------------------------------------*/
 
@@ -44,7 +47,7 @@ h1{font-size:48px;}
   font-weight: 400;
   text-align: left;
 }
-
+.profile_balance i.small{position: absolute;}
 /*.section-title:before {
   content: "";
   position: absolute;
@@ -62,9 +65,7 @@ h1{font-size:48px;}
 .mdi-hardware-keyboard-alt:before {
   content: "\e7b3";
 }
-/*.change_pass a{
-	right:52px !important;
-}*/
+
 .collection.profile_info .collection-item.avatar{
 	padding-left:20px;
 	height:60px;
@@ -75,14 +76,14 @@ h1{font-size:48px;}
 
 .profile_balance, .count, .curency{color:#0d47a1;}
 .profile_info .input-field label{
-	color: #b0bec5;
+	color: #546e7a;
 	left: 0;
 	top:0;
 }
+
 .profile_info .input-field input[type=text], input[type=password]{
 	height:20px;
-	width:80%;
-	border-bottom-color:#b3e5fc;
+	margin-bottom: 0px;
 }
 .profile_info .input-field input[type=text]:focus+label, input[type=password]:focus+label {color:#0d47a1;}
 .profile_info .input_pass.input-field label{top:1px;}
@@ -94,27 +95,43 @@ h1{font-size:48px;}
 	-ms-transform:translateY(-100%);
 	-o-transform:translateY(-100%);
 }
-.profile_info .input-field  input[type=password].valid{border-bottom-color:#0d47a1;}
-.profile_info .input-field input[type=text].valid{border-bottom-color:#0d47a1;}
+.profile_info .input-field  input[type=password].valid{border-bottom:none; box-shadow: none; -webkit-box-shadow: none;}
+.profile_info .input-field input[type=text].valid{border-bottom:none; box-shadow: none; -webkit-box-shadow: none;}
 .profile_info a, .links_profile a{color:#01579b;}
 .profile_info a:hover, .links_profile a:hover {color:#e0f2f1;}
+.profile_info {padding: 10px;}
+.input-field input {color: #004d40;}
+.profile_info li {border: 1px solid #FFFFFF; border-radius: 5px; padding: 5px 10px; margin: 10px 0; background-color: #e0f2f1;}
+.input-field input[type=text]{border-bottom: none; box-shadow: none; -webkit-box-shadow: none;}
+.input-field input[type=text]:focus {border-bottom: none; box-shadow: none; -webkit-box-shadow: none;}
+.input-field input[type=password] {border-bottom: none; box-shadow: none; -webkit-box-shadow: none;}
+.input-field input[type=password]:focus {border-bottom: none; box-shadow: none; -webkit-box-shadow: none;}
+
 
 
 	
 	/*----------------Interface-------------*/
-.search_url .input-field input[type=search]{width:90%;}
+.search_url .input-field input[type=search]{padding-right: 30px;}
 .search_line{height: 40px; margin-bottom:0px;}
-.search_line nav,.search_line nav .nav-wrapper i{height:34px; line-height:34px; margin-top:3px; background-color:#b0bec5;}
-.search_button nav{box-shadow:none; background-color:#0d47a1;}
+.search_line nav,.search_line nav .nav-wrapper i{height:34px; line-height:34px; margin-top:3px; background-color:#b0bec5; border-radius: 5px;}
+.search_button nav{box-shadow:none; background-color:transparent;}
 .sites{height:100%;}
+.search_form.col.m11{padding-left: 0;}
+.search_url .mdi-navigation-close:before {float: right; margin-top: -42px;}
+.search_button ul li a{padding: 0 7px;}
 
 /*-----------------------------------Client Payment---------------------*/
-.table_history table {padding: 0 20px 20px; background-color: #78909c ;}
+.table_history table {padding: 0 20px 20px; background-color: #b2dfdb; border-radius: 0px;}
 .table_history table.striped tbody tr:nth-child(odd){background-color: #90a4ae;}
-.table_history table th, .table_history table td{text-align: center;}
+.table_history table th, .table_history table td{text-align: center; }
+.table_history table th{border-radius: 0;}
+.table_history table thead{background-color: #009688;}
 .sum .btn{margin: 20px 0 0 0;}
 .row.date{margin-bottom:0;}
 .card-content.claent_payment{padding: 10px 0 0 15px;}
+.date label{position: absolute; right: 10px;}
+/*.date input[type=text]{padding-left: 35px;}*/
+.date .col.m2.s6{position: relative;}
 
 /*----------------------------------Modal Window-----------*/
 .close_btn{margin-top: -20px; margin-right: -15px; color: #ef5350;}
@@ -127,3 +144,79 @@ h1{font-size:48px;}
     background-color: #f44336;
     opacity: 0.6;
 }
+
+/*-------------------Scenaries--------------------------*/
+.progress.progress_persent{height: 20px; border-radius: 0;}
+.table_scenary a{margin-right: 0; color: #0d47a1;}
+.delete_scenarie a{color: #ef5350;}
+
+
+.settings_window_modal input, .settings_window_modal .select-wrapper input, .table_scenaries textarea{border: 1px solid #546e7a; border-radius: 2px; height: 30px; box-shadow: none;}
+.settings_window_modal .input-field input[type=text].valid, .settings_window_modal .input-field input[type=text]{border-bottom:1px solid #546e7a; }
+.modal.settings_window_modal{max-height: 100%; width: 35%;}
+@media only screen and (max-width: 992px){
+	.modal.settings_window_modal {width:80%;}
+}
+.table_scenaries textarea.materialize-textarea{padding: 0; margin: 0; min-height: 30px;}
+.price_bonuses{max-width: 130px;}
+@-moz-document url-prefix() {
+	.price_bonuses{max-width: 180px;}
+}
+@media screen and (-ms-high-contrast: active), (-ms-high-contrast: none) {
+	.price_bonuses{max-width: 180px;}
+}
+.table_scenaries td{padding: 0;}
+.table_scenary table{background-color: #78909c;}
+.table_scenary table td{padding: 10px 5px;}
+.table_scenary table .btn{margin-bottom: 0px;}
+
+.table_scenaries table.input-field{margin-top: 10px; height: 30px;}
+
+.table_scenaries .select-wrapper{margin-top: 10px;}
+.settings_window_modal .select-wrapper input.select-dropdown{line-height: 2rem;}
+.table_scenaries th{text-align: center;}
+.settings_window_modal .input-field{margin-top: 0;}
+.modal_select .select-wrapper{margin-top: 0px;}
+.scenaries_head{font-size: 20px; color: #FFFFFF; display: block; float: left; margin-left: 30px;}
+.modal .modal-footer.modal-footer-scenaries .btn{margin-right: 10px;}
+
+/*----------------------------Rental Numbers----------------*/
+.card-number {padding-bottom: 50px;}
+.filter_search form{width:20rem; position: relative;}
+.filter_search .input-field{height: 34px; margin: 0;}
+.filter_search .input-field input{height: 100%; border: none; padding-left: 30px; width: 16rem;}
+.filter_search .input-field i{height: 34px; line-height: 34px;}
+.filter_search .mdi-navigation-close:before{float: right;}
+.filter_search{border: 1px solid black; background-color: #FFFFFF; border-radius: 5px; height: 34px; margin: 0 10px 0 0;}
+.filter_search .input-field label{top:0; left: 10px;}
+.filter_search .input-field label.active{transform: none;  -webkit-transform: none;}
+.filter_search .input-field input[type=search]:focus{border: none; box-shadow: none}
+
+.filter_settings_left_block{border: 1px solid black; border-radius: 5px;}
+.filter_settings .select-wrapper{border: 1px solid black; background-color: #FFFFFF; border-radius: 5px; margin-bottom: 0px; margin-top: 0;}
+.filter_settings .select-wrapper input{margin-bottom: 0px; border: none; height: 35px; line-height: 35px; padding-left: 5px;}
+.filter_settings .filter_date{background-color: #FFFFFF; border-radius: 5px; margin-bottom: 0px; float: left; height: 35px; margin: 0;}
+.filter_date_text{float: left; line-height: 35px}
+.filter_settings .filter_date input[type=text]{border-bottom: none; height: 35px;}
+.filter_settings input[type=text]:focus{border: none; box-shadow: none; -webkit-box-shadow: none;}
+.filter_button{margin-top: 20px;}
+.filter_settings .row{margin-left: 0;}
+.filter_date_right.col.l4{margin-left: 5px;}
+
+.filter_settings_table table{border: 1px solid black; border-radius: 5px;}
+.filter_settings_table table form p{text-align: center;}
+.claent_payment .tabs li.tab, .claent_payment .tabs{background-color: transparent;  }
+.claent_payment .tabs li.tab a{color:#26a69a;}
+.claent_payment .tabs li.tab .active{color: #FFFFFF; font-size: 18px;}
+.claent_payment .tabs .indicator{background-color: #FFFFFF;}
+.claent_payment .tabs{margin: 0 -10px;}
+
+
+/*----------------------sms srnt----------------*/
+.sms_sent input, .sms_sent textarea{ border: 1px solid black; background-color: #FFFFFF; border-radius: 5px; height: 34px; margin: 0 10px 0 0;}
+.sms_sent textarea {min-height: 200px;}
+.sms_sent .input-field label.active{transform: none; color: #9e9e9e; font-size: 1rem; top: 0.6rem;}
+.sms_sent .input-field label{font-size: 2rem;}
+.sms_sent .row .col.s12{padding-left: 5px;}
+.picker__select--month, .picker__select--year{padding: 0;}
+.filter_date.col{padding: 0;}

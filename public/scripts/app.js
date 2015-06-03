@@ -8,7 +8,8 @@ $(document).ready(function() {
             if(res.status === 0) {
                 var userDeposit = res.data.balance/100;
                 $('.balance span').text(userDeposit.toFixed(2));
-                $('#user-login').text(res.data.login);
+                $('.profile_name').text(res.data.login);
+                $('#user-email').val(res.data.email);
             }
             //email
         });

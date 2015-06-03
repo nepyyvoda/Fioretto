@@ -2,6 +2,20 @@
  * Created by anton.nepyyvoda on 15.04.2015.
  */
 var execute = require('../db').execute;
+var formatter = require('./formatter/update');
+
+var allowedUpdateColumns = [
+    'usersRoleID',
+    'serviceAvailable',
+    'balance',
+    'bonus',
+    'password',
+    'email',
+    'dateChanged',
+    'dateLast',
+    'active',
+    'deleted'
+];
 
 function register(login, email, password, callback) {
     execute('SELECT * FROM users WHERE `email` = ? OR `login` = ?', [email, login], function(err, data) {
@@ -16,7 +30,9 @@ function register(login, email, password, callback) {
 }
 
 function login(login, password, callback) {
+    console.log(login, password);
     execute('SELECT * FROM users WHERE `email` = ? OR `login` = ? AND `password` = ? AND `active` = 1', [login, login, password], function(err, data) {
+        console.log(arguments);
         var queryData = data || [];
         if(queryData.length > 0) {
             callback(false, queryData);
@@ -58,8 +74,14 @@ function remove(id, callback){
     });
 }
 
-function update(id, parametr, value, callback){
-    execute('UPDATE users SET ?? = ? WHERE `id` = ?', [parametr, value, id], function(err, data){
+function update(id, data, callback){
+    var formattedData = formatter(id, data, allowedUpdateColumns);
+    if(!formattedData) {
+        callback (true, 'ILLEGAL_COLUMNS');
+    }
+    var queryTemplate = formattedData.template || '';
+    var queryData = formattedData.data || [];
+    execute('UPDATE users SET ' + queryTemplate + ' WHERE `id` = ?', queryData, function(err, data){
         if(data.length > 0){
             callback (false, data);
         } else {
