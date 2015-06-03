@@ -35,7 +35,13 @@ function changeMode(req, res) {
 }
 
 function getScenario(req, res) {
-    ScenariosModel.getScenario()
+    ScenariosModel.getScenario(req.params.id, function(err, data) {
+        if(!err) {
+            res.send(response('SUCCESS', data[0]));
+        } else {
+            res.send(response('INTERNAL_SERVER_ERROR', data));
+        }
+    });
 }
 
 function getScenarios(req, res) {

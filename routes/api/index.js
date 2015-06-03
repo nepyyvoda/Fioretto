@@ -46,6 +46,7 @@ router.get('/scenarios', checkAuth, function(req, res) {
 //todo check permissions
 router.get('/scenarios/:id', checkAuth, function(req, res) {
     //get user scenario by id
+    Scenarios.getScenario(req, res);
 });
 
 router.post('/scenarios', checkAuth, function(req, res) {
