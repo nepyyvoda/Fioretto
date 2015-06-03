@@ -89,5 +89,81 @@ router.get('/sms_center', checkAuth, function(req, res) {
     res.render('index/sms_center', { title: 'sms_center', name: req.path});
 });
 
+router.post('/vpn',function(req, res) {
+
+    var http = require('http');
+    var https = require('https');
+    var request = require('request');
+    var URL = require('url-parse');
+    var zlib = require('zlib');
+
+
+    var getOptions = function(protocol, host){
+
+        var url = protocol + "//" + host;
+        var proxyHost = "127.0.0.1";
+        var proxyPort = 9050;
+        var Agent;
+
+        if (protocol == "http:") {
+            Agent = require('socks5-http-client/lib/Agent');
+        } else {
+            Agent = require('socks5-https-client/lib/Agent');
+        };
+        var headers = {
+            "accept-charset" : "utf-8;q=0.7,*;q=0.3",
+            "accept-language" : "en-US,en;q=0.8",
+            "accept" : "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8",
+            "user-agent" : "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_6_8) AppleWebKit/537.13+ (KHTML, like Gecko) Version/5.1.7 Safari/534.57.2",
+            "accept-encoding" : "gzip,deflate",
+        };
+
+        var options = {
+            url: url,
+            agentClass: Agent,
+            headers: headers,
+            agentOptions: {
+                socksPort: 9050 
+            }
+        };
+        return options;
+    }
+
+    var requestWithEncoding = function(options, callback) {
+        var vpnReq = request.get(options);
+
+        vpnReq.on('response', function(vpnRes) {
+            var chunks = [];
+            vpnRes.on('data', function(chunk) {
+                chunks.push(chunk);
+            });
+
+            vpnRes.on('end', function() {
+                var buffer = Buffer.concat(chunks);
+                var headers = vpnRes.headers;
+                var encoding = vpnRes.headers['content-encoding'];
+                if (encoding == 'gzip') {
+                    zlib.gunzip(buffer, function(err, decoded) {
+                        callback(err, decoded && decoded.toString(),headers);
+                    });
+                } else if (encoding == 'deflate') {
+                    zlib.inflate(buffer, function(err, decoded) {
+                        callback(err, decoded && decoded.toString(),headers);
+                    })
+                } else {
+                    callback(null, buffer.toString(),headers);
+                }
+            });
+        });
+        vpnReq.on('error', function(err) {
+            callback(err);
+        });
+    }   
+    var url = new URL(req.body.url);
+    console.log()
+    requestWithEncoding(getOptions(url.protocol, url.host), function(err, data, headers) {
+        res.end(replaceAllRelByAbs(data,url.href));
+    })
+});
 
 module.exports = router;
