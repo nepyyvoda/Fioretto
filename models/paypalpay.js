@@ -4,7 +4,7 @@
 
 var execute = require('../db').execute;
 var formatter = require('./formatter/update');
-
+var log = require('../logger')(module);
 
 /*    var Payment = new PaymentModel();
  Payment.user = user_data_from_ipn.user;
@@ -34,7 +34,9 @@ function update(id, data, callback){
     }
     var queryTemplate = formattedData.template || '';
     var queryData = formattedData.data || [];
+
     execute('UPDATE paypalpay SET ' + queryTemplate + ' WHERE `id` = ?', queryData, function(err, data){
+        log.warn("DATA : ", data);
         if(data.length > 0){
             callback (false, data);
         } else {

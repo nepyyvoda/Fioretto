@@ -112,7 +112,7 @@ router.post('/ipn', function(req, res){
                     // IPN invalid, log for manual investigation
                     console.log('Invalid IPN!');
                     console.log('\n\n');
-                    Payment.update(id, 'error', function(status, data){
+                    Payment.update(id, {status:"error"}, function(status, data){
                         if (status)
                             console.log(data);
                     });
