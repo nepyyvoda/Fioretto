@@ -37,7 +37,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.locals.mode = config.get('mode');
 app.use('/api', api);
 app.use('/', index);
-app.use('/paypal', paypal);
+app.use('/pay', paypal);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
