@@ -5,6 +5,7 @@ var express = require('express');
 var router = express.Router();
 var config = require('../../config');
 
+var Paypal = require('../../controllers/paypal');
 var User = require('../../controllers/user');
 
 var jwt = require('jsonwebtoken');
@@ -69,5 +70,14 @@ router.get('/registration/:hash', function(req, res) {
 router.get('/logout', checkAuth, function(req, res) {
     User.logout(req, res);
 });
+
+router.get('/pay', checkAuth, function(req, res){
+    res.render('index/pay', { title: 'Paypal', name: req.path});
+});
+
+router.post('/pay/ipn', checkAuth, function(req, res){
+    Paypal.ipn_processor(req, res);
+});
+
 
 module.exports = router;

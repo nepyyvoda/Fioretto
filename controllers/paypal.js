@@ -6,6 +6,7 @@ var querystring = require('querystring');
 var request = require('request');
 var Payment = require('../models/paypalpay');
 var log = require('../logger')(module);
+var UserModel = require('../models/user');
 
 function ipn_processor(req, res){
 
@@ -14,12 +15,12 @@ function ipn_processor(req, res){
     log.info('\n\n');
     var data_body = req.body;
     var user_data_from_ipn = JSON.parse(data_body['transaction_subject']);
-
+    log.info('user = ', user_data_from_ipn);
     // STEP 1: read POST data
     req.body = req.body || {};
     res.status(200).send('OK');
 
-    Payment.create(user_data_from_ipn.user, data_body['mc_gross'],new Date(data_body['payment_date']).getTime(),data_body['ipn_track_id'], data_body['txn_id'], function(status, id){
+    Payment.create(user_data_from_ipn.userId, data_body['mc_gross'],new Date(data_body['payment_date']).getTime(),data_body['ipn_track_id'], data_body['txn_id'], function(status, id){
         // read the IPN message sent from PayPal and prepend 'cmd=_notify-validate'
         var postreq = 'cmd=_notify-validate';
         log.info("ID = ", id);
@@ -84,7 +85,22 @@ function ipn_processor(req, res){
 
                     Payment.update(id, {status:"complete"}, function(status, data){
                         if (!status) {
-                            log.info('Success Complete', data);
+                            log.info('Success Complete Paypal pay update', data);
+                            UserModel.get(user_data_from_ipn.userId, function(statusErr, data){
+                                if(!statusErr){
+                                    console.log("USERMODEL :", data);
+                                    var newBalance = data[0].balance + payment_amount;
+                                    console.log("USERMODEL :", user_data_from_ipn.userId, req.body);
+                                    UserModel.update(user_data_from_ipn.userId, {balance: newBalance}, function(statusErr, data){
+                                        if(!statusErr){
+                                            log.info("USER UPDATE SUCCESS! ", data);
+                                        }else{
+                                            log.warn("USER NOT UPDATE SUCCESS! ", data);
+                                        }
+                                    });
+                                }
+                            });
+
                         }else
                             log.info(data);
                     });
