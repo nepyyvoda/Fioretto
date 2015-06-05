@@ -38,7 +38,7 @@ function update(id, data, callback){
     //log.info("PARAMS QUERY: " +  queryTemplate + " " + queryData);
 
     execute('UPDATE paypalpay SET ' + queryTemplate + ' WHERE `id` = ?', queryData, function(err, data){
-        log.info("DATA : ", data.changedRows);
+        log.info("DATA : ", data);
         if(data.changedRows > 0){
             callback (false, data);
         } else {
