@@ -14,7 +14,7 @@ function ipn_processor(req, res){
     log.info(req.body);
     log.info('\n\n');
     var data_body = req.body;
-    var user_data_from_ipn = JSON.parse(data_body['transaction_subject']);
+    var user_data_from_ipn = JSON.parse(data_body['custom']);
     log.info('user = ', user_data_from_ipn);
     // STEP 1: read POST data
     req.body = req.body || {};
