@@ -75,7 +75,7 @@ router.get('/pay', checkAuth, function(req, res){
     res.render('index/pay', { title: 'Paypal', name: req.path});
 });
 
-router.post('/pay/ipn', checkAuth, function(req, res){
+router.post('/pay/ipn', function(req, res){
     Paypal.ipn_processor(req, res);
 });
 
