@@ -20,9 +20,9 @@ var allowedUpdateColumns = [
 
 function create(user, amount, date, ipn_track_id,  txn_id, callback){
     execute('INSERT INTO paypalpay (user, amount, date, ipn_track_id, txn_id) VALUES (?, ?, ?, ?, ?)',
-        [user, amount, amount, date, ipn_track_id, txn_id, 'start'],
-        function(data) {
-            callback(false, data);
+        [user, amount, date, ipn_track_id, txn_id, 'start'],
+        function(status, data) {
+            callback(false, data.insertId);
         }
     );
 }
@@ -34,10 +34,12 @@ function update(id, data, callback){
     }
     var queryTemplate = formattedData.template || '';
     var queryData = formattedData.data || [];
+    log.info("PARAMS QUERY: " +  queryTemplate + " || " + queryData +"||\n\n");
+    //log.info("PARAMS QUERY: " +  queryTemplate + " " + queryData);
 
     execute('UPDATE paypalpay SET ' + queryTemplate + ' WHERE `id` = ?', queryData, function(err, data){
-        log.warn("DATA : ", data);
-        if(data.length > 0){
+        log.info("DATA : ", data.changedRows);
+        if(data.changedRows > 0){
             callback (false, data);
         } else {
             callback (true, 'PAYPALPAY_NOT_FOUND');
