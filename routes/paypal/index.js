@@ -24,6 +24,7 @@ router.get('/', function(req, res){
 });
 
 router.post('/ipn', function(req, res){
+    log.info("Enter to controller");
     Paypal.ipn_processor(req, res);
 });
 
