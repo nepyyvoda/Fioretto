@@ -11,7 +11,7 @@ $(document).ready(function() {
                 amount=0;
             console.log('DATA', $("input[name='amount']"), amount, $.cookie("userId"));
             $("input[name='amount']").val(amount);
-            $("input[name='custom']").val(JSON.stringify({user: $.cookie("userId")}));
+            $("input[name='custom']").val(JSON.stringify({userId: $.cookie("userId")}));
             $('#p_amount').html('Amount is = ' + amount);
 
         });
