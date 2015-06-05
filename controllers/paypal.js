@@ -9,9 +9,9 @@ var log = require('../logger')(module);
 
 function ipn_processor(req, res){
 
-    log.infi('Received POST /');
-    log.infi(req.body);
-    log.infi('\n\n');
+    log.info('Received POST /');
+    log.info(req.body);
+    log.info('\n\n');
     var data_body = req.body;
     var user_data_from_ipn = JSON.parse(data_body['transaction_subject']);
 
@@ -22,7 +22,7 @@ function ipn_processor(req, res){
     Payment.create(user_data_from_ipn.user, data_body['mc_gross'],new Date(data_body['payment_date']).getTime(),data_body['ipn_track_id'], data_body['txn_id'], function(status, id){
         // read the IPN message sent from PayPal and prepend 'cmd=_notify-validate'
         var postreq = 'cmd=_notify-validate';
-        log.infi("ID = ", id);
+        log.info("ID = ", id);
         for (var key in req.body) {
             if (req.body.hasOwnProperty(key)) {
                 var value = querystring.escape(req.body[key]);
@@ -31,9 +31,9 @@ function ipn_processor(req, res){
         }
 
         // Step 2: POST IPN data back to PayPal to validate
-        log.infi('Posting back to paypal');
-        log.infi(postreq);
-        log.infi('\n\n');
+        log.info('Posting back to paypal');
+        log.info(postreq);
+        log.info('\n\n');
         var options = {
             url: 'https://www.sandbox.paypal.com/cgi-bin/webscr',
             method: 'POST',
@@ -54,8 +54,8 @@ function ipn_processor(req, res){
 
                 if (body.substring(0, 8) === 'VERIFIED'){
                     // The IPN is verified, process it
-                    log.infi('Verified IPN!');
-                    log.infi('\n\n');
+                    log.info('Verified IPN!');
+                    log.info('\n\n');
 
                     // assign posted variables to local variables
                     var item_name = req.body['item_name'];
@@ -68,34 +68,34 @@ function ipn_processor(req, res){
                     var payer_email = req.body['payer_email'];
 
                     //Lets check a variable
-                    log.infi("Checking variable");
-                    log.infi("payment_status:", payment_status)
-                    log.infi('\n\n');
+                    log.info("Checking variable");
+                    log.info("payment_status:", payment_status)
+                    log.info('\n\n');
 
                     // IPN message values depend upon the type of notification sent.
                     // To loop through the &_POST array and print the NV pairs to the screen:
-                    log.infi('Printing all key-value pairs...')
+                    log.info('Printing all key-value pairs...')
                     for (var key in req.body) {
                         if (req.body.hasOwnProperty(key)) {
                             var value = req.body[key];
-                            log.infi(key + "=" + value);
+                            log.info(key + "=" + value);
                         }
                     }
 
                     Payment.update(id, {status:"complete"}, function(status, data){
                         if (!status) {
-                            log.infi('Success Complete', data);
+                            log.info('Success Complete', data);
                         }else
-                            log.infi(data);
+                            log.info(data);
                     });
 
                 } else if (body.substring(0, 7) === 'INVALID') {
                     // IPN invalid, log for manual investigation
-                    log.infi('Invalid IPN!');
-                    log.infi('\n\n');
+                    log.info('Invalid IPN!');
+                    log.info('\n\n');
                     Payment.update(id, {status:"error"}, function(status, data){
                         if (status)
-                            log.infi(data);
+                            log.info(data);
                     });
                 }
 
