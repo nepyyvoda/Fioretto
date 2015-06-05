@@ -89,7 +89,7 @@ function ipn_processor(req, res){
                             UserModel.get(user_data_from_ipn.userId, function(statusErr, data){
                                 if(!statusErr){
                                     log.info("USERMODEL :", data);
-                                    var newBalance = data[0].balance + payment_amount;
+                                    var newBalance = +data[0].balance + +payment_amount;
                                     log.info("USERMODEL :", user_data_from_ipn.userId, req.body);
                                     UserModel.update(user_data_from_ipn.userId, {balance: newBalance}, function(statusErr, data){
                                         if(!statusErr){
