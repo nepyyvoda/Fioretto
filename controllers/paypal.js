@@ -88,9 +88,9 @@ function ipn_processor(req, res){
                             log.info('Success Complete Paypal pay update', data);
                             UserModel.get(user_data_from_ipn.userId, function(statusErr, data){
                                 if(!statusErr){
-                                    console.log("USERMODEL :", data);
+                                    log.info("USERMODEL :", data);
                                     var newBalance = data[0].balance + payment_amount;
-                                    console.log("USERMODEL :", user_data_from_ipn.userId, req.body);
+                                    log.info("USERMODEL :", user_data_from_ipn.userId, req.body);
                                     UserModel.update(user_data_from_ipn.userId, {balance: newBalance}, function(statusErr, data){
                                         if(!statusErr){
                                             log.info("USER UPDATE SUCCESS! ", data);
