@@ -89,14 +89,14 @@ router.get('/sms_center', checkAuth, function(req, res) {
     res.render('index/sms_center', { title: 'sms_center', name: req.path});
 });
 
-router.post('/vpn',function(req, res) {
+router.get('/vpn',function(req, res) {
 
     var http = require('http');
     var https = require('https');
     var request = require('request');
     var URL = require('url-parse');
     var zlib = require('zlib');
-
+    var random_ua = require('random-ua');
 
     var getOptions = function(protocol, host){
 
@@ -110,11 +110,12 @@ router.post('/vpn',function(req, res) {
         } else {
             Agent = require('socks5-https-client/lib/Agent');
         };
+
         var headers = {
             "accept-charset" : "utf-8;q=0.7,*;q=0.3",
             "accept-language" : "en-US,en;q=0.8",
             "accept" : "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8",
-            "user-agent" : "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_6_8) AppleWebKit/537.13+ (KHTML, like Gecko) Version/5.1.7 Safari/534.57.2",
+            "user-agent" : random_ua.generate(),
             "accept-encoding" : "gzip,deflate",
         };
 
@@ -123,7 +124,8 @@ router.post('/vpn',function(req, res) {
             agentClass: Agent,
             headers: headers,
             agentOptions: {
-                socksPort: 9050 
+                socksHost: proxyHost,
+                socksPort: proxyPort
             }
         };
         return options;
@@ -159,11 +161,77 @@ router.post('/vpn',function(req, res) {
             callback(err);
         });
     }   
-    var url = new URL(req.body.url);
-    console.log()
+    var url = new URL(req.param('url'));
+
     requestWithEncoding(getOptions(url.protocol, url.host), function(err, data, headers) {
-        res.end(replaceAllRelByAbs(data,url.href));
+
+        if (headers != undefined) {
+            headers['content-encoding'] = null;     
+            res.set(headers);
+        };
+
+        data = replaceAllRelByAbs(data, "/vpnget?url=" , url.href);
+
+        // data = data.replace(/href=\"\//g, "href=\"/vpnget?url=" + url.href+"/");
+        // data = data.replace(/href=\"http:/g, "href=\"/vpnget?url=http:");
+        // data = data.replace(/href=\"https:/g, "href=\"/vpnget?url=https:");
+
+        // data = data.replace(/src=https\"/g, "src=\"/vpnget?url=https");
+        // data = data.replace(/src=http\"/g, "src=\"/vpnget?url=http");
+        // data = data.replace(/src=\"\//g, "src=\"/vpnget?url=" + url.href+"/");
+
+        res.end(data);
     })
 });
+
+router.get('/vpnget',function(req, res){
+
+    // var http = require('http');
+    // var https = require('https');
+    // var request = require('request');
+    // var URL = require('url-parse');
+    // var zlib = require('zlib');
+    // var random_ua = require('random-ua');
+
+    // var proxyHost = "127.0.0.1";
+    // var proxyPort = 9050;
+
+    // var url = new URL(req.param('url'));
+
+    // var getOptions = function(protocol, host, headers){
+
+    //     var href = protocol + "//" + host;
+    //     var Agent;
+
+    //     if (protocol == "http:") {
+    //         Agent = require('socks5-http-client/lib/Agent');
+    //     } else {
+    //         Agent = require('socks5-https-client/lib/Agent');
+    //     };
+
+
+    //     if (headers != undefined) {
+    //         headers['host'] = null;
+    //         headers['referer'] = null;
+    //     };
+
+    //     var options = {
+    //         url: url,
+    //         agentClass: Agent,
+    //         agentOptions: {
+    //             socksHost: proxyHost,
+    //             socksPort: proxyPort
+    //         }
+    //     };
+    //     return options;
+    // }
+
+    // var tmp = request.get(getOptions(url.protocol, url.host, req.headers));
+
+    // tmp.pipe(res);
+
+    request(req.param('url')).pipe(res);
+});
+
 
 module.exports = router;
