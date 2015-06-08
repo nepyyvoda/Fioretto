@@ -7,7 +7,13 @@ var extend = require('extend');
 var log = require('../logger')(module);
 
 // create reusable transporter object using SMTP transport
-var transporter = nodemailer.createTransport();
+var transporter = nodemailer.createTransport({
+    service: 'Gmail',
+    auth: {
+        user: config.get('mailer:user'),
+        pass: config.get('mailer:pass')
+    }
+});
 
 // NB! No need to recreate the transporter object. You can use
 // the same transporter object for all e-mails

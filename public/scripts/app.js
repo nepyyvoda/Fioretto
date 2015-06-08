@@ -77,11 +77,37 @@ $(document).ready(function() {
                 }
             },
             complete: function() {
-
             },
             error: function(request, status, error) {
-
             }
         });
     })
 });
+
+function test()
+{
+    var requestData = {
+        id: $.cookie('userId'),
+        email: $('#eml').val(),
+        password: $('#password').val(),
+        password_new: $('#password-new').val(),
+        phone: $('#phone').val(),
+        skype: $('#skype').val()
+    };
+
+    $.ajax({
+            type: 'put',
+            url: '/api/users/'+ $.cookie('userId'),
+            dataType: "json",
+            contentType: 'application/json',
+            data: JSON.stringify(requestData),
+            cache: false,
+
+        })
+
+}
+
+
+
+
+

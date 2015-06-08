@@ -95,6 +95,10 @@ function get(req, res) {
     });
 }
 
+function update (req,res){
+    UserModel.update()
+};
+
 module.exports.login = login;
 module.exports.register = register;
 module.exports.logout = logout;
