@@ -71,6 +71,7 @@ router.get('/vpn',function(req, res) {
     var URL = require('url-parse');
     var zlib = require('zlib');
     var random_ua = require('random-ua');
+    var  replaceAllRelByAbs = require('../../utils/').replaceAllRelByAbs;
 
     var getOptions = function(protocol, host){
 
@@ -160,9 +161,9 @@ router.get('/vpn',function(req, res) {
 
 router.get('/vpnget',function(req, res){
 
+    var request = require('request');
     // var http = require('http');
     // var https = require('https');
-    // var request = require('request');
     // var URL = require('url-parse');
     // var zlib = require('zlib');
     // var random_ua = require('random-ua');

@@ -1,51 +1,48 @@
 /**
  * Created by anton.nepyyvoda on 08.01.2015.
  */
-function rel_to_abs(url, baseUrl){
-    /* Only accept commonly trusted protocols:
-     * Only data-image URLs are accepted, Exotic flavours (escaped slash,
-     * html-entitied characters) are not supported to keep the function fast */
-    if(/^(https?|file|ftps?|mailto|javascript|data:image\/[^;]{2,9};):/i.test(url))
-        return url; //Url is already absolute
+ function rel_to_abs(url, baseUrl, host){
 
-    var base_url = baseUrl.match(/^(.+)\/?(?:#.+)?$/)[0]+"/";
-    if(url.substring(0,2) == "//")
-        return 'https://' + url;//location.protocol + url;
-    else if(url.charAt(0) == "/")
+    if(url.charAt(0) === "/"){
+        if (url.indexOf("//") === 0 ) {
+            return baseUrl +url.replace('//','http://');
+        } else {
+            return baseUrl + host + url;
+        }
+    };
+
+    if(url.indexOf("http") === 0){
         return baseUrl + url;
-    else if(url.substring(0,2) == "./")
-        url = "." + url;
-    else if(/^\s*$/.test(url))
-        return ""; //Empty = Return nothing
-    else url = "../" + url;
+    };
 
-    url = base_url + url;
-    var i=0
-    while(/\/\.\.\//.test(url = url.replace(/[^\/]+\/+\.\.\//g,"")));
+    if(url.indexOf("'") === 0){
+        return "";
+    };    
 
-    /* Escape certain characters to prevent XSS */
-    url = url.replace(/\.$/,"").replace(/\/\./g,"").replace(/"/g,"%22")
-        .replace(/'/g,"%27").replace(/</g,"%3C").replace(/>/g,"%3E");
-    return url;
+    if (url.indexOf("javascript") === 0) {
+        return "";
+    };
+
+    return baseUrl + host + "/" + url;
 }
 
-function replaceAllRelByAbs(html, baseUrl){
+function replaceAllRelByAbs(html, baseUrl,host){
     /*HTML/XML Attribute may not be prefixed by these characters (common
      attribute chars.  This list is not complete, but will be sufficient
      for this function (see http://www.w3.org/TR/REC-xml/#NT-NameChar). */
-    var att = "[^-a-z0-9:._]";
+        var att = "[^-a-z0-9:._]";
 
     var entityEnd = "(?:;|(?!\\d))";
     var ents = {" ":"(?:\\s|&nbsp;?|&#0*32"+entityEnd+"|&#x0*20"+entityEnd+")",
-        "(":"(?:\\(|&#0*40"+entityEnd+"|&#x0*28"+entityEnd+")",
+    "(":"(?:\\(|&#0*40"+entityEnd+"|&#x0*28"+entityEnd+")",
         ")":"(?:\\)|&#0*41"+entityEnd+"|&#x0*29"+entityEnd+")",
-        ".":"(?:\\.|&#0*46"+entityEnd+"|&#x0*2e"+entityEnd+")"};
-    /* Placeholders to filter obfuscations */
-    var charMap = {};
+".":"(?:\\.|&#0*46"+entityEnd+"|&#x0*2e"+entityEnd+")"};
+/* Placeholders to filter obfuscations */
+var charMap = {};
     var s = ents[" "]+"*"; //Short-hand for common use
     var any = "(?:[^>\"']*(?:\"[^\"]*\"|'[^']*'))*?[^>]*";
     /* ^ Important: Must be pre- and postfixed by < and >.
-     *   This RE should match anything within a tag!  */
+    *   This RE should match anything within a tag!  */
 
     /*
      @name ae
@@ -53,7 +50,7 @@ function replaceAllRelByAbs(html, baseUrl){
      input and the HTML entity
      @param String string  String to convert
      */
-    function ae(string){
+     function ae(string){
         var all_chars_lowercase = string.toLowerCase();
         if(ents[string]) return ents[string];
         var all_chars_uppercase = string.toUpperCase();
@@ -83,22 +80,22 @@ function replaceAllRelByAbs(html, baseUrl){
      @name by
      @description  2nd argument for replace().
      */
-    function by(match, group1, group2, group3){
+     function by(match, group1, group2, group3){
         /* Note that this function can also be used to remove links:
-         * return group1 + "javascript://" + group3; */
-        return group1 + rel_to_abs(group2, baseUrl) + group3;
+        * return group1 + "javascript://" + group3; */
+        return group1 + rel_to_abs(group2, baseUrl,host) + group3;
     }
     /*
      @name by2
      @description  2nd argument for replace(). Parses relevant HTML entities
      */
-    var slashRE = new RegExp(ae("/"), 'g');
-    var dotRE = new RegExp(ae("."), 'g');
-    function by2(match, group1, group2, group3){
+     var slashRE = new RegExp(ae("/"), 'g');
+     var dotRE = new RegExp(ae("."), 'g');
+     function by2(match, group1, group2, group3){
         /*Note that this function can also be used to remove links:
-         * return group1 + "javascript://" + group3; */
+        * return group1 + "javascript://" + group3; */
         group2 = group2.replace(slashRE, "/").replace(dotRE, ".");
-        return group1 + rel_to_abs(group2, baseUrl) + group3;
+        return group1 + rel_to_abs(group2, baseUrl,host) + group3;
     }
     /*
      @name cr
@@ -111,7 +108,7 @@ function replaceAllRelByAbs(html, baseUrl){
      @param String end       Optional RegExp-escaped; forces the match to end
      before an occurence of <end>
      */
-    function cr(selector, attribute, marker, delimiter, end){
+     function cr(selector, attribute, marker, delimiter, end){
         if(typeof selector == "string") selector = new RegExp(selector, "gi");
         attribute = att + attribute;
         marker = typeof marker == "string" ? marker : "\\s*=\\s*";
@@ -136,7 +133,7 @@ function replaceAllRelByAbs(html, baseUrl){
      @param String end       Optional RegExp-escaped; forces the match to end
      before an occurence of <end>
      */
-    function cri(selector, attribute, front, flags, delimiter, end){
+     function cri(selector, attribute, front, flags, delimiter, end){
         if(typeof selector == "string") selector = new RegExp(selector, "gi");
         attribute = att + attribute;
         flags = typeof flags == "string" ? flags : "gi";
