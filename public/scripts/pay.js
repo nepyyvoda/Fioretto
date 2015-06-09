@@ -9,9 +9,9 @@ $(document).ready(function() {
             console.log(amount);
             if(amount === ''||amount <=0)
                 amount=0;
-            console.log('DATA', $("input[name='amount']"), amount);
+            console.log('DATA', $("input[name='amount']"), amount, $.cookie("userId"));
             $("input[name='amount']").val(amount);
-            $("input[name='custom']").val(JSON.stringify({user: "test", id_proc: amount+5, date: Date.now(), amount: amount}));
+            $("input[name='custom']").val(JSON.stringify({userId: $.cookie("userId")}));
             $('#p_amount').html('Amount is = ' + amount);
 
         });
