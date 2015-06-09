@@ -22,6 +22,19 @@
 				</div>
 				
 				<div class="center-btn pay_methods">
+                    <form method="post" action="https://www.sandbox.paypal.com/cgi-bin/webscr" class="paypal-button" target="_top">
+                        <div class="hide" id="errorBox"></div>
+                        <input type="hidden" name="button" value="buynow">
+                        <input type="hidden" name="item_name" value="Addition'">
+                        <input type="hidden" name="quantity" value="1">
+                        <input type="hidden" name="amount" value="">
+                        <input type="hidden" name="custom" value= '{"user": "test"}'>
+                        <input type="hidden" name="currency_code" value="USD">
+                        <input type="hidden" name="env" value="www.sandbox">
+                        <input type="hidden" name="cmd" value="_xclick">
+                        <input type="hidden" name="business" value="TENPTSTHJ3KVS">
+                        <input type="hidden" name="bn" value="JavaScriptButton_buynow">
+                        </form>
 					<a class="teal accent-4 paypal btn-large"></a>
 					<a class="teal accent-4 webmoney btn-large"></a>
 					<a class="teal accent-4 mastercard btn-large"></a>
