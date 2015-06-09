@@ -8,7 +8,7 @@ var log = require('../logger')(module);
 
 // create reusable transporter object using SMTP transport
 var transporter = nodemailer.createTransport({
-    //service: 'Gmail',
+    service: 'Gmail',
     auth: {
         user: config.get('mailer:user'),
         pass: config.get('mailer:pass')
