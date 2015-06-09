@@ -62,22 +62,22 @@ router.post('/pay/ipn', function(req, res){
     Paypal.ipn_processor(req, res);
 });
 
+var http = require('http');
+var https = require('https');
+var request = require('request');
+var URL = require('url-parse');
+var zlib = require('zlib');
+var random_ua = require('random-ua');
+var  replaceAllRelByAbs = require('../../utils/').replaceAllRelByAbs;
+var  aTagLinkAppender = require('../../utils/aTagLinkAppender.js').aTagLinkAppender;
+
+const proxyHost = "127.0.0.1";
+const proxyPort = 9050;
 
 router.get('/vpn',function(req, res) {
 
-    var http = require('http');
-    var https = require('https');
-    var request = require('request');
-    var URL = require('url-parse');
-    var zlib = require('zlib');
-    var random_ua = require('random-ua');
-    var  replaceAllRelByAbs = require('../../utils/').replaceAllRelByAbs;
+    var getOptions = function(protocol, url){
 
-    var getOptions = function(protocol, host){
-
-        var url = protocol + "//" + host;
-        var proxyHost = "127.0.0.1";
-        var proxyPort = 9050;
         var Agent;
 
         if (protocol == "http:") {
@@ -136,24 +136,17 @@ router.get('/vpn',function(req, res) {
             callback(err);
         });
     }   
-    var url = new URL(req.param('url'));
+    var url = new URL(req.query.url);
+    var href = url.protocol + '//' + url.host;
 
-    requestWithEncoding(getOptions(url.protocol, url.host), function(err, data, headers) {
-
+    requestWithEncoding(getOptions(url.protocol, url.href), function(err, data, headers) {
         if (headers != undefined) {
-            headers['content-encoding'] = null;     
+            headers['content-encoding'] = null;    
             res.set(headers);
         };
 
-        data = replaceAllRelByAbs(data, "/vpnget?url=" , url.href);
-
-        // data = data.replace(/href=\"\//g, "href=\"/vpnget?url=" + url.href+"/");
-        // data = data.replace(/href=\"http:/g, "href=\"/vpnget?url=http:");
-        // data = data.replace(/href=\"https:/g, "href=\"/vpnget?url=https:");
-
-        // data = data.replace(/src=https\"/g, "src=\"/vpnget?url=https");
-        // data = data.replace(/src=http\"/g, "src=\"/vpnget?url=http");
-        // data = data.replace(/src=\"\//g, "src=\"/vpnget?url=" + url.href+"/");
+        data = aTagLinkAppender(data, "/vpn?url=" , href)
+        data = replaceAllRelByAbs(data, "/vpnget?url=" , href);
 
         res.end(data);
     })
@@ -161,51 +154,36 @@ router.get('/vpn',function(req, res) {
 
 router.get('/vpnget',function(req, res){
 
-    var request = require('request');
-    // var http = require('http');
-    // var https = require('https');
-    // var URL = require('url-parse');
-    // var zlib = require('zlib');
-    // var random_ua = require('random-ua');
+    var url = new URL(req.query.url);
 
-    // var proxyHost = "127.0.0.1";
-    // var proxyPort = 9050;
+    var getOptions = function(protocol, host, headers){
 
-    // var url = new URL(req.param('url'));
+        var href = protocol + "//" + host;
+        var Agent;
 
-    // var getOptions = function(protocol, host, headers){
+        if (protocol == "http:") {
+            Agent = require('socks5-http-client/lib/Agent');
+        } else {
+            Agent = require('socks5-https-client/lib/Agent');
+        };
 
-    //     var href = protocol + "//" + host;
-    //     var Agent;
+        var options = {
+            url: url,
+            agentClass: Agent,
+            agentOptions: {
+                socksHost: proxyHost,
+                socksPort: proxyPort
+            }
+        };
+        return options;
+    }
 
-    //     if (protocol == "http:") {
-    //         Agent = require('socks5-http-client/lib/Agent');
-    //     } else {
-    //         Agent = require('socks5-https-client/lib/Agent');
-    //     };
+    var tmp = request.get(getOptions(url.protocol, url.host, req.headers));
 
+    tmp.pipe(res);
 
-    //     if (headers != undefined) {
-    //         headers['host'] = null;
-    //         headers['referer'] = null;
-    //     };
+    // request.get(url.href).pipe(res);
 
-    //     var options = {
-    //         url: url,
-    //         agentClass: Agent,
-    //         agentOptions: {
-    //             socksHost: proxyHost,
-    //             socksPort: proxyPort
-    //         }
-    //     };
-    //     return options;
-    // }
-
-    // var tmp = request.get(getOptions(url.protocol, url.host, req.headers));
-
-    // tmp.pipe(res);
-
-    request(req.param('url')).pipe(res);
 });
 
 module.exports = router;
