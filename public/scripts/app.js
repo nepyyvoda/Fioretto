@@ -95,19 +95,24 @@ function test()
         skype: $('#skype').val()
     };
 
-    $.ajax({
+    requestData.password = (CryptoJS.SHA256(requestData.password)).toString();
+    requestData.password_new = (CryptoJS.SHA256(requestData.password_new)).toString();
+
+     $.ajax({
             type: 'put',
             url: '/api/users/'+ $.cookie('userId'),
             dataType: "json",
             contentType: 'application/json',
             data: JSON.stringify(requestData),
             cache: false,
+            beforeSend: function (request){
+                         },
+            success: function(res) {
+                        if(res.status === 0){
 
+                        }
+                        },
+            complete: function() {  },
+            error: function(request, status, error) {  }
         })
-
 }
-
-
-
-
-

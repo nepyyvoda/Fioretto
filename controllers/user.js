@@ -39,11 +39,11 @@ function register(req, res) {
         var uid = uuid.v4();
         console.log(uid);
         memoryStorage.set(uid, req.body.email);
-        console.log('<a href="' + config.get('host') + '/register/' + uid + '">Confirm your registration at Fioretto</a>, or just ignore this mail.');
+        console.log('<a href="' + config.get('host') + '/register/' + uid + '">Confirm your registration at Fiaretto</a>, or just ignore this mail.');
         mailer.send({
             to: [req.body.email],
             subject: 'Registration in Fioretto',
-            html: '<a href="' + config.get('host') + '/registration/' + uid + '">Confirm your registration at Fioretto</a>, or just ignore this mail.'//text:
+            html: '<a href="' + config.get('host') + '/registration/' + uid + '">Confirm your registration at Fiaretto</a>, or just ignore this mail.'//text:
         }, function(error, info) {
             if(error) {
                 res.send(response('INTERNAL_SERVER_ERROR'));
@@ -80,7 +80,7 @@ function registerConfirm(req, res) {
 }
 
 function logout(req, res) {
-    res.cookie('sid', '', { httpOnly: true });
+    res.cookie('sid', '', {httpOnly: true });
     res.cookie('userId', '');
     res.redirect('/login');
 }
@@ -96,7 +96,24 @@ function get(req, res) {
 }
 
 function update (req,res){
-    UserModel.update()
+    UserModel.getPassword(req.cookies.userId, function(err, data) {
+
+         if ((req.body.password === data[0].password) && (req.body.password != req.body.password_new)) {
+            var UpdateDate =
+            {
+                email: req.body.email,
+                password: req.body.password_new,
+                phone: req.body.phone,
+                skype: req.body.skype
+            };
+                UserModel.update(req.cookies.userId, UpdateDate, function (req, res) {
+            });
+             console.log('The profile data are updated');
+        }
+        else{
+             console.log('The current password uncorrected or new password and current passwords are same');
+         }
+    });
 };
 
 module.exports.login = login;
@@ -104,3 +121,4 @@ module.exports.register = register;
 module.exports.logout = logout;
 module.exports.registerConfirm = registerConfirm;
 module.exports.get = get;
+module.exports.update = update;

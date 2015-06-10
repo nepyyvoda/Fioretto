@@ -61,9 +61,8 @@ router.delete('/scenarios/:id', checkAuth, function(req, res) {
     //remove scenario
 });
 
-router.put('/user/:id', checkAuth, checkPermission, function(req, res) {
-    User.update(req, res);
+router.put('/users/:id', checkAuth, checkPermission, function(req, res) {
+       User.update(req, res);
 });
-
 
 module.exports = router;

@@ -14,8 +14,11 @@ var allowedUpdateColumns = [
     'dateChanged',
     'dateLast',
     'active',
-    'deleted'
+    'deleted',
+    'phone',
+    'skype'
 ];
+
 
 function register(login, email, password, callback) {
     execute('SELECT * FROM users WHERE `email` = ? OR `login` = ?', [email, login], function(err, data) {
@@ -90,6 +93,17 @@ function update(id, data, callback){
     });
 }
 
+function getPassword(id, callback) {
+    execute('SELECT password FROM users WHERE `id` = ?', [id], function(err, data){
+        if(!err){
+            callback (false, data);
+
+        } else {
+            callback (true, 'USER_NOT_FOUND');
+        }
+    });
+}
+
 function get(id, callback) {
     execute('SELECT login, email, balance FROM users WHERE `id` = ?', [id], function(err, data){
         if(!err){
@@ -106,4 +120,5 @@ module.exports.activateUser = activateUser;
 module.exports.deactivateUser = deactivateUser;
 module.exports.remove = remove;
 module.exports.update = update;
+module.exports.getPassword = getPassword;
 module.exports.get = get;
