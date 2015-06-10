@@ -44,7 +44,8 @@
     "zlib": "~1.0.5",
     "url-parse": "~1.0.1",
     "socks5-https-client": "~1.1.0",
-    "socks5-http-client": "~1.0.1"
+    "socks5-http-client": "~1.0.1",
+    "random-ua": "0.0.6"
   },
   "devDependencies": {},
   "keywords": [
