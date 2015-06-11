@@ -115,7 +115,7 @@ function ipn_processor(req, res){
                                                     log.info('\nPAYPAL.USER FROM DB : ', statusErr, data);
                                                     if(!statusErr){
                                                         log.info("USER UPDATE SUCCESS! ", data);
-                                                        UsersPayments.update(userpaymentid, {end_date: new Date(), textStatus: 'complete'}, function(status, data){
+                                                        UsersPayments.update(userpaymentid, {end_date: new Date(), textStatus: 'complete', amount: newBalance}, function(status, data){
                                                             if(!status){
                                                                 log.info("USERPAYMENTS UPDATE SUCCESS! ", data);
                                                             } else {

@@ -66,7 +66,7 @@ function update(id, data, callback){
     var queryData = formattedData.data || [];
     //log.info("PARAMS QUERY: " +  queryTemplate + " || " + queryData +"||\n\n");
     execute('UPDATE userspayments SET ' + queryTemplate + ' WHERE `id` = ?', queryData, function(err, data){
-        if(data.changedRows > 0){
+        if(data.affectedRows > 0){
             callback (false, data);
         } else {
             callback (true, 'USERPAYMENTS_NOT_FOUND');
