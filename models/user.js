@@ -85,7 +85,7 @@ function update(id, data, callback){
     var queryTemplate = formattedData.template || '';
     var queryData = formattedData.data || [];
     execute('UPDATE users SET ' + queryTemplate + ' WHERE `id` = ?', queryData, function(err, data){
-        console.log("USER model UPDATE :", JSON.parse(data));
+        console.log("USER model UPDATE :", data);
         if(data.changedRows > 0){
             callback (false, data);
         } else {
