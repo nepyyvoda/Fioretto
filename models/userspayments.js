@@ -56,16 +56,6 @@ function create(login,
     );
 }
 
-/*function update(id, parametr, value, callback){
-    execute('UPDATE userspayments SET ?? = ? WHERE `id` = ?', [parametr, value, id], function(err, data){
-        if(data.length > 0){
-            callback (false, data);
-        } else {
-            callback (true, 'PAYMENT_NOT_FOUND');
-        }
-    });
-}*/
-
 function update(id, data, callback){
     var formattedData = formatter(id, data, allowedUpdateColumns);
     if(!formattedData) {
@@ -76,7 +66,6 @@ function update(id, data, callback){
     var queryData = formattedData.data || [];
     //log.info("PARAMS QUERY: " +  queryTemplate + " || " + queryData +"||\n\n");
     execute('UPDATE userspayments SET ' + queryTemplate + ' WHERE `id` = ?', queryData, function(err, data){
-        log.info("DATA userspayments: ", data);
         if(data.changedRows > 0){
             callback (false, data);
         } else {
