@@ -40,6 +40,7 @@ function ipn_processor(req, res){
                 0,
                 0,
                 0x0,function(status, userpaymentid){
+
                     var postreq = 'cmd=_notify-validate';
                     log.info("ID = ", id);
                     for (var key in req.body) {

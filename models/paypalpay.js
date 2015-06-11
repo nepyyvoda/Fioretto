@@ -39,7 +39,7 @@ function update(id, data, callback){
 
     execute('UPDATE paypalpay SET ' + queryTemplate + ' WHERE `id` = ?', queryData, function(err, data){
         log.info("DATA : ", data);
-        if(data.changedRows > 0){
+        if(data.affectedRows > 0){
             callback (false, data);
         } else {
             callback (true, 'PAYPALPAY_NOT_FOUND');

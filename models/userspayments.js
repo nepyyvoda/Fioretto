@@ -9,6 +9,7 @@ var allowedUpdateColumns = [
     'end_time',
     'statusPaymentID',
     'textStatus',
+    'amount',
     'deleted'
 ];
 
@@ -50,8 +51,8 @@ function create(login,
             paymentSchemeID,
             commission,
             deleted],
-        function(data) {
-            callback(false, data);
+        function(status, data) {
+            callback(false, data.insertId);
         }
     );
 }
@@ -64,8 +65,9 @@ function update(id, data, callback){
 
     var queryTemplate = formattedData.template || '';
     var queryData = formattedData.data || [];
-    //log.info("PARAMS QUERY: " +  queryTemplate + " || " + queryData +"||\n\n");
+    console.log("PARAMS QUERY: " +  queryTemplate + " || " + queryData +"||\n\n");
     execute('UPDATE userspayments SET ' + queryTemplate + ' WHERE `id` = ?', queryData, function(err, data){
+        console.log('UsersPayments DATA UPDATE', data);
         if(data.affectedRows > 0){
             callback (false, data);
         } else {
