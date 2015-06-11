@@ -104,15 +104,15 @@ function ipn_processor(req, res){
                                 Payment.update(id, {status:"complete"}, function(status, data){
                                     if (!status) {
                                         log.info('Success Complete Paypal pay update', data);
-                                        UserModel.get(user_data_from_ipn.userId, function(statusErr, data){
+                                        UserModel.get(+user_data_from_ipn.userId, function(statusErr, data){
                                             if(!statusErr){
-                                                log.info("USERMODEL :", data);
+                                                log.info("\nPAYPAL.USERMODEL :", data);
                                                 var newBalance = +data[0].balance + ( +payment_amount * 100);
                                                 //parse to cents
 
-                                                log.info("USERMODEL : " + user_data_from_ipn.userId + ", body" + req.body);
-                                                UserModel.update(user_data_from_ipn.userId, {balance: newBalance}, function(statusErr, data){
-                                                    log.info('USER FROM DB : ', statusErr, data);
+                                                log.info("\nPAYPAL.USERMODEL : " + user_data_from_ipn.userId + ", body" + req.body);
+                                                UserModel.update(+user_data_from_ipn.userId, {balance: newBalance}, function(statusErr, data){
+                                                    log.info('\nPAYPAL.USER FROM DB : ', statusErr, data);
                                                     if(!statusErr){
                                                         log.info("USER UPDATE SUCCESS! ", data);
                                                         UsersPayments.update(userpaymentid, {end_date: new Date(), textStatus: 'complete'}, function(status, data){
