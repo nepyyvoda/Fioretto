@@ -85,7 +85,6 @@ function update(id, data, callback){
     var queryTemplate = formattedData.template || '';
     var queryData = formattedData.data || [];
     execute('UPDATE users SET ' + queryTemplate + ' WHERE `id` = ?', queryData, function(err, data){
-        console.log('user UPDATE', data);
         if(data.affectedRows > 0){
             callback (false, data);
         } else {
@@ -107,7 +106,6 @@ function getPassword(id, callback) {
 
 function get(id, callback) {
     execute('SELECT login, email, balance FROM users WHERE `id` = ?', [id], function(err, data){
-        console.log("USER model GET :", data);
         if(data.length > 0){
             callback (false, data);
         } else {
