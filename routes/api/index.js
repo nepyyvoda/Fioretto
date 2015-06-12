@@ -5,6 +5,7 @@ var response = require('../../response');
 
 var User = require('../../controllers/user');
 var Scenarios = require('../../controllers/scenarios');
+var Payments = require('../../controllers/payments');
 
 function checkAuth(req, res, next) {
     var token = req.cookies.sid;
@@ -63,7 +64,11 @@ router.delete('/scenarios/:id', checkAuth, function(req, res) {
 });
 
 router.put('/users/:id', checkAuth, checkPermission, function(req, res) {
-       User.update(req, res);
+    User.update(req, res);
+});
+
+router.get('/user/payments/:login', checkAuth, function(req, res){
+    Payments.history(req, res);
 });
 
 module.exports = router;

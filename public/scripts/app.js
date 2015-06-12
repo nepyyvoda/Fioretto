@@ -45,6 +45,34 @@ function updateScenariosList() {
     });
 }
 
+function updatePayment(){
+    $.getJSON('/api/user/payments/' + $.cookie('userId'), function(res){
+        console.log(res);
+        $('#payments-list').find('.list-row-clone').remove();
+        if(Object.keys(res.data).length > 0) {
+            for(var i in res.data) {
+                console.log(res.data[i]);
+                var $template = $(".template");
+                var $tmp = null;
+
+                $tmp = $template.clone().removeClass("template").removeClass('hidden').addClass('list-row-clone');
+                $tmp.find('.login').text(res.data[i].id);
+                $tmp.find('.date').text(res.data[i].end_time);
+                $tmp.find('.transactionid').text(res.data[i].transactionID);
+                $tmp.find('.serviceid').text(res.data[i].servicesID);
+                $tmp.find('.scheme').text(res.data[i].paymentSchemeID);
+                $tmp.find('.sum').text('$' + res.data[i].amount/100);
+
+                $tmp.attr('data-id', res.data[i].id);
+                //res.data[i].mode;
+                //res.data[i].nameScenario;
+                $tmp.appendTo('#payments-list');
+            }
+
+        }
+    });
+}
+
 $(document).ready(function() {
     if($.cookie('userId')) {
         $.getJSON('/api/user/' + $.cookie('userId'), function(res) {
