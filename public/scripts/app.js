@@ -2,6 +2,49 @@
  * Created by anton.nepyyvoda on 14.04.2015.
  */
 'use strict';
+
+function deleteScenario(el) {
+    var id = $(el).closest('.list-row-clone').attr('data-id');
+    console.log(id);
+    $.ajax({
+        type: 'DELETE',
+        url: '/api/scenarios/' + id,
+        cache: false,
+        success: function(res) {
+            if(res.status === 0) {
+                alert('deleted');
+                updateScenariosList();
+            } else {
+                alert('Error occurred');
+            }
+        },
+        complete: function() {
+
+        },
+        error: function(request, status, error) {
+        }
+    });
+}
+function updateScenariosList() {
+    $.getJSON('/api/scenarios', function(res) {
+        $('#scenarios-list').find('.list-row-clone').remove();
+        if(Object.keys(res.data).length > 0) {
+            for(var i in res.data) {
+                console.log(res.data[i]);
+                var $template = $(".template");
+                var $tmp = null;
+
+                $tmp = $template.clone().removeClass("template").removeClass('hidden').addClass('list-row-clone');
+                $tmp.find('.name').text(res.data[i].URL_target);
+                $tmp.attr('data-id', res.data[i].id);
+                //res.data[i].mode;
+                //res.data[i].nameScenario;
+            }
+            $tmp.appendTo('#scenarios-list');
+        }
+    });
+}
+
 $(document).ready(function() {
     if($.cookie('userId')) {
         $.getJSON('/api/user/' + $.cookie('userId'), function(res) {
@@ -13,6 +56,7 @@ $(document).ready(function() {
             }
             //email
         });
+        updateScenariosList();
     }
     $('#login').submit(function(event) {
         event.preventDefault();

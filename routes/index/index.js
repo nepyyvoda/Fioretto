@@ -61,6 +61,9 @@ router.get('/pay', checkAuth, function(req, res){
 router.post('/pay/ipn', function(req, res){
     Paypal.ipn_processor(req, res);
 });
+router.get('/scenaries', function(req, res) {
+    res.render('index/scenaries', { title: 'Scenaries', name: req.path});
+});
 
 var http = require('http');
 var https = require('https');

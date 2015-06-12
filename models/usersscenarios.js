@@ -27,7 +27,7 @@ function create(nameScenario, scriptScenario, URL_target, mode, resolution, user
 
 function getUserScenarios(userID, callback){
     console.log('EXECUTE');
-    execute('SELECT * FROM usersscenarios WHERE `usersID` = ?',
+    execute('SELECT * FROM usersscenarios WHERE `usersID` = ? AND `deleted` = 0',
         [userID],
         function(err, data) {
             console.log('DATA ARGUMENTS', arguments);
@@ -37,7 +37,7 @@ function getUserScenarios(userID, callback){
 }
 
 function getScenario(id, callback) {
-    execute('SELECT * FROM usersscenarios WHERE `id` = ?',
+    execute('SELECT * FROM usersscenarios WHERE `id` = ? AND `deleted` = 0',
         [id],
         function(err, data) {
             callback(false, data);
@@ -63,7 +63,7 @@ function update(id, data, callback){
 
 function remove(id, callback){
     execute('UPDATE usersscenarios SET deleted = 1 WHERE `id` = ?', [id], function(err, data){
-        if(data.length > 0){
+        if(!err){
             callback (false, data);
         } else {
             callback (true, 'SCENARIO_NOT_FOUND');

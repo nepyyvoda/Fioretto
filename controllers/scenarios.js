@@ -27,7 +27,13 @@ function rename(req, res) {
 }
 
 function update(req, res) {
-
+    ScenariosModel.update(req.params.id, {}, function(err, data) {
+        if(!err) {
+            res.send(response('SUCCESS', data[0]));
+        } else {
+            res.send(response('INTERNAL_SERVER_ERROR', data));
+        }
+    });
 }
 
 function changeMode(req, res) {
@@ -47,7 +53,7 @@ function getScenario(req, res) {
 function getScenarios(req, res) {
     ScenariosModel.getUserScenarios(req.cookies.userId, function(err, data) {
         if(!err) {
-            res.send(response('SUCCESS', data[0]));
+            res.send(response('SUCCESS', data));
         } else {
             res.send(response('INTERNAL_SERVER_ERROR', data));
         }
@@ -57,7 +63,7 @@ function getScenarios(req, res) {
 function del(req, res) {
     ScenariosModel.remove(req.params.id, function(err, data) {
         if(!err) {
-            res.send(response('SUCCESS', data[0]));
+            res.send(response('SUCCESS', data));
         } else {
             res.send(response('INTERNAL_SERVER_ERROR', data));
         }
