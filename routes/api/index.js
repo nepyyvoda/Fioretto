@@ -16,9 +16,10 @@ function checkAuth(req, res, next) {
         if(!decoded) {
             res.cookie('sid', '', { httpOnly: true });
             res.send(response('AUTHORIZATION_FAILED'));
+            return;
         }
+        next();
     });
-    next();
 }
 function checkPermission(req, res, next) {
     var token = req.cookies.sid;
@@ -58,7 +59,7 @@ router.put('/scenarios/:id', checkAuth, function(req, res) {
 });
 
 router.delete('/scenarios/:id', checkAuth, function(req, res) {
-    //remove scenario
+    Scenarios.del(req, res);
 });
 
 router.put('/user/:id', checkAuth, checkPermission, function(req, res) {
