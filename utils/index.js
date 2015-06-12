@@ -2,7 +2,7 @@
  * Created by anton.nepyyvoda on 08.01.2015.
  */
  function rel_to_abs(url, baseUrl, host){
-
+    
     if (baseUrl.slice(-1)=="/") {
         baseUrl = baseUrl.substring(0, baseUrl.length - 1);
     };
@@ -17,6 +17,13 @@
             return baseUrl + host + url;
         }
     };
+
+    if(url.indexOf("url(") > 0 ){
+        if(url.indexOf("url('") >= 0 ){
+            return url.replace(/url\('/g,"url('"+ baseUrl);
+        }
+        return url.replace(/url\(/g,"url("+ baseUrl);
+    }
 
     if(url.indexOf("http") === 0){
         if(url.indexOf("vpn")>=0){
@@ -172,12 +179,17 @@ var charMap = {};
     cr("<object"+any+att+"data\\s*="+any+">", "data"); /* <object data= > */
     cr("<applet"+any+att+"codebase\\s*="+any+">", "codebase"); /* <applet codebase= > */
 
+    cr("<a"+any+att+"style\\s*="+any+">", "style");
+    // cr("<a"+any+att+"rel\\s*="+any+">", "rel");
+
+    cr("<span"+any+att+"style\\s*="+any+">", "style"); /* <applet codebase= > */
     /* <param name=movie value= >*/
     cr("<param"+any+att+"name\\s*=\\s*(?:\""+ae("movie")+"\""+any+">|'"+ae("movie")+"'"+any+">|"+ae("movie")+"(?:"+ae(" ")+any+">|>))", "value");
 
     cr(/<style[^>]*>(?:[^"']*(?:"[^"]*"|'[^']*'))*?[^'"]*(?:<\/style|$)/gi, "url", "\\s*\\(\\s*", "", "\\s*\\)"); /* <style> */
     cri("<"+any+att+"style\\s*="+any+">", "style", ae("url")+s+ae("(")+s, 0, s+ae(")"), ae(")")); /*< style=" url(...) " > */
-    return html;
+
+   return html;
 }
 
 module.exports.replaceAllRelByAbs = replaceAllRelByAbs;
