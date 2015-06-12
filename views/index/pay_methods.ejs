@@ -1,4 +1,6 @@
 <div class="container">
+    <script src="http://code.jquery.com/jquery-latest.min.js"></script>
+    <script src="/scripts/pay_methods.js"></script>
 	 <div class="row">
 		<div class="col s12 m12">
 			<div class="card card_methods teal lighten-1 valign center z-depth-2">
@@ -14,12 +16,25 @@
 						<select class="white col s3 browser-default currency">
 							<option value="" disabled selected>currency</option>
 							<option value="1">USD</option>
-							<option value="2">EUR</option>
+							<!--<option value="2">EUR</option>-->
 						</select>
 					</div>
 				</div>
 				
 				<div class="center-btn pay_methods">
+                    <form method="post" action="https://www.sandbox.paypal.com/cgi-bin/webscr" class="paypal-button" target="_top">
+                        <div class="hide" id="errorBox"></div>
+                        <input type="hidden" name="button" value="buynow">
+                        <input type="hidden" name="item_name" value="Addition'">
+                        <input type="hidden" name="quantity" value="1">
+                        <input type="hidden" name="amount" value="">
+                        <input type="hidden" name="custom" value= '{"user": "test"}'>
+                        <input type="hidden" name="currency_code" value="RUB">
+                        <input type="hidden" name="env" value="www.sandbox">
+                        <input type="hidden" name="cmd" value="_xclick">
+                        <input type="hidden" name="business" value="E9H953PCMYUWE">
+                        <input type="hidden" name="bn" value="JavaScriptButton_buynow">
+                        </form>
 					<a class="teal accent-4 paypal btn-large"></a>
 					<a class="teal accent-4 webmoney btn-large"></a>
 					<a class="teal accent-4 mastercard btn-large"></a>
