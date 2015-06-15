@@ -57,13 +57,17 @@ router.get('/scenarios/init', function(req, res) {
     res.send({status: 0, proxy: proxyURL});
 });
 
+router.post('/scenarios', checkAuth, function(req, res) {
+    Scenarios.create(req, res);
+});
+
 //todo check permissions
 router.get('/scenarios/:id', checkAuth, function(req, res) {
     Scenarios.getScenario(req, res);
 });
 
-router.post('/scenarios', checkAuth, function(req, res) {
-    //create scenario
+router.post('/scenarios/:id/start', checkAuth, function(req, res) {
+    Scenarios.startScenario(req, res);
 });
 
 router.put('/scenarios/:id', checkAuth, function(req, res) {

@@ -6,6 +6,8 @@ var ScenariosModel = require('../models/usersscenarios');
 var response = require('../response');
 var config = require('../config');
 var log = require('../logger')(module);
+var scenarioClient = require('../scenario-client');
+var scriptBuilder = require('../script-builder').scriptBuild;
 
 var availableModes = {
     tor: 0,
@@ -13,9 +15,9 @@ var availableModes = {
 };
 
 function create(req, res) {
-    ScenariosModel.get(req.params.id, function(err, data) {
+    ScenariosModel.create(req.body.name, (JSON.stringify(req.body.chain)).toString(), req.body.url, req.body.mode || 0, JSON.stringify(req.body.resolution), req.cookies.userId , req.cookies.count, function(err, data) {
         if(!err) {
-            res.send(response('SUCCESS', data[0]));
+            res.send(response('SUCCESS', data));
         } else {
             res.send(response('INTERNAL_SERVER_ERROR', data));
         }
@@ -70,9 +72,53 @@ function del(req, res) {
     });
 }
 
+function startScenario(req, res) {
+    console.log(req.params.id);
+    ScenariosModel.getScenario(req.params.id, function(err, data) {
+        if(!err) {
+            var scenario = data[0];
+            var neededDataForVoting = {};
+
+            var script = scriptBuilder({
+                url: scenario.URL_target,
+                resolution: scenario.resolution,
+                eventsChain: JSON.parse(scenario.scriptScenario)
+            });
+
+            neededDataForVoting.vote = {
+                name: scenario.nameScenario,
+                votes: scenario.countTotal,
+                mode: scenario.mode,
+                url: scenario.URL_target,
+                resolution: scenario.resolution
+            };
+            neededDataForVoting.scenario = script;
+            neededDataForVoting.node = {
+                ip: config.get('workerServer:ip'),
+                port: config.get('workerServer:port')
+            };
+            scenarioClient.sendToNodeVoting(neededDataForVoting, res, sender);
+        }
+    });
+}
+
+var sender = {};
+
+sender.err = callSendError;
+sender.data = callSendData;
+
+function callSendData(msg, res, data){
+    res.send(response('SUCCESS'));
+}
+
+function callSendError(msg, res){
+    res.send(response('INTERNAL_SERVER_ERROR'));
+}
+
 module.exports.create = create;
 module.exports.rename = rename;
 module.exports.update = update;
 module.exports.del = del;
 module.exports.getScenario = getScenario;
 module.exports.getScenarios = getScenarios;
+module.exports.startScenario = startScenario;
