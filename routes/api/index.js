@@ -2,9 +2,11 @@ var express = require('express');
 var router = express.Router();
 var jwt = require('jsonwebtoken');
 var response = require('../../response');
-
 var User = require('../../controllers/user');
 var Scenarios = require('../../controllers/scenarios');
+var replaceAllRelByAbs = require('../../utils').replaceAllRelByAbs;
+var uid = require('uid');
+var request = require('request');
 
 function checkAuth(req, res, next) {
     var token = req.cookies.sid;
@@ -44,9 +46,18 @@ router.get('/scenarios', checkAuth, function(req, res) {
     //get user scenarios
     Scenarios.getScenarios(req, res);
 });
+router.get('/scenarios/init', function(req, res) {
+    var proxyId = uid(10);
+    var proxyURL = '/proxy-'+proxyId;
+    var url = decodeURIComponent(req.query.url);
+    router.use(proxyURL, function(req, res, next){
+        req.pipe(request(url)).pipe(res);
+    });
+    res.send({status: 0, proxy: proxyURL});
+});
+
 //todo check permissions
 router.get('/scenarios/:id', checkAuth, function(req, res) {
-    //get user scenario by id
     Scenarios.getScenario(req, res);
 });
 

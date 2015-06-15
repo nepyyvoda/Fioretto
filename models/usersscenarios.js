@@ -26,7 +26,6 @@ function create(nameScenario, scriptScenario, URL_target, mode, resolution, user
 }
 
 function getUserScenarios(userID, callback){
-    console.log('EXECUTE');
     execute('SELECT * FROM usersscenarios WHERE `usersID` = ? AND `deleted` = 0',
         [userID],
         function(err, data) {

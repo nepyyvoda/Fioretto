@@ -14,9 +14,12 @@
                 <div class="card-action ">
                     <div class="row">
                         <p class="scenaries_head">List of target resources</p>
-                        <a href="http://193.110.162.230:3000/" class="waves-effect waves-circle waves-light btn-floating secondary-content tooltipped" data-position="bottom" data-delay="50" data-tooltip="Add">
-                            <i class="mdi-content-add"></i>
-                        </a>
+                        <div class="right-align">
+                            <input id="scenario-url" placeholder="http://example.com" />
+                            <a href="#" onclick="initScenario(this)" class="waves-effect waves-circle waves-light btn-floating secondary-content">
+                                <i class="mdi-content-add"></i>
+                            </a>
+                        </div>
                     </div>
 
                     <div class="row table_scenary">
@@ -44,9 +47,6 @@
                                     </td>
                                     <td class="delete_scenarie">
                                         <a href="#" onclick="deleteScenario(this)"> <i class="small mdi-navigation-close"></i></a>
-                                        <!--<button class="delete-scenario"></button>-->
-                                        <!--<a href="" class="waves-effect waves-light btn delete-scenario" onclick="deleteScenario(this)">onclick="deleteScenario(this)"</a>-->
-                                        <!--onclick="deleteScenario(this)"-->
                                     </td>
                                 </tr>
                             </tbody>
