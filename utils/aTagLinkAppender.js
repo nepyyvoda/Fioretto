@@ -1,8 +1,5 @@
  function urlChecker(url, baseUrl, host){
 
-    if (url.slice(-1)=="/") {
-        url = url.substring(0, url.length - 1);
-    };
     if (baseUrl.slice(-1)=="/") {
         baseUrl = baseUrl.substring(0, baseUrl.length - 1);
     };

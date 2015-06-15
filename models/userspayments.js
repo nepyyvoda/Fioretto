@@ -86,6 +86,60 @@ function remove(id, callback){
     });
 }
 
+function get(id, callback) {
+    execute('SELECT ' +
+     'login' +
+    'sourceID, ' +
+    'receiverID, ' +
+    'servicesPaymentID, ' +
+    'servicesID,' +
+    'start_time, ' +
+    'end_time,' +
+    'transactionTypeID, ' +
+    'statusPaymentID,' +
+    'textStatus,' +
+    'transactionID, ' +
+    'currencyID, ' +
+    'amount, ' +
+    'paymentSchemeID, ' +
+    'commission ' +
+    'FROM userspayments WHERE `id` = ?', [id], function(err, data){
+        if(data.length > 0){
+            callback (false, data);
+        } else {
+            callback (true, 'USER_NOT_FOUND');
+        }
+    });
+}
+
+function history(login, callback){
+    execute('SELECT ' +
+    'id, ' +
+    'sourceID, ' +
+    'receiverID, ' +
+    'servicesPaymentID, ' +
+    'servicesID,' +
+    'start_time, ' +
+    'end_time,' +
+    'transactionTypeID, ' +
+    'statusPaymentID,' +
+    'textStatus,' +
+    'transactionID, ' +
+    'currencyID, ' +
+    'amount, ' +
+    'paymentSchemeID, ' +
+    'commission ' +
+    'FROM userspayments WHERE `login` = ?', [login], function(err, data){
+        console.log("MODEL data - ", data);
+        if(data.length > 0){
+            callback (false, data);
+        } else {
+            callback (true, 'USER_NOT_FOUND');
+        }
+    });
+}
+
 module.exports.create = create;
 module.exports.update = update;
 module.exports.remove = remove;
+module.exports.history = history;

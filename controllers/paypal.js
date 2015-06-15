@@ -81,7 +81,7 @@ function ipn_processor(req, res){
                                 var item_name = req.body['item_name'];
                                 var item_number = req.body['item_number'];
                                 var payment_status = req.body['payment_status'];
-                                var payment_amount = req.body['mc_gross'];
+                                var payment_amount = +req.body['mc_gross'] * 100;
                                 var payment_currency = req.body['mc_currency'];
                                 var txn_id = req.body['txn_id'];
                                 var receiver_email = req.body['receiver_email'];
@@ -108,11 +108,11 @@ function ipn_processor(req, res){
                                         UserModel.get(+user_data_from_ipn.userId, function(statusErr, data){
                                             if(!statusErr){
                                                 //parse to cents
-                                                var newBalance = +data[0].balance + ( +payment_amount * 100);
+                                                var newBalance = +data[0].balance + payment_amount;
                                                 UserModel.update(+user_data_from_ipn.userId, {balance: newBalance}, function(statusErr, data){
                                                     if(!statusErr){
                                                         log.info("USER UPDATE SUCCESS! ", data);
-                                                        UsersPayments.update(userpaymentid, {end_time: new Date(), textStatus: 'complete', amount: newBalance}, function(status, data){
+                                                        UsersPayments.update(userpaymentid, {end_time: new Date(), textStatus: 'complete', amount: payment_amount}, function(status, data){
                                                             if(!status){
                                                                 log.info("USERPAYMENTS UPDATE SUCCESS! ", data);
                                                             } else {

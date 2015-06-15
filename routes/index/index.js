@@ -76,6 +76,8 @@ var  aTagLinkAppender = require('../../utils/aTagLinkAppender.js').aTagLinkAppen
 
 const proxyHost = "127.0.0.1";
 const proxyPort = 9050;
+const servletPageLoader = "/vpn?url=";
+const resourceLoader = "/vpnget?url=";
 
 router.get('/vpn',function(req, res) {
 
@@ -137,8 +139,11 @@ router.get('/vpn',function(req, res) {
         });
         vpnReq.on('error', function(err) {
             callback(err);
+            vpnReq.end(); 
         });
+        vpnReq.end(); 
     }   
+
     var url = new URL(req.query.url);
     var href = url.protocol + '//' + url.host;
 
@@ -148,10 +153,18 @@ router.get('/vpn',function(req, res) {
             res.set(headers);
         };
 
-        data = aTagLinkAppender(data, "/vpn?url=" , href)
-        data = replaceAllRelByAbs(data, "/vpnget?url=" , href);
+        var XMLHttpRequestOverride = '<head> \n<script type="text/javascript">\n(function() { var proxied = window.XMLHttpRequest.prototype.open;\nwindow.XMLHttpRequest.prototype.open = function() { arguments[1] = "' + resourceLoader + '" + arguments[1]  ;return proxied.apply(this, [].slice.call(arguments));};})();\n</script>'.toString();
+        
+        if (data != undefined) {
 
-        res.end(data);
+            data = data.replace("<head>",XMLHttpRequestOverride);
+            data = aTagLinkAppender(data, servletPageLoader , href)
+            data = replaceAllRelByAbs(data, resourceLoader , href);
+
+            res.send(data);
+        } else {
+            res.send("");
+        };
     })
 });
 
@@ -159,20 +172,23 @@ router.get('/vpnget',function(req, res){
 
     var url = new URL(req.query.url);
 
-    var getOptions = function(protocol, host, headers){
-
+    var getOptions = function(protocol, host){
         var href = protocol + "//" + host;
         var Agent;
-
         if (protocol == "http:") {
             Agent = require('socks5-http-client/lib/Agent');
         } else {
             Agent = require('socks5-https-client/lib/Agent');
         };
+        var headers = req.headers;
 
         var options = {
             url: url,
             agentClass: Agent,
+            timeout : 10000,
+            headers:{
+                connection: 'close'
+            },
             agentOptions: {
                 socksHost: proxyHost,
                 socksPort: proxyPort
@@ -181,12 +197,16 @@ router.get('/vpnget',function(req, res){
         return options;
     }
 
-    var tmp = request.get(getOptions(url.protocol, url.host, req.headers));
+    var options = getOptions(url.protocol, url.host);
 
+    var tmp = request.get(options)
+    tmp.on('error', function(err) {
+        console.log(err)
+        tmp.end();
+    })
     tmp.pipe(res);
-
+    tmp.end();
     // request.get(url.href).pipe(res);
-
 });
 
 router.get('/scenario/creating', function(req, res) {

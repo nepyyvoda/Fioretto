@@ -42,36 +42,19 @@
                             </tr>
                             </thead>
 
-                            <tbody>
-                            <tr>
-                                <td>Alvin</td>
-                                <td>Eclair</td>
-                                <td>$0.87</td>
-                                <td>Alvin</td>
-                                <td>Eclair</td>
-                                <td>$0.87</td>
+                            <tbody id="payments-list">
+                            <tr class="template hidden">
+                                <td class="login"></td>
+                                <td class="date"></td>
+                                <td class="transactionid"></td>
+                                <td class="serviceid"></td>
+                                <td class="scheme"></td>
+                                <td class="sum"></td>
                             </tr>
-                            <tr>
-                                <td>Alan</td>
-                                <td>Jellybean</td>
-                                <td>$3.76</td>
-                                <td>Alvin</td>
-                                <td>Eclair</td>
-                                <td>$0.87</td>
-                            </tr>
-                            <tr>
-                                <td>Jonathan</td>
-                                <td>Lollipop</td>
-                                <td>$7.00</td>
-                                <td>Alvin</td>
-                                <td>Eclair</td>
-                                <td>$0.87</td>
-                            </tr>
-
                             </tbody>
                         </table>
                         <div class="sum">
-                            <a class="btn disabled right teal lighten-2 white-text">Sum   <span>200</span>$</a>
+                            <a class="btn disabled right teal lighten-2 white-text" onclick="updatePayment()">Update</a>
                         </div>
                     </div>
                 </div>
