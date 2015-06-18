@@ -29,7 +29,6 @@ function getUserScenarios(userID, callback){
     execute('SELECT * FROM usersscenarios WHERE `usersID` = ? AND `deleted` = 0',
         [userID],
         function(err, data) {
-            console.log('DATA ARGUMENTS', arguments);
             callback(false, data);
         }
     );

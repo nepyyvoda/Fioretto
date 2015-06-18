@@ -32,6 +32,7 @@ connection.connect(function(err) {
 });
 
 connection.on('error', function(err) {
+    console.log('SQL ERR', err);
     if(err.fatal) {
         log.error('DB error. ' + err.code + ': ' + err.stack);
     } else {
@@ -47,6 +48,7 @@ function execute(query, inserts, callback) {
     //var inserts = ['users', 'id', userId];
     sql = mysql.format(sql, inserts);
     connection.query({sql: sql, timeout: config.get('db:queryTimeout')}, function(err, data) {
+        console.log(sql, err);
         if(err) {
             callback(err);
             log.warn('DB error. ' + err.code + ': ' + err.stack);
