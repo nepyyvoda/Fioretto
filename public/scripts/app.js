@@ -179,7 +179,6 @@ function updatePayment(){
                 var $tmp = null;
 
                 $tmp = $template.clone().removeClass("template").removeClass('hidden').addClass('list-row-clone');
-                $tmp.find('.login').text(res.data[i].id);
                 $tmp.find('.date').text(res.data[i].end_time);
                 $tmp.find('.transactionid').text(res.data[i].transactionID);
                 $tmp.find('.serviceid').text(res.data[i].servicesID);
@@ -208,6 +207,7 @@ $(document).ready(function() {
             //email
         });
         updateScenariosList();
+        updatePayment();
     }
     $('#login').submit(function(event) {
         event.preventDefault();
