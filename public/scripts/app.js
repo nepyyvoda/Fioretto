@@ -303,7 +303,8 @@ $(document).ready(function() {
             alert('Pick element for voting');
             return;
         }
-        if(isNaN(parseInt($('[name="count"]').val(), 10))) {
+        var iterations = isNaN(parseInt($('[name="count"]').val(), 10));
+        if(iterations) {
             alert('Choose votes amount');
             return;
         }
@@ -311,7 +312,7 @@ $(document).ready(function() {
             type: "POST",
             url: "/api/scenarios",
             data: JSON.stringify({
-                count: $('[name="count"]').val(),
+                count: iterations,
                 chain: window.eventsChain,
                 url: decodeURIComponent(getParameterByName('url')),
                 name: $('[name="name"]').val(),

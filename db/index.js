@@ -47,6 +47,7 @@ function execute(query, inserts, callback) {
     var sql = query;//"SELECT * FROM ?? WHERE ?? = ?";
     //var inserts = ['users', 'id', userId];
     sql = mysql.format(sql, inserts);
+    console.log(sql);
     connection.query({sql: sql, timeout: config.get('db:queryTimeout')}, function(err, data) {
         console.log(sql, err);
         if(err) {

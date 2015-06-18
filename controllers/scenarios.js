@@ -15,7 +15,12 @@ var availableModes = {
 };
 
 function create(req, res) {
-    ScenariosModel.create(req.body.name, (JSON.stringify(req.body.chain)).toString(), req.body.url, req.body.mode || 0, JSON.stringify(req.body.resolution), req.cookies.userId , req.cookies.count, function(err, data) {
+    var iterations = parseInt(req.body.count, 10);
+    if(isNaN(iterations)) {
+        iterations = 0;
+    }
+
+    ScenariosModel.create(req.body.name, (JSON.stringify(req.body.chain)).toString(), req.body.url, req.body.mode || 0, JSON.stringify(req.body.resolution), req.cookies.userId , iterations, function(err, data) {
         if(!err) {
             res.send(response('SUCCESS', data));
         } else {

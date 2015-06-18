@@ -18,7 +18,7 @@ var allowedUpdateColumns = [
 
 function create(nameScenario, scriptScenario, URL_target, mode, resolution, userID, countTotal, callback){
     execute('INSERT INTO usersscenarios (nameScenario, scriptScenario, URL_target, mode, resolution, usersID, countTotal) VALUES (?, ?, ?, ?, ?, ?, ?)',
-        [nameScenario, scriptScenario, URL_target, mode, resolution, userID],
+        [nameScenario, scriptScenario, URL_target, mode, resolution, userID, countTotal],
         function(err, data) {
             callback(false, data);
         }
