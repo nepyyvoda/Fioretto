@@ -117,7 +117,7 @@ function deleteScenario(el) {
                 alert('deleted');
                 updateScenariosList();
             } else {
-                alert('Error occurred');
+                alert('Request cannot be handled');
             }
         },
         complete: function() {
@@ -157,7 +157,7 @@ function startScenario(el) {
             if(res.status === 0) {
                 alert('started');
             } else {
-                alert('Error occurred');
+                alert('Request cannot be handled');
             }
         },
         complete: function() {
@@ -234,13 +234,15 @@ $(document).ready(function() {
                 if(res.status === 0) {
                     $.cookie('userId', res.data.id);
                     window.location.pathname = '/profile';
+                } else {
+                    alert('Wrong authorization data');
                 }
             },
             complete: function() {
 
             },
             error: function(request, status, error) {
-
+                alert('Network error');
             }
         });
     });
@@ -269,14 +271,17 @@ $(document).ready(function() {
             success: function(res) {
                 if(res.status === 0) {
                     alert('We have send email with confirmation lint to you email. Please check your email box and verify your account');
+                } else {
+                    alert('Request cannot be handled');
                 }
             },
             complete: function() {
             },
             error: function(request, status, error) {
+                alert('Network error');
             }
         });
-    })
+    });
 
     var xpath = null;
     var captcha = {};
@@ -321,12 +326,14 @@ $(document).ready(function() {
             dataType: "json",
             success: function(data){
                 if(data.status == 0) {
-
-                    //window.location = '/scenaries';
+                    alert('Created');
+                    window.location = '/scenaries';
+                } else {
+                    alert('Request cannot be handled');
                 }
             },
-            failure: function(errMsg) {
-
+            error: function(errMsg) {
+                alert('Network error');
             }
         });
     });
@@ -391,7 +398,7 @@ $(document).ready(function() {
                 });
             }
 
-            $('body').append('<div class="qazwsxedcrfvtgb" style="position: absolute; border:1px solid black; left: ' + e.clientX + 'px; top: ' + parseInt(e.clientY + 130, 10) + 'px;">' + eventsChain.length + '</div>');
+            $('body').append('<div class="qazwsxedcrfvtgb" style="position: absolute; border:1px solid black; left: ' + e.clientX + 'px; top: ' + parseInt(e.clientY + 165, 10) + 'px;">' + eventsChain.length + '</div>');
         });
     });
 
@@ -500,13 +507,20 @@ function test()
             data: JSON.stringify(requestData),
             cache: false,
             beforeSend: function (request){
-                         },
-            success: function(res) {
-                        if(res.status === 0){
 
-                        }
-                        },
-            complete: function() {  },
-            error: function(request, status, error) {  }
+            },
+            success: function(res) {
+                if(res.status === 0){
+                    alert('Updated');
+                } else {
+                    alert('Request cannot be handled');
+                }
+            },
+            complete: function() {
+
+            },
+            error: function(request, status, error) {
+                alert('Network error');
+            }
         })
 }

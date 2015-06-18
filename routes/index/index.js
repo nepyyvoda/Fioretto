@@ -213,7 +213,8 @@ router.get('/scenario/creating', function(req, res) {
     res.render('scenario/generator', {
         title: 'Programing scenario',
         proxyUrl: decodeURIComponent(req.query.proxy),
-        name: 'Creating scenario'
+        name: 'Creating scenario',
+        layout: false
     });
 });
 
