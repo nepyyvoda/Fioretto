@@ -489,7 +489,7 @@ function test()
 {
     var requestData = {
         id: $.cookie('userId'),
-        email: $('#eml').val(),
+        email: $('#user-email').val(),
         password: $('#password').val(),
         password_new: $('#password-new').val(),
         phone: $('#phone').val(),
