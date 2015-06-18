@@ -84,19 +84,20 @@ function startScenario(req, res) {
                 resolution: scenario.resolution,
                 eventsChain: JSON.parse(scenario.scriptScenario)
             });
-
             neededDataForVoting.vote = {
                 name: scenario.nameScenario,
                 votes: scenario.countTotal,
                 mode: scenario.mode,
                 url: scenario.URL_target,
-                resolution: scenario.resolution
+                resolution: scenario.resolution,
+                eventsChain: JSON.parse(scenario.scriptScenario)
             };
             neededDataForVoting.scenario = script;
             neededDataForVoting.node = {
                 ip: config.get('workerServer:ip'),
                 port: config.get('workerServer:port')
             };
+            console.log(neededDataForVoting);
             scenarioClient.sendToNodeVoting(neededDataForVoting, res, sender);
         }
     });
@@ -108,11 +109,11 @@ sender.err = callSendError;
 sender.data = callSendData;
 
 function callSendData(msg, res, data){
-    res.send(response('SUCCESS'));
+    res.send(response('SUCCESS', data));
 }
 
 function callSendError(msg, res){
-    res.send(response('INTERNAL_SERVER_ERROR'));
+    res.send(response('INTERNAL_SERVER_ERROR', data));
 }
 
 module.exports.create = create;
