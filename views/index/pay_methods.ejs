@@ -9,14 +9,16 @@
 					<div class="row">
 						<div class="amount_currency">
 							<!--<a class="col s4 m1 offset-m3 btn-large btn_count disabled">200</a>-->
-							<div class="col s8 m8 offset-m4">
-								<form class="col s2 m2">
-									<input type="text" class="white amount">
-								</form>
-								<select class="white col s4 m4 browser-default currency">
-									<option value="1" selected>USD</option>
-									<!--<option value="2">EUR</option>-->
-								</select>
+							<div class="col s4 m4 offset-m4">
+								<div class="">
+									<form class="col s4 m4 offset-m2">
+										<input type="text" class="white amount">
+									</form>
+									<select class="white col s4 m4 browser-default currency">
+										<option value="1" selected>USD</option>
+										<!--<option value="2">EUR</option>-->
+									</select>
+								</div>
 							</div>
 						</div>
 					</div>
@@ -36,8 +38,8 @@
 							<input type="hidden" name="bn" value="JavaScriptButton_buynow">
 						</form>
 						<a class="teal accent-4 paypal btn-large"></a>
-						<a class="teal accent-4 webmoney btn-large"></a>
-						<a class="teal accent-4 mastercard btn-large"></a>
+						<a class="teal accent-4 webmoney btn-large modal-trigger" href="#refill"></a>
+						<a class="teal accent-4 mastercard btn-large modal-trigger" href="#refill"></a>
 					</div>
 				</div>
 			</div>
@@ -45,3 +47,13 @@
 			</div>
 		</div>
 	 </div>
+<div id="refill" class="modal small">
+	<div class="modal-content">
+		<a href="#!" class="right modal-close close_btn"> <i class="small  mdi-content-clear"></i></a>
+		<h4>Refill balance</h4>
+		<p>Refill method will be available soon</p>
+	</div>
+	<div class="modal-footer">
+		<!--<a href="#!" class=" modal-action modal-close waves-effect waves-green btn-flat">Ok</a>-->
+	</div>
+</div>
