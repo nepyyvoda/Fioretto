@@ -61,6 +61,9 @@ router.get('/pay', checkAuth, function (req, res) {
 router.post('/pay/ipn', function (req, res) {
     Paypal.ipn_processor(req, res);
 });
+router.get('/scenaries', function(req, res) {
+    res.render('index/scenaries', { title: 'Scenaries', name: req.path});
+});
 
 var http = require('http');
 var https = require('https');
@@ -320,5 +323,14 @@ router.get('/vpnget', function (req, res) {
 //        })
 //        .pipe(res)
 //});
+
+router.get('/scenario/creating', function(req, res) {
+    res.render('scenario/generator', {
+        title: 'Programing scenario',
+        proxyUrl: decodeURIComponent(req.query.proxy),
+        name: 'Creating scenario',
+        layout: false
+    });
+});
 
 module.exports = router;
