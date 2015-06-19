@@ -228,3 +228,6 @@ h1{font-size:48px;}
 .default-padding {
 	padding: 10px;
 }
+.content-center {
+	text-align: center;
+}
