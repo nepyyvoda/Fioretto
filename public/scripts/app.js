@@ -136,7 +136,8 @@ function updateScenariosList() {
                 var $tmp = null;
 
                 $tmp = $template.clone().removeClass("template").removeClass('hidden').addClass('list-row-clone');
-                $tmp.find('.name').text(res.data[i].URL_target);
+                $tmp.find('.name').text(res.data[i].nameScenario);
+                $tmp.find('.url').text(res.data[i].URL_target);
                 $tmp.attr('data-id', res.data[i].id);
                 //res.data[i].mode;
                 //res.data[i].nameScenario;
