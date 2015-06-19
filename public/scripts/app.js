@@ -491,9 +491,7 @@ function test()
         id: $.cookie('userId'),
         email: $('#user-email').val(),
         password: $('#password').val(),
-        password_new: $('#password-new').val(),
-        phone: $('#phone').val(),
-        skype: $('#skype').val()
+        password_new: $('#password-new').val()
     };
 
     requestData.password = (CryptoJS.SHA256(requestData.password)).toString();

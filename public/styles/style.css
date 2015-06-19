@@ -223,3 +223,8 @@ h1{font-size:48px;}
 .filter_date.col{padding: 0;}
 .hidden{display: none;}
 #scenario-url{margin: 7px;}
+
+/*----------------------helpers----------------*/
+.default-padding {
+	padding: 10px;
+}
