@@ -105,7 +105,7 @@ function getPassword(id, callback) {
 }
 
 function get(id, callback) {
-    execute('SELECT login, email, balance FROM users WHERE `id` = ?', [id], function(err, data){
+    execute('SELECT login, email, phone, skype, balance FROM users WHERE `id` = ?', [id], function(err, data){
         if(!err){
             callback (false, data);
         } else {

@@ -9,7 +9,9 @@ $(document).ready(function() {
                 var userDeposit = res.data.balance/100;
                 $('.balance span').text(userDeposit.toFixed(2));
                 $('.profile_name').text(res.data.login);
-                $('#user-email').val(res.data.email);
+                $('#eml').val(res.data.email);
+                $('#phone').val(res.data.phone);
+                $('#skype').val(res.data.skype);
             }
             //email
         });
@@ -109,7 +111,7 @@ function test()
                          },
             success: function(res) {
                         if(res.status === 0){
-
+                          alert('Data changed successfully');
                         }
                         },
             complete: function() {  },
