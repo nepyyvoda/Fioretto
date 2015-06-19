@@ -7,6 +7,18 @@ var config = require('../../config');
 var Paypal = require('../../controllers/paypal');
 var User = require('../../controllers/user');
 var jwt = require('jsonwebtoken');
+
+function isLogged(sid, callback) {
+    var token = sid;
+    jwt.verify(token, 'secret', function (err, decoded) {
+        if (decoded) {
+            callback(true);
+        } else {
+            callback(false);
+        }
+    });
+}
+
 function checkAuth(req, res, next) {
     var token = req.cookies.sid;
     jwt.verify(token, 'secret', function (err, decoded) {
@@ -20,7 +32,13 @@ function checkAuth(req, res, next) {
 }
 /* GET home page. */
 router.get('/', function (req, res) {
-    res.render('index/index', {title: 'Fioretto', layout: false, name: req.path});
+    isLogged(req.cookies.sid, function(state) {
+        if(state === true) {
+            res.redirect('/profile');
+        } else {
+            res.render('index/index', {title: 'Fioretto', layout: false, name: req.path});
+        }
+    });
 });
 router.get('/profile', checkAuth, function (req, res) {
     res.render('index/profile', {title: 'Profile', name: req.path});
@@ -29,13 +47,31 @@ router.get('/pay_methods', checkAuth, function (req, res) {
     res.render('index/pay_methods', {title: 'Pay methods', name: req.path});
 });
 router.get('/registration', function (req, res) {
-    res.render('index/registration', {title: 'Registration', layout: false, name: req.path});
+    isLogged(req.cookies.sid, function(state) {
+        if(state === true) {
+            res.redirect('/profile');
+        } else {
+            res.render('index/registration', {title: 'Registration', layout: false, name: req.path});
+        }
+    });
 });
 router.get('/login', function (req, res) {
-    res.render('index/login', {title: 'Login form', layout: false, name: req.path});
+    isLogged(req.cookies.sid, function(state) {
+        if(state === true) {
+            res.redirect('/profile');
+        } else {
+            res.render('index/login', {title: 'Login form', layout: false, name: req.path});
+        }
+    });
 });
 router.get('/password_recovery', function (req, res) {
-    res.render('index/password_recovery', {title: 'Password recovery', layout: false, name: req.path});
+    isLogged(req.cookies.sid, function(state) {
+        if(state === true) {
+            res.redirect('/profile');
+        } else {
+            res.render('index/password_recovery', {title: 'Password recovery', layout: false, name: req.path});
+        }
+    });
 });
 router.get('/new_pass', function (req, res) {
     res.render('index/new_pass', {title: 'New password', layout: false, name: req.path});
@@ -61,6 +97,9 @@ router.get('/pay', checkAuth, function (req, res) {
 router.post('/pay/ipn', function (req, res) {
     Paypal.ipn_processor(req, res);
 });
+router.get('/scenaries', checkAuth, function(req, res) {
+    res.render('index/scenaries', { title: 'Scenaries', name: req.path});
+});
 
 var http = require('http');
 var https = require('https');
@@ -76,7 +115,7 @@ const proxyPort = config.get('vpn:proxyPort');
 const servletPageLoader = "/vpn?url=";
 const resourceLoader = "/vpnget?url=";
 
-router.get('/vpn', function (req, res) {
+router.get('/vpn', checkAuth, function (req, res) {
 
     var url = new URL(req.query.url);
 
@@ -155,7 +194,6 @@ router.get('/vpn', function (req, res) {
 
             vpnRes.on('end', function () {
                 var buffer = Buffer.concat(chunks);
-
                 var headers = vpnRes.headers;
                 var encoding = vpnRes.headers['content-encoding'];
                 if (encoding == 'gzip') {
@@ -233,7 +271,7 @@ router.get('/vpn', function (req, res) {
 })
 ;
 
-router.get('/vpnget', function (req, res) {
+router.get('/vpnget', checkAuth, function (req, res) {
 
     var url = new URL(req.query.url);
 
@@ -260,7 +298,6 @@ router.get('/vpnget', function (req, res) {
     };
 
     var requestWithEncoding = function (options, callback) {
-
         var vpnReq = request.get(options);
 
         vpnReq.on('response', function (vpnRes) {
@@ -383,7 +420,7 @@ router.get('/vpnget', function (req, res) {
 //        .pipe(res)
 //});
 
-router.get('/scenario/creating', function (req, res) {
+router.get('/scenario/creating', checkAuth, function(req, res) {
     res.render('scenario/generator', {
         title: 'Programing scenario',
         proxyUrl: decodeURIComponent(req.query.proxy),

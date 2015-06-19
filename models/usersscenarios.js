@@ -18,7 +18,7 @@ var allowedUpdateColumns = [
 
 function create(nameScenario, scriptScenario, URL_target, mode, resolution, userID, countTotal, callback){
     execute('INSERT INTO usersscenarios (nameScenario, scriptScenario, URL_target, mode, resolution, usersID, countTotal) VALUES (?, ?, ?, ?, ?, ?, ?)',
-        [nameScenario, scriptScenario, URL_target, mode, resolution, userID],
+        [nameScenario, scriptScenario, URL_target, mode, resolution, userID, countTotal],
         function(err, data) {
             callback(false, data);
         }
@@ -29,7 +29,6 @@ function getUserScenarios(userID, callback){
     execute('SELECT * FROM usersscenarios WHERE `usersID` = ? AND `deleted` = 0',
         [userID],
         function(err, data) {
-            console.log('DATA ARGUMENTS', arguments);
             callback(false, data);
         }
     );

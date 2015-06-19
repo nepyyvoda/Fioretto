@@ -98,9 +98,8 @@ function initScenario(el) {
     var url = $('#scenario-url').val();
     if(validateURL(url)) {
         $.getJSON('/api/scenarios/init?url=' + encodeURIComponent($.trim(url)), function(res) {
-            console.log(res);
             if(res.status == 0) {
-                window.location = 'scenario/creating?url=' + encodeURIComponent($.trim(url)) + '&proxy=' + encodeURIComponent(res.proxy);
+                window.location = 'scenario/creating?url=' + encodeURIComponent($.trim(url)) + '&proxy=/vpn?url=' + $.trim(url);
             }
         })
     }
@@ -179,7 +178,6 @@ function updatePayment(){
                 var $tmp = null;
 
                 $tmp = $template.clone().removeClass("template").removeClass('hidden').addClass('list-row-clone');
-                $tmp.find('.login').text(res.data[i].id);
                 $tmp.find('.date').text(res.data[i].end_time);
                 $tmp.find('.transactionid').text(res.data[i].transactionID);
                 $tmp.find('.serviceid').text(res.data[i].servicesID);
@@ -208,6 +206,7 @@ $(document).ready(function() {
             //email
         });
         updateScenariosList();
+        updatePayment();
     }
     $('#login').submit(function(event) {
         event.preventDefault();
@@ -303,7 +302,8 @@ $(document).ready(function() {
             alert('Pick element for voting');
             return;
         }
-        if(isNaN(parseInt($('[name="count"]').val(), 10))) {
+        var iterations = isNaN(parseInt($('[name="count"]').val(), 10));
+        if(iterations) {
             alert('Choose votes amount');
             return;
         }
@@ -311,7 +311,7 @@ $(document).ready(function() {
             type: "POST",
             url: "/api/scenarios",
             data: JSON.stringify({
-                count: $('[name="count"]').val(),
+                count: iterations,
                 chain: window.eventsChain,
                 url: decodeURIComponent(getParameterByName('url')),
                 name: $('[name="name"]').val(),
@@ -489,11 +489,9 @@ function test()
 {
     var requestData = {
         id: $.cookie('userId'),
-        email: $('#eml').val(),
+        email: $('#user-email').val(),
         password: $('#password').val(),
-        password_new: $('#password-new').val(),
-        phone: $('#phone').val(),
-        skype: $('#skype').val()
+        password_new: $('#password-new').val()
     };
 
     requestData.password = (CryptoJS.SHA256(requestData.password)).toString();
