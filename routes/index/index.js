@@ -92,7 +92,7 @@ router.get('/logout', checkAuth, function (req, res) {
     User.logout(req, res);
 });
 router.get('/pay', checkAuth, function (req, res) {
-    res.render('index/pay', {title: 'Paypal', name: req.path});
+    res.redirect('/profile');
 });
 router.post('/pay/ipn', function (req, res) {
     Paypal.ipn_processor(req, res);
@@ -110,10 +110,10 @@ var replaceAllRelByAbs = require('../../utils/').replaceAllRelByAbs;
 var aTagLinkAppender = require('../../utils/aTagLinkAppender.js').aTagLinkAppender;
 var iconv = require('iconv-lite');
 
-const proxyHost = config.get('vpn:proxyHost');
-const proxyPort = config.get('vpn:proxyPort');
-const servletPageLoader = "/vpn?url=";
-const resourceLoader = "/vpnget?url=";
+var proxyHost = config.get('vpn:proxyHost');
+var proxyPort = config.get('vpn:proxyPort');
+var servletPageLoader = "/vpn?url=";
+var resourceLoader = "/vpnget?url=";
 
 router.get('/vpn', checkAuth, function (req, res) {
 
@@ -126,7 +126,7 @@ router.get('/vpn', checkAuth, function (req, res) {
         var htmlMatch = htmlPage.match(redExp);
         var headersMatch = headers.toString().match(redExp);
 
-        const DetectIfStringContainCharset = 8;
+        var DetectIfStringContainCharset = 8;
 
         if (htmlMatch != null && htmlMatch != undefined && htmlMatch[0].length > DetectIfStringContainCharset) {
             htmlMatch = htmlMatch[0];

@@ -27,24 +27,27 @@
                         <table class="centered bordered">
                             <thead>
                                 <tr>
+                                    <th data-field="name">Name</th>
                                     <th data-field="id">Address of the target site</th>
-                                    <th data-field="name">Script parameters</th>
+                                    <!--<th data-field="name">Script parameters</th>-->
                                     <th data-field="price">Start / Stop</th>
-                                    <th data-field="price">Progress</th>
+                                    <!--<th data-field="price">Progress</th>-->
                                     <th data-field="price">Delete</th>
                                 </tr>
                             </thead>
 
                             <tbody id="scenarios-list">
                                 <tr class="template hidden">
+
                                     <td class="name"></td>
-                                    <td><a href="#settings_window" class="waves-effect waves-light btn modal-trigger">setting</a></td>
+                                    <td class="url"></td>
+                                    <!--<td><a href="#settings_window" class="waves-effect waves-light btn modal-trigger">setting</a></td>-->
                                     <td><a href="#" onclick="startScenario(this)" class="waves-effect waves-light btn">start</a></td>
-                                    <td>
+                                    <!--<td>-->
                                         <!--<div class="progress progress_persent">-->
-                                            <!--<div class="determinate center-align" style="width: 70%">70%</div>-->
+                                        <!--<div class="determinate center-align" style="width: 70%">70%</div>-->
                                         <!--</div>-->
-                                    </td>
+                                    <!--</td>-->
                                     <td class="delete_scenarie">
                                         <a href="#" onclick="deleteScenario(this)"> <i class="small mdi-navigation-close"></i></a>
                                     </td>
