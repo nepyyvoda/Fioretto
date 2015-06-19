@@ -1,12 +1,16 @@
 {
-    "port": 3010,
-    "db": {
-        "host": "192.168.2.101",
-        "port": "3306",
-        "user": "fioretto",
-        "password": "T6sJb8bzLipo",
-        "database": "fioretto",
-        "queryTimeout": 30000
-    },
-    "loglvl": "info"
+  "port": 3010,
+  "db": {
+    "host": "192.168.2.101",
+    "port": "3306",
+    "user": "fioretto",
+    "password": "T6sJb8bzLipo",
+    "database": "fioretto",
+    "queryTimeout": 30000
+  },
+  "vpn": {
+    "proxyHost": "127.0.0.1",
+    "proxyPort": 9050
+  },
+  "loglvl": "info"
 }

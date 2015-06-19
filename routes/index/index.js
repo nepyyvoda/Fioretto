@@ -74,22 +74,10 @@ router.get('/password_recovery', function (req, res) {
     });
 });
 router.get('/new_pass', function (req, res) {
-    isLogged(req.cookies.sid, function(state) {
-        if(state === true) {
-            res.redirect('/profile');
-        } else {
-            res.render('index/new_pass', {title: 'New password', layout: false, name: req.path});
-        }
-    });
+    res.render('index/new_pass', {title: 'New password', layout: false, name: req.path});
 });
 router.get('/social_networks', function (req, res) {
-    isLogged(req.cookies.sid, function(state) {
-        if(state === true) {
-            res.redirect('/profile');
-        } else {
-            res.render('index/social_networks', {title: 'Social networks', layout: false, name: req.path});
-        }
-    });
+    res.render('index/social_networks', {title: 'Social networks', layout: false, name: req.path});
 });
 router.get('/interface', checkAuth, function (req, res) {
     res.render('index/interface', {title: 'Interface', name: req.path});
@@ -118,18 +106,51 @@ var https = require('https');
 var request = require('request');
 var URL = require('url-parse');
 var zlib = require('zlib');
-var random_ua = require('random-ua');
 var replaceAllRelByAbs = require('../../utils/').replaceAllRelByAbs;
 var aTagLinkAppender = require('../../utils/aTagLinkAppender.js').aTagLinkAppender;
+var iconv = require('iconv-lite');
 
-const proxyHost = "127.0.0.1";
-const proxyPort = 9050;
+const proxyHost = config.get('vpn:proxyHost');
+const proxyPort = config.get('vpn:proxyPort');
 const servletPageLoader = "/vpn?url=";
 const resourceLoader = "/vpnget?url=";
 
 router.get('/vpn', checkAuth, function (req, res) {
 
     var url = new URL(req.query.url);
+
+    var getPageCharset = function (htmlPage, headers) {
+
+        var redExp = new RegExp(/charset=.[a-z0-9-]*/g);
+
+        var htmlMatch = htmlPage.match(redExp);
+        var headersMatch = headers.toString().match(redExp);
+
+        const DetectIfStringContainCharset = 8;
+
+        if (htmlMatch != null && htmlMatch != undefined && htmlMatch[0].length > DetectIfStringContainCharset) {
+            htmlMatch = htmlMatch[0];
+            if (htmlMatch.indexOf('"') >= 0) {
+                return htmlMatch.replace('charset="', "");
+            } else if (htmlMatch.indexOf("'") >= 0) {
+                return htmlMatch.replace("charset='", "");
+            } else {
+                return htmlMatch.replace("charset=", "");
+            }
+
+        } else if (headersMatch != null && headersMatch != undefined && headersMatch[0].length > DetectIfStringContainCharset) {
+            headersMatch = headersMatch[0];
+            if (headersMatch.indexOf('"') >= 0) {
+                return headersMatch.replace('charset="', "");
+            } else if (headersMatch.indexOf("'") >= 0) {
+                return headersMatch.replace("charset='", "");
+            } else {
+                return headersMatch.replace("charset=", "");
+            }
+        } else {
+            return false;
+        }
+    };
 
     var getOptions = function (protocol, url) {
 
@@ -144,7 +165,7 @@ router.get('/vpn', checkAuth, function (req, res) {
         var headers = {
             "accept-charset": "utf-8;q=0.7,*;q=0.3",
             "accept": "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8",
-            "user-agent": random_ua.generate(),
+            "user-agent": req.headers['user-agent'],
             "accept-encoding": "gzip,deflate",
             "connection": 'close'
         };
@@ -177,14 +198,43 @@ router.get('/vpn', checkAuth, function (req, res) {
                 var encoding = vpnRes.headers['content-encoding'];
                 if (encoding == 'gzip') {
                     zlib.gunzip(buffer, function (err, decoded) {
-                        callback(err, decoded && decoded.toString(), headers);
+
+                        var charset = getPageCharset(decoded.toString(), headers);
+
+                        if (charset != false) {
+                            var str = iconv.decode(decoded, charset);
+                            callback(err, str && str.toString(), headers);
+                        } else {
+                            callback(err, decoded && decoded.toString(), headers);
+                        }
                     });
                 } else if (encoding == 'deflate') {
                     zlib.inflate(buffer, function (err, decoded) {
-                        callback(err, decoded && decoded.toString(), headers);
+
+                        var charset = getPageCharset(decoded.toString(), headers);
+
+                        if (charset != false) {
+                            var str = iconv.decode(decoded, charset);
+                            callback(err, str && str.toString(), headers);
+                        } else {
+                            callback(err, decoded && decoded.toString(), headers);
+                        }
                     })
                 } else {
-                    callback(null, buffer.toString(), headers);
+
+                    var charset = getPageCharset(buffer.toString(), headers);
+
+                    if (charset != false) {
+
+                        var str = iconv.decode(buffer.toString(), charset);
+                        callback(null, str && str.toString(), headers);
+
+                    } else {
+                        
+                        callback(null, buffer.toString(), headers);
+
+                    }
+
                 }
             });
         });
@@ -200,9 +250,8 @@ router.get('/vpn', checkAuth, function (req, res) {
     requestWithEncoding(getOptions(url.protocol, url.href), function (err, data, headers) {
 
         if (headers != undefined) {
-            console.log(headers);
             headers['content-encoding'] = null;
-            res.set(null);
+            res.set(headers);
         }
         var XMLHttpRequestOverride = '<head> \n<script type="text/javascript">\n(function() { var proxied = window.XMLHttpRequest.prototype.open;\nwindow.XMLHttpRequest.prototype.open = function() { arguments[1] = "' + resourceLoader + '" + arguments[1]  ;return proxied.apply(this, [].slice.call(arguments));};})();\n</script>'.toString();
 
@@ -219,7 +268,8 @@ router.get('/vpn', checkAuth, function (req, res) {
         }
     });
 
-});
+})
+;
 
 router.get('/vpnget', checkAuth, function (req, res) {
 
@@ -282,7 +332,7 @@ router.get('/vpnget', checkAuth, function (req, res) {
 
     var options = getOptions(url.protocol);
 
-    var href = url.protocol  + "//" +url.href;
+    var href = url.protocol + "//" + url.href;
 
     try {
 
@@ -307,7 +357,6 @@ router.get('/vpnget', checkAuth, function (req, res) {
                     res.set(headers);
                 }
 
-
                 if (data != undefined) {
 
                     data = data.replace(/url\(\//g, "url(" + resourceLoader + url.protocol + "//" + url.host + "/");
@@ -328,7 +377,6 @@ router.get('/vpnget', checkAuth, function (req, res) {
 
 
 });
-
 //router.post('/vpnget', function (req, res){
 //
 //    var url = new URL(req.query.url);
