@@ -302,8 +302,8 @@ $(document).ready(function() {
             alert('Pick element for voting');
             return;
         }
-        var iterations = isNaN(parseInt($('[name="count"]').val(), 10));
-        if(iterations) {
+        var iterations = parseInt($('[name="count"]').val(), 10);
+        if(isNaN(iterations)) {
             alert('Choose votes amount');
             return;
         }
