@@ -121,7 +121,7 @@ router.get('/vpn', checkAuth, function (req, res) {
 
     var getPageCharset = function (htmlPage, headers) {
 
-        var redExp = new RegExp(/charset=.[a-z0-9-]*/g);
+        var redExp = new RegExp(/charset=.[A-Za-z0-9-]*/g);
 
         var htmlMatch = htmlPage.match(redExp);
         var headersMatch = headers.toString().match(redExp);
@@ -336,12 +336,12 @@ router.get('/vpnget', checkAuth, function (req, res) {
 
     try {
 
-        if (href.indexOf(".jpg") >= 0 ||
-            href.indexOf(".gif") >= 0 ||
-            href.indexOf(".png") >= 0 ||
-            href.indexOf(".jpeg") >= 0 ||
-            href.indexOf(".ico") >= 0 ||
-            href.indexOf(".svg") >= 0) {
+        if (href.toLowerCase().indexOf(".jpg") >= 0 ||
+            href.toLowerCase().indexOf(".gif") >= 0 ||
+            href.toLowerCase().indexOf(".png") >= 0 ||
+            href.toLowerCase().indexOf(".jpeg") >= 0 ||
+            href.toLowerCase().indexOf(".ico") >= 0 ||
+            href.toLowerCase().indexOf(".svg") >= 0) {
 
             request.get(options)
                 .on('error', function (err) {
@@ -377,6 +377,7 @@ router.get('/vpnget', checkAuth, function (req, res) {
 
 
 });
+
 //router.post('/vpnget', function (req, res){
 //
 //    var url = new URL(req.query.url);
