@@ -98,9 +98,8 @@ function initScenario(el) {
     var url = $('#scenario-url').val();
     if(validateURL(url)) {
         $.getJSON('/api/scenarios/init?url=' + encodeURIComponent($.trim(url)), function(res) {
-            console.log(res);
             if(res.status == 0) {
-                window.location = 'scenario/creating?url=' + encodeURIComponent($.trim(url)) + '&proxy=' + encodeURIComponent(res.proxy);
+                window.location = 'scenario/creating?url=' + encodeURIComponent($.trim(url)) + '&proxy=/vpn?url=' + $.trim(url);
             }
         })
     }
