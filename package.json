@@ -25,6 +25,7 @@
     "http": "0.0.0",
     "http-proxy": "^1.11.1",
     "https": "~1.0.0",
+    "iconv-lite": "^0.4.10",
     "jsonwebtoken": "^5.0.0",
     "morgan": "^1.5.2",
     "mysql": "^2.6.1",
