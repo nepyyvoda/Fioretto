@@ -114,26 +114,6 @@ function get(id, callback) {
 
 function history(obj, callback){
 
-    if(typeof obj.end_time_from == "undefined")
-        obj.end_time_from = new Date(0);
-    else
-        obj.end_time_from = new Date(+obj.end_time_from);
-
-    if(typeof obj.end_time_to == "undefined")
-        obj.end_time_to = new Date();
-    else
-        obj.end_time_to = new Date(+obj.end_time_to);
-
-    if(typeof obj.sized == "undefined")
-        obj.sized = 10;
-    if(typeof obj.sizeof == "undefined")
-        obj.sizeof = 0;
-    if(obj.end_time_from > obj.end_time_to){
-        var swap = obj.end_time_from;
-        obj.end_time_from = obj.end_time_to;
-        obj.end_time_to = swap;
-    }
-
     execute('SELECT * ' +
     'FROM userspayments JOIN transactiontype ON userspayments.transactionTypeID = transactiontype.id WHERE userspayments.login = ? AND userspayments.end_time BETWEEN ? AND ? LIMIT ?,?',
         [obj.login, obj.end_time_from, obj.end_time_to, obj.sizeof, obj.sized], function(err, data){
