@@ -4,7 +4,7 @@
   "description": "Fiaretto",
   "main": "bin/www.js",
   "scripts": {
-    "start": "node ./bin/www",
+    "start": "forever ./bin/www.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "bin": {
@@ -49,7 +49,9 @@
     "winston": "^1.0.0",
     "zlib": "~1.0.5"
   },
-  "devDependencies": {},
+  "devDependencies": {
+    "forever": "^0.14.1"
+  },
   "keywords": [
     "Fiaretto"
   ],
