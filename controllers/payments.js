@@ -11,8 +11,14 @@ function get(req, res){
 
 
 function history(req, res){
-    UsersPayments.history(req.params.login, function(err, data){
-        console.log('Payments controller: data history -', data);
+    //console.log(req.query.from + " : " + req.query.to);
+    var obj = {};
+    obj.login = req.params.id;
+    obj.end_time_from = req.query.from;
+    obj.end_time_to = req.query.to;
+
+    UsersPayments.history(obj, function(err, data){
+        //console.log('Payments controller: data history -', data);
         if(!err) {
             res.send(response('SUCCESS', data));
         } else {
