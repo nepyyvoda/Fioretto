@@ -12,34 +12,44 @@ var mysql      = require('mysql');
 //});
 //module.exports = AppModel;
 console.log(config);
-var connection = mysql.createConnection({
-    host     : config.get('db:host'),
-    port     : config.get('db:port'),
-    user     : config.get('db:user'),
-    password : config.get('db:password'),
-    database : config.get('db:database')
-});
-connection.connect(function(err) {
-    if (err) {
-        if(err.fatal) {
-            log.error('DB error. Connect: ' + err.stack);
-        } else {
-            log.warn('DB error. Connect: ' + err.stack);
+var connection;
+
+function handleDisconnect() {
+    connection = mysql.createConnection({
+        host     : config.get('db:host'),
+        port     : config.get('db:port'),
+        user     : config.get('db:user'),
+        password : config.get('db:password'),
+        database : config.get('db:database')
+    });
+    connection.connect(function(err) {
+        if (err) {
+            if(err.fatal) {
+                log.error('DB error. Connect: ' + err.stack);
+            } else {
+                log.warn('DB error. Connect: ' + err.stack);
+            }
+            return;
         }
-        return;
-    }
 
-    log.info('Connected as id ' + connection.threadId);
-});
+        log.info('Connected as id ' + connection.threadId);
+    });
 
-connection.on('error', function(err) {
-    console.log('SQL ERR', err);
-    if(err.fatal) {
-        log.error('DB error. ' + err.code + ': ' + err.stack);
-    } else {
-        log.warn('DB error. ' + err.code + ': ' + err.stack);
-    }
-});
+    connection.on('error', function(err) {
+        console.log('SQL ERR', err);
+        if(err.code === 'PROTOCOL_CONNECTION_LOST') {
+            handleDisconnect();
+        }
+        if(err.fatal) {
+            log.error('DB error. ' + err.code + ': ' + err.stack);
+        } else {
+            log.warn('DB error. ' + err.code + ': ' + err.stack);
+        }
+    });
+}
+
+
+
 /*
 * param query (String)
 * param inserts (Array)
@@ -60,5 +70,7 @@ function execute(query, inserts, callback) {
         }
     })
 }
+
+handleDisconnect();
 
 module.exports.execute = execute;
