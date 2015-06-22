@@ -82,7 +82,7 @@ router.put('/users/:id', checkAuth, checkPermission, function(req, res) {
     User.update(req, res);
 });
 
-router.get('/user/payments/:login', checkAuth, function(req, res){
+router.get('/user/:id/payments/', checkAuth, function(req, res){
     Payments.history(req, res);
 });
 

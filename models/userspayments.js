@@ -112,26 +112,13 @@ function get(id, callback) {
     });
 }
 
-function history(login, callback){
-    execute('SELECT ' +
-    'id, ' +
-    'sourceID, ' +
-    'receiverID, ' +
-    'servicesPaymentID, ' +
-    'servicesID,' +
-    'start_time, ' +
-    'end_time,' +
-    'transactionTypeID, ' +
-    'statusPaymentID,' +
-    'textStatus,' +
-    'transactionID, ' +
-    'currencyID, ' +
-    'amount, ' +
-    'paymentSchemeID, ' +
-    'commission ' +
-    'FROM userspayments WHERE `login` = ?', [login], function(err, data){
-        console.log("MODEL data - ", data);
-        if(data.length > 0){
+function history(obj, callback){
+
+    execute('SELECT * ' +
+    'FROM userspayments JOIN transactiontype ON userspayments.transactionTypeID = transactiontype.id WHERE userspayments.login = ? AND userspayments.end_time BETWEEN ? AND ? LIMIT ?,?',
+        [obj.login, obj.end_time_from, obj.end_time_to, obj.sizeof, obj.sized], function(err, data){
+        //console.log("MODEL data - ", data);
+        if(data.length >= 0){
             callback (false, data);
         } else {
             callback (true, 'USER_NOT_FOUND');

@@ -169,7 +169,16 @@ function startScenario(el) {
 }
 
 function updatePayment(){
-    $.getJSON('/api/user/payments/' + $.cookie('userId'), function(res){
+    var datePickerFromTo = {};
+    var datePicker = $(".picker__day--selected");
+    var reqPayments = "";
+    if(datePicker.length === 2){
+        console.log(datePicker.first().attr("data-pick") + " : " + datePicker.last().attr("data-pick"));
+        datePickerFromTo.from = datePicker.first().attr("data-pick");
+        datePickerFromTo.to = datePicker.last().attr("data-pick");
+    }
+
+    $.getJSON('/api/user/' + $.cookie('userId') + '/payments', datePickerFromTo,function(res){
         console.log(res);
         $('#payments-list').find('.list-row-clone').remove();
         if(Object.keys(res.data).length > 0) {
@@ -188,6 +197,8 @@ function updatePayment(){
                 $tmp.attr('data-id', res.data[i].id);
                 //res.data[i].mode;
                 //res.data[i].nameScenario;
+                if(res.data[i].transactionTypeID === 2)
+                    $tmp.addClass("red").addClass("lighten-3");
                 $tmp.appendTo('#payments-list');
             }
 
