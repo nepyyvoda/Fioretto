@@ -112,7 +112,7 @@ h1{font-size:48px;}
 	/*----------------Interface-------------*/
 .search_url .input-field input[type=search]{padding-right: 30px;}
 .search_line{height: 40px; margin-bottom:0px;}
-.search_line nav,.search_line nav .nav-wrapper i{height:34px; line-height:34px; margin-top:3px; background-color:#b0bec5; border-radius: 5px;}
+.search_line nav,.search_line nav .nav-wrapper i{height:34px; line-height:34px; margin-top:3px; background-color:#FFFFFF; border-radius: 5px;}
 .search_button nav{box-shadow:none; background-color:transparent;}
 .sites{height:100%;}
 .search_form.col.m11{padding-left: 0;}
