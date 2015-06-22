@@ -311,7 +311,7 @@ router.get('/vpn', checkAuth, function (req, res) {
                 res.send("");
             }
         });
-    }catch(err){}
+    }catch(err){console.log(err);}
 
 });
 
@@ -387,7 +387,7 @@ try{
         console.log(err);
     }
 
-}catch(err){}
+}catch(err){console.log(err);}
 });
 
 router.post('/vpn/get', function (req, res) {
@@ -449,7 +449,7 @@ router.post('/vpn/get', function (req, res) {
         }
 
     });
-    }catch(err){}
+    }catch(err){console.log(err);}
 });
 
 router.get('/scenario/creating', checkAuth, function (req, res) {
