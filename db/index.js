@@ -11,7 +11,6 @@ var mysql      = require('mysql');
 //    database : config.get('db:database')
 //});
 //module.exports = AppModel;
-console.log(config);
 var connection = mysql.createConnection({
     host     : config.get('db:host'),
     port     : config.get('db:port'),
