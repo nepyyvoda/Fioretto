@@ -305,10 +305,9 @@ router.get('/vpn', checkAuth, function (req, res) {
                 data = aTagLinkAppender(data, servletPageLoader, href);
                 data = replaceAllRelByAbs(data, resourceLoader, href);
 
+
                 res.send(data);
 
-            } else {
-                res.send("");
             }
         });
     }catch(err){console.log(err);}
