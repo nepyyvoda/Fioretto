@@ -1,4 +1,45 @@
-<div class="container">
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title><%= title %></title>
+
+    <!-- mobile settings -->
+    <meta name="viewport" content="width=device-width, maximum-scale=1, initial-scale=1, user-scalable=0" />
+
+    <!-- Favicon -->
+    <link rel="shortcut icon" href="/images/favicon.ico" />
+
+    <!-- Materializecss -->
+    <link type="text/css" rel="stylesheet" href="/styles/materialize.min.css"  media="screen,projection"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+    <link href="/styles/style.css" type="text/css" rel="stylesheet" media="screen,projection"/>
+    <script type="text/javascript" src="http://code.jquery.com/jquery-latest.min.js"></script>
+    <script type="text/javascript" src="/scripts/libs/bootstrap.min.js"></script>
+</head>
+<body>
+
+<!-- Materialize.toast-->
+<div id="toast-container" style="display: none">
+    <div class="toast toast_error">
+        Wrong action!!!
+    </div>
+</div>
+
+<!-- Modal Structure -->
+
+<div id="modal1" class="modal modal-window" style="display: none">
+    <div class="modal-content">
+        <a href="#!" class="right modal-close close_btn"> <i class="small  mdi-content-clear"></i></a>
+        <h4>Modal Header</h4>
+        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum</p>
+    </div>
+    <div class="modal-footer">
+        <a href="#!" class=" modal-action modal-close waves-effect waves-red btn-flat">Cancel</a>
+        <a href="#!" class=" modal-action modal-close waves-effect waves-teal btn-flat">Agree</a>
+    </div>
+</div>
+<div class="">
     <div class="row">
         <div class="col s12 m12">
             <div class="admin-panel">
@@ -34,9 +75,18 @@
                     </div>
                 </div>
             </div>
-            <iframe src="http://materializecss.com/" width="100%" height="4000" frameborder=0 scrolling="no" ></iframe>
+            <iframe src="<%= proxyUrl %>" width="100%" height="4000" frameborder=0 scrolling="no" style="position: absolute; left: 0;" ></iframe>
         </div>
     </div>
 </div>
 
-<script src="/scripts/iframe.js"></script>
+<!--  Scripts-->
+<!-- Materializecss -->
+<script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+<script type="text/javascript" src="/scripts/libs/materialize.min.js"></script>
+<script type="text/javascript" src="/scripts/libs/jquery.cookie.js"></script>
+<script src="/scripts/init.js"></script>
+<script type="text/javascript" src="http://crypto-js.googlecode.com/svn/tags/3.1.2/build/rollups/sha256.js"></script>
+<script src="/scripts/app.js"></script>
+</body>
+</html>

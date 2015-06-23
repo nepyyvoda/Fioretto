@@ -59,7 +59,6 @@ h1{font-size:48px;}
   position: relative;
   display: inline-block;
   padding-right: 1.4em;
-  background-color:#546e7a;
   }
   
 .mdi-hardware-keyboard-alt:before {
@@ -113,7 +112,7 @@ h1{font-size:48px;}
 	/*----------------Interface-------------*/
 .search_url .input-field input[type=search]{padding-right: 30px;}
 .search_line{height: 40px; margin-bottom:0px;}
-.search_line nav,.search_line nav .nav-wrapper i{height:34px; line-height:34px; margin-top:3px; background-color:#b0bec5; border-radius: 5px;}
+.search_line nav,.search_line nav .nav-wrapper i{height:34px; line-height:34px; margin-top:3px; background-color:#FFFFFF; border-radius: 5px;}
 .search_button nav{box-shadow:none; background-color:transparent;}
 .sites{height:100%;}
 .search_form.col.m11{padding-left: 0;}
@@ -137,7 +136,9 @@ h1{font-size:48px;}
 .close_btn{margin-top: -20px; margin-right: -15px; color: #ef5350;}
 .close_btn i:hover{box-shadow: 0 0 10px rgba(0,0,0,0.5); color: #f44336;}
 .modal-window {display: block;}
-
+.modal.small{
+	width: 20%;
+}
 /*--------------------------------Toast-------------*/
 .toast_error{
     margin-right: 10px;
@@ -220,3 +221,13 @@ h1{font-size:48px;}
 .sms_sent .row .col.s12{padding-left: 5px;}
 .picker__select--month, .picker__select--year{padding: 0;}
 .filter_date.col{padding: 0;}
+.hidden{display: none;}
+#scenario-url{margin: 7px;}
+
+/*----------------------helpers----------------*/
+.default-padding {
+	padding: 10px;
+}
+.content-center {
+	text-align: center;
+}

@@ -14,55 +14,44 @@
                 <div class="card-action ">
                     <div class="row">
                         <p class="scenaries_head">List of target resources</p>
-                        <a href="http://193.110.162.230:3000/" class="waves-effect waves-circle waves-light btn-floating secondary-content tooltipped" data-position="bottom" data-delay="50" data-tooltip="Add">
-                            <i class="mdi-content-add"></i>
-                        </a>
+                        <div class="right-align">
+                            <input id="scenario-url" placeholder="http://example.com" />
+                            <a href="#" onclick="initScenario(this)" class="waves-effect waves-circle waves-light btn-floating secondary-content">
+                                <i class="mdi-content-add"></i>
+                            </a>
+                        </div>
                     </div>
 
                     <div class="row table_scenary">
 
                         <table class="centered bordered">
                             <thead>
-                            <tr>
-                                <th data-field="id">Address of the target site</th>
-                                <th data-field="name">Script parameters</th>
-                                <th data-field="price">Start / Stop</th>
-                                <th data-field="price">Progress</th>
-                                <th data-field="price">Delete</th>
-                            </tr>
+                                <tr>
+                                    <th data-field="name">Name</th>
+                                    <th data-field="id">Address of the target site</th>
+                                    <!--<th data-field="name">Script parameters</th>-->
+                                    <th data-field="price">Start / Stop</th>
+                                    <!--<th data-field="price">Progress</th>-->
+                                    <th data-field="price">Delete</th>
+                                </tr>
                             </thead>
 
-                            <tbody>
-                            <tr>
-                                <td>adress1</td>
-                                    <td><a href="#settings_window" class="waves-effect waves-light btn modal-trigger">setting</a></td>
-                                    <td><a href="http://193.110.162.230:3000/" class="waves-effect waves-light btn">start</a></td>
-                                <td>
-                                    <div class="progress progress_persent">
-                                        <div class="determinate center-align" style="width: 70%">70%</div>
-                                    </div></td>
-                                <td class="delete_scenarie"><a href="#" > <i class="small mdi-navigation-close"></i></a></td>
-                            </tr>
-                            <tr>
-                                <td>adress1</td>
-                                    <td><a href="#settings_window" class="waves-effect waves-light btn modal-trigger">setting</a></td>
-                                    <td><a href="http://193.110.162.230:3000/" class="waves-effect waves-light btn">start</a></td>
-                                <td>
-                                    <div class="progress progress_persent">
-                                        <div class="determinate center-align" style="width: 70%">70%</div>
-                                    </div></td>
-                                <td class="delete_scenarie"><a href="#" > <i class="small mdi-navigation-close"></i></a></td>
-                            </tr>
-                            <tr>
-                                <td>adress1</td>
-                                    <td><a href="#settings_window" class="waves-effect waves-light btn modal-trigger">setting</a></td>
-                                    <td><a href="http://193.110.162.230:3000/" class="waves-effect waves-light btn">start</a></td>
-                                <td>
-                                    <div class="progress progress_persent">
-                                        <div class="determinate center-align" style="width: 70%">70%</div>
-                                    </div></td>
-                                <td class="delete_scenarie"><a href="#" > <i class="small mdi-navigation-close"></i></a></td>
-                            </tr>
+                            <tbody id="scenarios-list">
+                                <tr class="template hidden">
+
+                                    <td class="name"></td>
+                                    <td class="url"></td>
+                                    <!--<td><a href="#settings_window" class="waves-effect waves-light btn modal-trigger">setting</a></td>-->
+                                    <td><a href="#" onclick="startScenario(this)" class="waves-effect waves-light btn">start</a></td>
+                                    <!--<td>-->
+                                        <!--<div class="progress progress_persent">-->
+                                        <!--<div class="determinate center-align" style="width: 70%">70%</div>-->
+                                        <!--</div>-->
+                                    <!--</td>-->
+                                    <td class="delete_scenarie">
+                                        <a href="#" onclick="deleteScenario(this)"> <i class="small mdi-navigation-close"></i></a>
+                                    </td>
+                                </tr>
                             </tbody>
                         </table>
                 </div>

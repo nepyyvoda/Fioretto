@@ -34,12 +34,10 @@ function update(id, data, callback){
     }
     var queryTemplate = formattedData.template || '';
     var queryData = formattedData.data || [];
-    log.info("PARAMS QUERY: " +  queryTemplate + " || " + queryData +"||\n\n");
     //log.info("PARAMS QUERY: " +  queryTemplate + " " + queryData);
 
     execute('UPDATE paypalpay SET ' + queryTemplate + ' WHERE `id` = ?', queryData, function(err, data){
-        log.info("DATA : ", data);
-        if(data.changedRows > 0){
+        if(data.affectedRows > 0){
             callback (false, data);
         } else {
             callback (true, 'PAYPALPAY_NOT_FOUND');
