@@ -98,22 +98,31 @@ function get(req, res) {
 function update (req,res){
     UserModel.getPassword(req.cookies.userId, function(err, data) {
 
-         if ((req.body.password === data[0].password) && (req.body.password != req.body.password_new)) {
+     if ((req.body.password = '') && (req.body.password_new = ''))
+        {
             var UpdateDate =
-            {
-                email: req.body.email,
-                password: req.body.password_new,
+            {   email: req.body.email,
                 phone: req.body.phone,
                 skype: req.body.skype
             };
-                UserModel.update(req.cookies.userId, UpdateDate, function (req, res) {
-            });
-             console.log('The profile data are updated');
+            UserModel.update(req.cookies.userId, UpdateDate, function (req, res) { });
+            console.log('The data changed successfully');
         }
-        else{
-             console.log('The current password uncorrected or new password and current passwords are same');
-         }
-    });
+        else {
+               if ((req.body.password === data[0].password) && (req.body.password != req.body.password_new) ) {
+                   var UpdateDate =
+                       {email: req.body.email,
+                       password: req.body.password_new,
+                       phone: req.body.phone,
+                       skype: req.body.skype
+                       };
+                   UserModel.update(req.cookies.userId, UpdateDate, function (req, res) { });
+                   console.log('The password changed successfully');
+               }
+               else
+                  {console.log('The current password uncorrected or new password and current passwords are same');}
+             }
+        });
 };
 
 module.exports.login = login;
