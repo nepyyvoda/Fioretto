@@ -169,41 +169,49 @@ function startScenario(el) {
 }
 
 function updatePayment(){
-    var datePickerFromTo = {};
-    var datePicker = $(".picker__day--selected");
-    var reqPayments = "";
-    if(datePicker.length === 2){
-        console.log(datePicker.first().attr("data-pick") + " : " + datePicker.last().attr("data-pick"));
-        datePickerFromTo.from = datePicker.first().attr("data-pick");
-        datePickerFromTo.to = datePicker.last().attr("data-pick");
-    }
+    if(window.location.pathname === "/client_payment"){
+        var datePickerFromTo = {};
+        var inputFrom = $('.datepicker').first().pickadate();
+        var inputTo = $('.datepicker').last().pickadate();
+        var pickerTo = inputTo.pickadate('picker');
+        var pickerFrom = inputFrom.pickadate('picker');
 
-    $.getJSON('/api/user/' + $.cookie('userId') + '/payments', datePickerFromTo,function(res){
-        console.log(res);
-        $('#payments-list').find('.list-row-clone').remove();
-        if(Object.keys(res.data).length > 0) {
-            for(var i in res.data) {
-                console.log(res.data[i]);
-                var $template = $(".template");
-                var $tmp = null;
-
-                $tmp = $template.clone().removeClass("template").removeClass('hidden').addClass('list-row-clone');
-                $tmp.find('.date').text(res.data[i].end_time);
-                $tmp.find('.transactionid').text(res.data[i].transactionID);
-                $tmp.find('.serviceid').text(res.data[i].servicesID);
-                $tmp.find('.scheme').text(res.data[i].paymentSchemeID);
-                $tmp.find('.sum').text('$' + res.data[i].amount/100);
-
-                $tmp.attr('data-id', res.data[i].id);
-                //res.data[i].mode;
-                //res.data[i].nameScenario;
-                if(res.data[i].transactionTypeID === 2)
-                    $tmp.addClass("red").addClass("lighten-3");
-                $tmp.appendTo('#payments-list');
-            }
-
+        if($(".picker__day--selected").length !== 2){
+            var current = new Date();
+            pickerTo.set('select', current);
+            pickerFrom.set('select', current.setMonth(current.getMonth() - 1));
         }
-    });
+
+        datePickerFromTo.from = pickerFrom.get('select').pick;
+        datePickerFromTo.to = pickerTo.get('select').pick;
+
+        $.getJSON('/api/user/' + $.cookie('userId') + '/payments', datePickerFromTo,function(res){
+            console.log(res);
+            $('#payments-list').find('.list-row-clone').remove();
+            if(Object.keys(res.data).length > 0) {
+                for(var i in res.data) {
+                    console.log(res.data[i]);
+                    var $template = $(".template");
+                    var $tmp = null;
+                    var parsedDate =  new Date(res.data[i].end_time);
+                    $tmp = $template.clone().removeClass("template").removeClass('hidden').addClass('list-row-clone');
+                    $tmp.find('.date').text(parsedDate.toLocaleDateString() + " " +  parsedDate.toLocaleTimeString());
+                    $tmp.find('.transactionid').text(res.data[i].transactionID);
+                    $tmp.find('.serviceid').text(res.data[i].serv_name);
+                    $tmp.find('.paysystem').text(res.data[i].payservice_name);
+                    $tmp.find('.sum').text('$' + res.data[i].amount/100);
+
+                    $tmp.attr('data-id', res.data[i].id);
+                    //res.data[i].mode;
+                    //res.data[i].nameScenario;
+                    if(res.data[i].transactionTypeID === 2)
+                        $tmp.addClass("red").addClass("lighten-3");
+                    $tmp.appendTo('#payments-list');
+                }
+
+            }
+        });
+    }
 }
 
 $(document).ready(function() {
