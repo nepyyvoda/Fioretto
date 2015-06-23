@@ -194,6 +194,7 @@ function replaceAllRelByAbs(html, baseUrl, host) {
     /* <applet codebase= > */
 
     cr("<a" + any + att + "style\\s*=" + any + ">", "style");
+    cr("<form" + any + att + "action\\s*=" + any + ">", "action");
     // cr("<a"+any+att+"rel\\s*="+any+">", "rel");
 
     cr("<span" + any + att + "style\\s*=" + any + ">", "style");
