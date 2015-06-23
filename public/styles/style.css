@@ -24,7 +24,7 @@ h1{font-size:48px;}
 	font-size:2rem !important;
 }
 .card_methods{
-	padding: 50px 0 0 0;
+	padding: 30px 0 0 0;
 	margin-top: 80px;
 }
 .amount_currency{padding: 30px 0; font-size:2rem !important; color:#78909c !important;}
@@ -106,7 +106,9 @@ h1{font-size:48px;}
 .input-field input[type=password] {border-bottom: none; box-shadow: none; -webkit-box-shadow: none;}
 .input-field input[type=password]:focus {border-bottom: none; box-shadow: none; -webkit-box-shadow: none;}
 
-
+.card_methods a{color:#004d40;}
+.card_methods a:hover{color:#546e7a;}
+.card_methods .save_btn {margin-bottom: 50px;}
 
 	
 	/*----------------Interface-------------*/
