@@ -5,7 +5,7 @@
                 <div class="card-content client_payment white-text">
                     <h5 class="header section-title">
                         <span><i class="mdi-action-account-balance"> </i>
-                                Client payment
+                                Payment History
                         </span>
                     </h5>
                 </div>
@@ -25,6 +25,9 @@
                         <div class="col m2 s6">
                             <label for="icon_prefix2"><i class="small mdi-action-event"></i></label>
                             <input id="icon_prefix2" type="date" class="datepicker">
+                        </div>
+                        <div class="sum">
+                            <a class="btn teal lighten-4" onclick="updatePayment()">OK</a>
                         </div>
                     </div>
 
@@ -50,9 +53,7 @@
                             </tr>
                             </tbody>
                         </table>
-                        <div class="sum">
-                            <a class="btn disabled right teal lighten-2 white-text" onclick="updatePayment()">Update</a>
-                        </div>
+
                     </div>
                 </div>
 
