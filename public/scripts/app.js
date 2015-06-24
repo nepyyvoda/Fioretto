@@ -208,7 +208,11 @@ function updatePayment(){
                         $tmp.addClass("red").addClass("lighten-3");
                     $tmp.appendTo('#payments-list');
                 }
-
+            } else {
+                var $template = $(".empty");
+                var $tmp = null;
+                $tmp = $template.clone().removeClass("empty").removeClass('hidden').addClass('list-row-clone');
+                $tmp.appendTo('#payments-list');
             }
         });
     }
