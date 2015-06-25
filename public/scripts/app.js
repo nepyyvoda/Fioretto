@@ -130,8 +130,8 @@ function updateScenariosList() {
     $.getJSON('/api/scenarios', function(res) {
         $('#scenarios-list').find('.list-row-clone').remove();
         if(Object.keys(res.data).length > 0) {
+            $('.empty').addClass('hidden');
             for(var i in res.data) {
-                console.log(res.data[i]);
                 var $template = $(".template");
                 var $tmp = null;
 
@@ -143,6 +143,12 @@ function updateScenariosList() {
                 //res.data[i].nameScenario;
                 $tmp.appendTo('#scenarios-list');
             }
+        } else {
+            $('#scenarios-list').append(
+                '<tr class="list-row-clone empty">'+
+                    '<td colspan="5">No scenarios to show</td>'+
+                '</tr>'
+            );
         }
     });
 }
@@ -331,6 +337,8 @@ $(document).ready(function() {
             alert('Choose votes amount');
             return;
         }
+        var boost = $('#boost').is(':checked');
+        var mode = boost?1:0;
         $.ajax({
             type: "POST",
             url: "/api/scenarios",
@@ -340,7 +348,7 @@ $(document).ready(function() {
                 url: decodeURIComponent(getParameterByName('url')),
                 name: $('[name="name"]').val(),
                 proxy: getParameterByName('proxy'),
-                mode: 0,
+                mode: mode,
                 resolution: {
                     w: window.screen.availWidth,
                     h: window.screen.availHeight

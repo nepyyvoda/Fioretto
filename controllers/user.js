@@ -97,7 +97,7 @@ function get(req, res) {
 
 function update (req,res){
     UserModel.getPassword(req.cookies.userId, function(err, data) {
-
+//????????
      if ((req.body.password = '') && (req.body.password_new = ''))
         {
             var UpdateDate =

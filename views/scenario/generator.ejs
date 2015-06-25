@@ -27,18 +27,6 @@
 </div>
 
 <!-- Modal Structure -->
-
-<div id="modal1" class="modal modal-window" style="display: none">
-    <div class="modal-content">
-        <a href="#!" class="right modal-close close_btn"> <i class="small  mdi-content-clear"></i></a>
-        <h4>Modal Header</h4>
-        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum</p>
-    </div>
-    <div class="modal-footer">
-        <a href="#!" class=" modal-action modal-close waves-effect waves-red btn-flat">Cancel</a>
-        <a href="#!" class=" modal-action modal-close waves-effect waves-teal btn-flat">Agree</a>
-    </div>
-</div>
 <div class="">
     <div class="row">
         <div class="col s12 m12">
@@ -46,31 +34,44 @@
                 <div class="row">
                     <div class="col m7 s7">
                         <div class="row col m12 s12">
-                            <div class="col m4 s4 form-group">
-                                <label for="name">Email address</label>
-                                <input placeholder="Name" name="name" type="text" class="form-control" >
+                            <div class="col m4 s4">
+                                <div class="col m12 s12 form-group">
+                                    <input placeholder="Scenario Name" name="name" type="text" class="form-control" >
+                                </div>
+                                <div class="col m12 s12 form-group">
+                                    <input placeholder="Scenario iterations" name="count" type="text" class="form-control" >
+                                </div>
+                                <div class="col m12 s12">
+                                    <div class="switch">
+                                        <label>
+                                            Boost speed
+                                            <input id="boost" type="checkbox">
+                                            <span class="lever"></span>
+                                        </label>
+                                    </div>
+                                </div>
                             </div>
-                            <div class="col m4 s4 form-group">
-                                <label for="count">Email address</label>
-                                <input placeholder="Votes" name="count" type="text" class="form-control" >
+                            <div class="col m2 s2">
+                                <div>
+                                    <button id="clearChain" class="btn btn-default" type="button">Clear chain</button>
+                                </div>
+                                <div>
+                                    <button id="accept-voting" class="btn btn-primary" type="button">Save voting</button>
+                                </div>
                             </div>
                             <div class="col m4 s4">
-                                <button id="clearChain" class="btn btn-default" type="button">Clear chain</button>
-                                <button id="accept-voting" class="btn btn-primary" type="button">Save voting</button>
+                                <div>
+                                    <button id="captchaActivate" class="btn btn-warning btn-captcha">CAPTCHACHEKER</button>
+                                </div>
+                                <div>
+                                    <button id="captchaImage" class="btn btn-sm btn-captcha disabled">CAPTCHAIMG</button>
+                                    <label id="captchaImageStatus" class="hide">Image not selected</label>
+                                </div>
+                                <div>
+                                    <button id="captchaInput" class="btn btn-sm btn-captcha disabled">CAPTCHAINPUT</button>
+                                    <label id="captchaInputStatus" class="hide">Input not selected</label>
+                                </div>
                             </div>
-                        </div>
-                    </div>
-                    <div class="col m5 s5">
-                        <div>
-                            <button id="captchaActivate" class="btn btn-warning btn-captcha">CAPTCHACHEKER</button>
-                        </div>
-                        <div>
-                            <button id="captchaImage" class="btn btn-sm btn-captcha disabled">CAPTCHAIMG</button>
-                            <label id="captchaImageStatus" class="hide">Image not selected</label>
-                        </div>
-                        <div>
-                            <button id="captchaInput" class="btn btn-sm btn-captcha disabled">CAPTCHAINPUT</button>
-                            <label id="captchaInputStatus" class="hide">Input not selected</label>
                         </div>
                     </div>
                 </div>

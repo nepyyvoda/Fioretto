@@ -78,7 +78,7 @@ router.delete('/scenarios/:id', checkAuth, function(req, res) {
     Scenarios.del(req, res);
 });
 
-router.put('/users/:id', checkAuth, checkPermission, function(req, res) {
+router.put('/user/:id', checkAuth, checkPermission, function(req, res) {
     User.update(req, res);
 });
 
