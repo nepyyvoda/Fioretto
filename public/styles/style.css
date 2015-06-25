@@ -156,7 +156,8 @@ ul.side-nav li.collapsible-header-services:hover, ul.side-nav li.active.collapsi
 .date label{color: white;}
 .date input{border-bottom: 1px solid white;}
 .sum .btn.disabled{color:#004d40;}
-.table_history thead{border-bottom: 1px solid #004d40;}
+.table_history thead{border-bottom: 1px solid #004d40; color: rgba(0,0,0,0.5);}
+.table_history table{color: rgba(0,0,0,0.5);}
 
 /*----------------------------------Modal Window-----------*/
 .close_btn{margin-top: -20px; margin-right: -15px; color: #ef5350;}
@@ -177,6 +178,7 @@ ul.side-nav li.collapsible-header-services:hover, ul.side-nav li.active.collapsi
 .table_scenary a{margin-right: 0; color: #0d47a1;}
 .delete_scenarie a{color: #ef5350;}
 .btn-floating.add_site i{color: #004d40;}
+.btn-floating.add_site{margin-left: 20px;}
 
 .settings_window_modal input, .settings_window_modal .select-wrapper input, .table_scenaries textarea{border: 1px solid #546e7a; border-radius: 2px; height: 30px; box-shadow: none;}
 .settings_window_modal .input-field input[type=text].valid, .settings_window_modal .input-field input[type=text]{border-bottom:1px solid #546e7a; }
@@ -204,7 +206,9 @@ ul.side-nav li.collapsible-header-services:hover, ul.side-nav li.active.collapsi
 .table_scenaries th{text-align: center;}
 .settings_window_modal .input-field{margin-top: 0;}
 .modal_select .select-wrapper{margin-top: 0px;}
-.scenaries_head{font-size: 20px; color: #FFFFFF; display: block; float: left; margin-left: 30px;}
+.scenaries_head{font-size: 20px; color: #FFFFFF; margin: 10px 7px 0;}
+.scenaries_head.add{font-size: 15px; margin-bottom: 0;}
+
 .modal .modal-footer.modal-footer-scenaries .btn{margin-right: 10px;}
 
 /*----------------------------Rental Numbers----------------*/
@@ -249,7 +253,7 @@ ul.side-nav li.collapsible-header-services:hover, ul.side-nav li.active.collapsi
 .picker__select--month, .picker__select--year{padding: 0;}
 .filter_date.col{padding: 0;}
 .hidden{display: none;}
-#scenario-url{margin: 7px;}
+#scenario-url{margin: 7px; width: 500px;}
 
 /*----------------------helpers----------------*/
 .default-padding {

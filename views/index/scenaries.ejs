@@ -11,27 +11,29 @@
                 </div>
                 <div class="card-action  card-action-line">
                     <div class="row">
-                        <p class="scenaries_head">List of target resources</p>
-                        <div class="right-align">
+                        <p class="scenaries_head add">Add URL</p>
+                        <div class="left-align">
                             <input id="scenario-url" placeholder="http://example.com" />
-                            <a href="#" onclick="initScenario(this)" class="waves-effect waves-circle teal lighten-4 btn-floating add_site secondary-content">
+                            <a href="#" onclick="initScenario(this)" class="waves-effect waves-circle teal lighten-4 btn-floating add_site">
                                 <i class="mdi-content-add"></i>
                             </a>
                         </div>
+                        <p class="scenaries_head">Voting Scenarios</p>
+
                     </div>
 
-                    <div class="row table_scenary table_history">
+                    <div class="row  table_history">
 
-                        <table class="centered bordered ">
+                        <table >
                             <thead>
                                 <tr>
                                     <th data-field="name">Name</th>
-                                    <th data-field="id">Address of the target site</th>
+                                    <th data-field="id">Voting URL</th>
                                     <!--<th data-field="name">Script parameters</th>-->
-                                    <th>Start / Stop</th>
-                                    <th data-field="mode">Mode</th>
+                                    <th>Iterations</th>
+                                    <th data-field="mode">          </th>
                                     <!--<th data-field="price">Progress</th>-->
-                                    <th data-field="price">Delete</th>
+                                    <th data-field="price">       </th>
                                 </tr>
                             </thead>
 
