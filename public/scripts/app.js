@@ -198,23 +198,23 @@ function updatePayment(){
             console.log(res);
             $('#payments-list').find('.list-row-clone').remove();
             console.log("COUNT = ",res.data.count);
-            if(Object.keys(res.data.data).length > 0) {
-                for(var i in res.data.data) {
-                    console.log(res.data.data[i]);
+            if(Object.keys(res.data).length > 0) {
+                for(var i in res.data) {
+                    console.log(res.data[i]);
                     var $template = $(".template");
                     var $tmp = null;
-                    var parsedDate =  new Date(res.data.data[i].end_time);
+                    var parsedDate =  new Date(res.data[i].end_time);
                     $tmp = $template.clone().removeClass("template").removeClass('hidden').addClass('list-row-clone');
                     $tmp.find('.date').text(parsedDate.toLocaleDateString() + " " +  parsedDate.toLocaleTimeString());
-                    $tmp.find('.transactionid').text(res.data.data[i].transactionID);
-                    $tmp.find('.serviceid').text(res.data.data[i].serv_name);
-                    $tmp.find('.paysystem').text(res.data.data[i].payservice_name);
-                    $tmp.find('.sum').text('$' + res.data.data[i].amount/100);
+                    $tmp.find('.transactionid').text(res.data[i].transactionID);
+                    $tmp.find('.serviceid').text(res.data[i].serv_name);
+                    $tmp.find('.paysystem').text(res.data[i].payservice_name);
+                    $tmp.find('.sum').text('$' + res.data[i].amount/100);
 
-                    $tmp.attr('data-id', res.data.data[i].id);
+                    $tmp.attr('data-id', res.data[i].id);
                     //res.data[i].mode;
                     //res.data[i].nameScenario;
-                    if(res.data.data[i].transactionTypeID === 2)
+                    if(res.data[i].transactionTypeID === 2)
                         $tmp.addClass("red").addClass("lighten-3");
                     $tmp.appendTo('#payments-list');
                 }
