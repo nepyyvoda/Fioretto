@@ -182,6 +182,9 @@ function updatePayment(){
         var pickerTo = inputTo.pickadate('picker');
         var pickerFrom = inputFrom.pickadate('picker');
 
+        pickerTo.off('close');
+        pickerFrom.off('close');
+
         if($(".picker__day--selected").length !== 2){
             var current = new Date();
             pickerTo.set('select', current);
@@ -194,33 +197,38 @@ function updatePayment(){
         $.getJSON('/api/user/' + $.cookie('userId') + '/payments', datePickerFromTo,function(res){
             console.log(res);
             $('#payments-list').find('.list-row-clone').remove();
-            if(Object.keys(res.data).length > 0) {
-                for(var i in res.data) {
-                    console.log(res.data[i]);
+            console.log("COUNT = ",res.data.count);
+            if(Object.keys(res.data.data).length > 0) {
+                for(var i in res.data.data) {
+                    console.log(res.data.data[i]);
                     var $template = $(".template");
                     var $tmp = null;
-                    var parsedDate =  new Date(res.data[i].end_time);
+                    var parsedDate =  new Date(res.data.data[i].end_time);
                     $tmp = $template.clone().removeClass("template").removeClass('hidden').addClass('list-row-clone');
                     $tmp.find('.date').text(parsedDate.toLocaleDateString() + " " +  parsedDate.toLocaleTimeString());
-                    $tmp.find('.transactionid').text(res.data[i].transactionID);
-                    $tmp.find('.serviceid').text(res.data[i].serv_name);
-                    $tmp.find('.paysystem').text(res.data[i].payservice_name);
-                    $tmp.find('.sum').text('$' + res.data[i].amount/100);
+                    $tmp.find('.transactionid').text(res.data.data[i].transactionID);
+                    $tmp.find('.serviceid').text(res.data.data[i].serv_name);
+                    $tmp.find('.paysystem').text(res.data.data[i].payservice_name);
+                    $tmp.find('.sum').text('$' + res.data.data[i].amount/100);
 
-                    $tmp.attr('data-id', res.data[i].id);
+                    $tmp.attr('data-id', res.data.data[i].id);
                     //res.data[i].mode;
                     //res.data[i].nameScenario;
-                    if(res.data[i].transactionTypeID === 2)
+                    if(res.data.data[i].transactionTypeID === 2)
                         $tmp.addClass("red").addClass("lighten-3");
                     $tmp.appendTo('#payments-list');
                 }
             } else {
+                console.log('LOL');
                 var $template = $(".empty");
                 var $tmp = null;
-                $tmp = $template.clone().removeClass("empty").removeClass('hidden').addClass('list-row-clone');
+                $tmp = $template.clone().removeClass("empty").removeClass('hidden').addClass("list-row-clone");
                 $tmp.appendTo('#payments-list');
             }
         });
+
+        pickerTo.on('close', function(){updatePayment()});
+        pickerFrom.on('close', function(){updatePayment()});
     }
 }
 

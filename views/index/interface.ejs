@@ -1,7 +1,17 @@
 <div class="container">
 	<div class="row search_line">
+		<div class="col s12 m12">
+			<div class="card card_methods teal lighten-1">
+				<div class="card-content client_payment white-text">
+					<h5 class="header section-title">
+                        <span><i class="small material-icons">language </i>
+                                Proxy Browsing
+                        </span>
+					</h5>
+				</div>
+				<div class="card-action card-action-line">
 
-		<div class="row">
+
 			<!-- <div class="col m1 s12 search_button center-align ">
                 <nav>
                     <ul class="left center">
@@ -11,17 +21,39 @@
                     </ul>
                 </nav>
             </div> -->
-			<div class="col s12 m12 search_form ">
-				<nav class="search_url">
-					<div class="nav-wrapper ">
-						<form target="_blank" action="/vpn" method="GET" >
-							<div class="input-field">
-								<input id="search" name = "url" type="search" required placeholder="http://test.com">
-								<label for="search"><i class="mdi-action-search"></i></label>
-							</div>
-						</form>
+					<div class="col s12 m4 l3 select_country proxy">
+						<h6>Select country</h6>
+						<div class="filter_settings input-field">
+							<select>
+								<option value="" disabled selected></option>
+								<option value="1">Ukraine</option>
+								<option value="2">USA</option>
+								<option value="3">Italy</option>
+							</select>
+						</div>
 					</div>
-				</nav>
+
+					<div class="col s12 m12 search_form proxy">
+						<h6>Enter URL's target</h6>
+						<nav class="search_url">
+							<div class="nav-wrapper ">
+								<form target="_blank" action="/vpn" method="GET" >
+									<div class="input-field">
+										<input id="search" name = "url" type="search" required placeholder="http://test.com">
+										<label for="search"><i class="mdi-action-search"></i></label>
+									</div>
+								</form>
+							</div>
+						</nav>
+					</div>
+
+					<div class="col m12 proxy">
+						<div class="sum">
+							<a class="btn teal lighten-4" onclick="">GO</a>
+						</div>
+					</div>
+				</div>
+
 			</div>
 		</div>
 
