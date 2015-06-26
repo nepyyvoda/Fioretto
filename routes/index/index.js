@@ -80,7 +80,7 @@ router.get('/new_pass', function (req, res) {
 router.get('/social_networks', function (req, res) {
     res.render('index/social_networks', {title: 'Social networks', layout: false, name: req.path});
 });
-router.get('/interface', function (req, res) {
+router.get('/interface',checkAuth , function (req, res) {
     res.render('index/interface', {title: 'Interface', name: req.path});
 });
 router.get('/client_payment', checkAuth, function (req, res) {
@@ -102,18 +102,18 @@ router.get('/scenaries', checkAuth, function (req, res) {
     res.render('index/scenaries', {title: 'Scenaries', name: req.path});
 });
 
-router.get('/vpn', function (req, res) {
+router.get('/vpn',checkAuth ,function (req, res) {
 
     var country = req.query.country;
 
-    if(country != undefined && country != null && country.length >= 4){
+    if(country != undefined && country != null){
         vpn.torCountryConfig(country);
     }
     vpn.paigeLoader(req, res);
 
 });
 
-router.get('/vpn/get',  function (req, res) {
+router.get('/vpn/get',checkAuth ,  function (req, res) {
     vpn.resourceLoader(req, res);
 });
 

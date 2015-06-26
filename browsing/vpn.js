@@ -338,7 +338,8 @@ var allAvailableCountries = ["default-{}",
     "zimbabwe-{zw}"
 ];
 
-var availableCountries = [    "ukraine-{ua}",
+var availableCountries = [    "gefault-{}",
+    "ukraine-{ua}",
     "russianfederation-{ru}",
     "unitedstates-{us}",
     "scotland-{uk}",
@@ -696,7 +697,7 @@ var postLoader = function (req, res) {
 
 var torCountryConfig = function (country) {
 
-    console.log(searchStringInArray(country.toLowerCase(), availableCountries))
+
     if (searchStringInArray(country.toLowerCase(), availableCountries)) {
 
         var settings = torDefaultTemplate;
