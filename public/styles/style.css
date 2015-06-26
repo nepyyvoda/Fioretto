@@ -207,7 +207,11 @@ ul.side-nav li.collapsible-header-services:hover, ul.side-nav li.active.collapsi
 .settings_window_modal .input-field{margin-top: 0;}
 .modal_select .select-wrapper{margin-top: 0px;}
 .scenaries_head{font-size: 20px; color: #FFFFFF; margin: 10px 7px 0;}
+<<<<<<< Updated upstream
 .scenaries_head.add{font-size: 20px; margin-bottom: 0;}
+=======
+.scenaries_head.add{ margin-bottom: 0;}
+>>>>>>> Stashed changes
 
 .modal .modal-footer.modal-footer-scenaries .btn{margin-right: 10px;}
 
