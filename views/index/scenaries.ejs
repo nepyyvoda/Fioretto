@@ -11,7 +11,7 @@
                 </div>
                 <div class="card-action  card-action-line">
                     <div class="row">
-                        <p class="scenaries_head add">Add URL</p>
+                        <p class="scenaries_head add">Add Voting URL</p>
                         <div class="left-align">
                             <input id="scenario-url" placeholder="http://example.com" />
                             <a href="#" onclick="initScenario(this)" class="waves-effect waves-circle teal lighten-4 btn-floating add_site">
@@ -28,12 +28,13 @@
                             <thead>
                                 <tr>
                                     <th data-field="name">Name</th>
-                                    <th data-field="id">Voting URL</th>
+                                    <th data-field="id">URL</th>
                                     <!--<th data-field="name">Script parameters</th>-->
-                                    <th>Iterations</th>
-                                    <th data-field="mode">          </th>
+                                    <th data-field="iterations">Iterations</th>
+                                    <th data-field="mode"> Speed Mode         </th>
                                     <!--<th data-field="price">Progress</th>-->
-                                    <th data-field="price">       </th>
+                                    <th data-field="start"> </th>
+                                    <th data-field="price">  </th>
                                 </tr>
                             </thead>
 
@@ -43,8 +44,10 @@
                                     <td class="name"></td>
                                     <td class="url"></td>
                                     <!--<td><a href="#settings_window" class="waves-effect waves-light btn modal-trigger">setting</a></td>-->
-                                    <td><a href="#" onclick="startScenario(this)" class="waves-effect waves-light btn">start</a></td>
+                                    <td>10</td>
                                     <td class="mode"></td>
+                                    <td><a href="#" onclick="startScenario(this)" class="waves-effect waves-light btn">start</a></td>
+
                                     <!--<td>-->
                                         <!--<div class="progress progress_persent">-->
                                         <!--<div class="determinate center-align" style="width: 70%">70%</div>-->
