@@ -10,7 +10,9 @@
   },
   "vpn": {
     "proxyHost": "127.0.0.1",
-    "proxyPort": 9050
+    "proxyPort": 9050,
+    "torPath": "/etc/tor/",
+    "torConfigFileName": "torrc"
   },
   "loglvl": "info"
 }

@@ -12,24 +12,39 @@
 				<div class="card-action card-action-line">
 
 
-			<!-- <div class="col m1 s12 search_button center-align ">
-                <nav>
-                    <ul class="left center">
-                        <li><a href="#"><i class="mdi-content-undo small"></i></a></li>
-                        <li><a href="#"><i class="mdi-content-redo small"></i></a></li>
-                        <li><a href="#"><i class="mdi-action-autorenew small"></i></a></li>
-                    </ul>
-                </nav>
-            </div> -->
+					<!-- <div class="col m1 s12 search_button center-align ">
+                        <nav>
+                            <ul class="left center">
+                                <li><a href="#"><i class="mdi-content-undo small"></i></a></li>
+                                <li><a href="#"><i class="mdi-content-redo small"></i></a></li>
+                                <li><a href="#"><i class="mdi-action-autorenew small"></i></a></li>
+                            </ul>
+                        </nav>
+                    </div> -->
 					<div class="col s12 m4 l3 select_country proxy">
 						<h6>Select country</h6>
 						<div class="filter_settings input-field">
-							<select>
-								<option value="" disabled selected></option>
-								<option value="1">Ukraine</option>
-								<option value="2">USA</option>
-								<option value="3">Italy</option>
+
+							<select name = "country" form="send">
+								<option value="">Auto</option>
+								<option value="{ua}">Ukraine</option>
+								<option value="{ru}">Russian Federation</option>
+								<option value="{us}">United States</option>
+								<option value="{uk}">Scotland</option>
+								<option value="{fr}">France</option>
+								<option value="{ro}">Romania</option>
+								<option value="{es}">Spain</option>
+								<option value="{kr}">Korea</option>
+								<option value="{jp}">Japan</option>
+								<option value="{il}">Israel</option>
+								<option value="{it}">Italy</option>
+								<option value="{de}">Germany</option>
+								<option value="{pl}">Poland</option>
+								<option value="{se}">Sweden</option>
+								<option value="{ch}">Switzerland</option>
+								<option value="{an}">Netherland</option>
 							</select>
+
 						</div>
 					</div>
 
@@ -37,7 +52,7 @@
 						<h6>Enter URL's target</h6>
 						<nav class="search_url">
 							<div class="nav-wrapper ">
-								<form target="_blank" action="/vpn" method="GET" >
+								<form target="_blank" action="/vpn" method="GET" id = "send">
 									<div class="input-field">
 										<input id="search" name = "url" type="search" required placeholder="http://test.com">
 										<label for="search"><i class="mdi-action-search"></i></label>
@@ -49,7 +64,7 @@
 
 					<div class="col m12 proxy">
 						<div class="sum">
-							<a class="btn teal lighten-4" onclick="">GO</a>
+							<a class="btn teal lighten-4" onclick="document.forms['send'].submit()">GO</a>
 						</div>
 					</div>
 				</div>
