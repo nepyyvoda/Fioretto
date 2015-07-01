@@ -1,26 +1,18 @@
 {
-  "host": "http://fiaretto.com",
   "port": 3010,
   "db": {
-    "host": "localhost",
+    "host": "192.168.2.101",
     "port": "3306",
-    "user": "filareto",
-    "password": "V8D2IgixwUPm",
-    "database": "filareto",
+    "user": "fioretto",
+    "password": "T6sJb8bzLipo",
+    "database": "fioretto",
     "queryTimeout": 30000
-  },
-  "mailer": {
-    "user": "fiorettosystem@gmail.com",
-    "pass": "z753951Z"
-  },
-  "workerServer": {
-    "ip": "193.110.162.230",
-    "port": 12445
   },
   "vpn": {
     "proxyHost": "127.0.0.1",
     "proxyPort": 9050,
-    "torPath": "/home/fioretto/cabinet/Fioretto/torconf",
+    "proxyControlPort": 9051,
+    "torPath": "/home/vitaliy/tor/",
     "torConfigFileName": "torrc"
   },
   "loglvl": "info"

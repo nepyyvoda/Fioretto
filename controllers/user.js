@@ -117,7 +117,8 @@ function update (req,res){
                        phone: req.body.phone,
                        skype: req.body.skype
                        };
-                   UserModel.update(req.cookies.userId, UpdateDate, function (req, res) { });
+                   UserModel.update(req.cookies.userId, UpdateDate, function (req, res) {
+                   });
                    console.log('The password changed successfully');
                }
                else
