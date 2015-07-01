@@ -147,7 +147,7 @@ function updateScenariosList() {
         } else {
             $('#scenarios-list').append(
                 '<tr class="list-row-clone empty">'+
-                    '<td colspan="5">No scenarios to show</td>'+
+                    '<td colspan="6">No scenarios to show</td>'+
                 '</tr>'
             );
         }
