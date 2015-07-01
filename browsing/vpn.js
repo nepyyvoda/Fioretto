@@ -436,6 +436,9 @@ var torStart = function (callback) {
     torProc = cp.spawn('tor', ['-f', torPath + torConfigFileName]);
     torProc.stdout.on('data', function(data) {
         console.log(data.toString('utf-8'));
+        if(data.toString("utf-8").indexOf("Bootstrapped 100%: Done")>=0){
+            callback();
+        }
     });
     torProc.stderr.on('data', function(data) {
         console.log(data.toString('utf-8'));
@@ -444,40 +447,32 @@ var torStart = function (callback) {
     torProc.on('close', function(code) {
         console.log("Tor is stop");
     });
-    callback();
+    //callback();
 };
 
-var torStop = function (callback) {
+var torStop = function () {
     if(torProc != undefined && torProc != null) {
-        torProc.on('close', function(){
-
-            torProc = undefined;
-            callback();
-        });
         torProc.kill();
+        torProc = undefined;
     }
 };
 
 var torCountryConfig = function (country,callback) {
 
     var settings = torDefaultTemplate;
+    
+    var configText = fs.readFileSync(torPath + torConfigFileName, {encoding: 'utf8'});
 
-    if(country != null && country != undefined) {
-
-           var configText = fs.readFileSync(torPath + torConfigFileName, {encoding: 'utf8'});
-
-            if (configText.indexOf(country)<0) {
-                torStop(function () {
-                })
-            } else {
-                callback();
-            }
-
-            if (searchStringInArray(country.toLowerCase(), availableCountries)) {
-                settings = torCountryTemplate.replace(/\{country\}/gmi, country) + settings;
-            }
-
+    if (configText.indexOf(country)<0) {
+        torStop();
+    } else {
+        callback();
     }
+
+    if (searchStringInArray(country.toLowerCase(), availableCountries)) {
+        settings = torCountryTemplate.replace(/\{country\}/gmi, country) + settings;
+    }
+
 
     fs.writeFileSync(torPath + torConfigFileName, settings, 'utf8');
 

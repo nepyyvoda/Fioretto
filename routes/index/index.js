@@ -106,9 +106,14 @@ router.get('/vpn',checkAuth ,function (req, res) {
 
     var country = req.query.country;
 
-    vpn.torCountryConfig(country, function () {
+
+    if(country == null || country == undefined) {
         vpn.paigeLoader(req, res);
-    });
+    } else {
+        vpn.torCountryConfig(country, function () {
+            vpn.paigeLoader(req, res);
+        });
+    }
 
 });
 
