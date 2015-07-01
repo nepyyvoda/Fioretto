@@ -86,7 +86,8 @@ function logout(req, res) {
 }
 
 function get(req, res) {
-    UserModel.get(req.params.id, function(err, data) {
+    console.log('CHECK', req.params.id);
+    UserModel.get({id: req.params.id}, function(err, data) {
         if(!err) {
             res.send(response('SUCCESS', data[0]));
         } else {

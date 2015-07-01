@@ -104,8 +104,8 @@ function getPassword(id, callback) {
     });
 }
 
-function get(id, callback) {
-    execute('SELECT login, email, balance FROM users WHERE `id` = ?', [id], function(err, data){
+function get(obj, callback) {
+    execute('SELECT * FROM users WHERE `id` = ?', [obj.id], function(err, data){
         if(data.length > 0){
             callback (false, data);
         } else {
