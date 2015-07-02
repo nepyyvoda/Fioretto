@@ -18,13 +18,14 @@ var cp = require('child_process');
 
 var proxyHost = config.get('vpn:proxyHost');
 var proxyPort = config.get('vpn:proxyPort');
+var proxyControlPort = config.get('vpn:proxyControlPort');
 var torPath = config.get('vpn:torPath');
 var torConfigFileName = config.get('vpn:torConfigFileName');
 var servletPageLoaderPath = "/vpn?url=";
 var resourceLoaderPath = "/vpn/get?url=";
 var resourceLoaderController = "/vpn/get?";
 var countryRegexpTemplate = new RegExp("{.?.?}", "mi");
-var torDefaultTemplate = "SocksPort 9050 \nControlPort 9051 \n";
+var torDefaultTemplate = "SocksPort "+ proxyPort +"\nControlPort "+ proxyControlPort +"\n";
 var torCountryTemplate = "ExitNodes {country}\nStrictNodes 1 \n";
 var torProc;
 
@@ -85,11 +86,9 @@ var charsets = ["utf-8", "ucs2", "utf-16le", "utf-16", "ascii", "binary", "base6
     "viscii", "iso646cn", "iso646jp", "hproman8", "tis620", "shift_jis", "windows--31j", "windows-932", "euc-jp", "gb2312", "gbk",
     "gb18030", "windows-936", "euc-cn", "ks_c_5601", "windows-949", "euc-kr", "big5", "big5-hkscs", "windows-950"];
 
-var availableCountries = [    "gefault-{}",
-    "ukraine-{ua}",
+var availableCountries = [ "ukraine-{ua}",
     "russianfederation-{ru}",
     "unitedstates-{us}",
-    "scotland-{uk}",
     "france-{fr}",
     "romania-{ro}",
     "spain-{es}",
@@ -463,7 +462,7 @@ var torCountryConfig = function (country,callback) {
     
     var configText = fs.readFileSync(torPath + torConfigFileName, {encoding: 'utf8'});
 
-    if (configText.indexOf(country)<0) {
+    if (configText.indexOf(country) < 0 && country.length > 3) {
         torStop();
     } else {
         callback();
