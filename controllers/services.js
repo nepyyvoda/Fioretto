@@ -34,4 +34,8 @@ function availableScenario(req, res){}
 
 function availableSMS(req, res){}
 
+function priceServices(req, res){
+
+}
+
 module.exports.availableBrowser = availableBrowser;
