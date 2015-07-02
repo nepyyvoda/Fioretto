@@ -20,7 +20,8 @@
   "vpn": {
     "proxyHost": "127.0.0.1",
     "proxyPort": 9050,
-    "torPath": "/home/fioretto/cabinet/Fioretto/torconf",
+    "proxyControlPort": 9051,
+    "torPath": "/home/fioretto/cabinet/Fioretto/torconf/",
     "torConfigFileName": "torrc"
   },
   "loglvl": "info"
