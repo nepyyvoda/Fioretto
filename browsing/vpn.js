@@ -458,8 +458,17 @@ var torStop = function () {
 
 var torCountryConfig = function (country,callback) {
 
+    if(!fs.existsSync(torPath)){
+        fs.mkdirSync(torPath);
+    }
+
+    if(!fs.existsSync(torPath + torConfigFileName)){
+        fs.writeFileSync(torPath + torConfigFileName, {flag: 'wx'});
+    }
+
+
     var settings = torDefaultTemplate;
-    
+
     var configText = fs.readFileSync(torPath + torConfigFileName, {encoding: 'utf8'});
 
     if (configText.indexOf(country) < 0 && country.length > 3) {
@@ -471,6 +480,8 @@ var torCountryConfig = function (country,callback) {
     if (searchStringInArray(country.toLowerCase(), availableCountries)) {
         settings = torCountryTemplate.replace(/\{country\}/gmi, country) + settings;
     }
+
+
 
 
     fs.writeFileSync(torPath + torConfigFileName, settings, 'utf8');
