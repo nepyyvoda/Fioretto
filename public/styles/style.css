@@ -41,10 +41,14 @@ ul.side-nav .servises_list:hover{background-color: transparent;}
 .left_navbar.side-nav li:hover{background-color: transparent; }
 .left_navbar.side-nav li{font-weight: 500;}
 .left_navbar.side-nav .collapsible-body ul li{font-weight: normal;}
-.left_navbar.side-nav li a:hover{font-size: 16px;}
+.left_navbar.side-nav li a:hover, .left_navbar.side-nav .collapsible-body li a:hover{font-size: 16px; background-color: #ddd; margin: 0 0;}
+.left_navbar.side-nav li a, .left_navbar.side-nav .collapsible-body li a{margin: 0 0;}
+.left_navbar.side-nav .collapsible-body li a{padding-left: 3rem;}
 .profile_name.title{color:#444;}
 .left_navbar.collection .collection-item.avatar{height: 64px}
 .left_navbar.collection .collection-item {line-height: 2.5rem;}
+.left_navbar.side-nav .collapsible-body li.active, .side-nav.fixed .collapsible-body li.active{background-color:#ddd;}
+
 
 
 /*------------------Nav-bar---------------------------------------*/
