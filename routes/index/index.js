@@ -104,20 +104,30 @@ router.get('/scenaries', checkAuth, function (req, res) {
 
 router.get('/vpn',checkAuth ,function (req, res) {
 
-    var country = req.query.country;
-
-    if(country != undefined && country != null){
-        vpn.torCountryConfig(country);
+    try {
+        var country = req.query.country;
+        if (country == null || country == undefined) {
+            vpn.paigeLoader(req, res);
+        } else {
+            vpn.torCountryConfig(country, function () {
+                vpn.paigeLoader(req, res);
+            });
+        }
+    }catch(err){
+        console.log(err)
     }
-    vpn.paigeLoader(req, res);
 
 });
 
 router.get('/vpn/get',checkAuth ,  function (req, res) {
-    vpn.resourceLoader(req, res);
+    try {
+        vpn.resourceLoader(req, res);
+    }catch(err){
+        console.log(err)
+    }
 });
 
-router.post('/vpn/get', function (req, res) {
+router.post('/vpn/get', checkAuth, function (req, res) {
     vpn.postLoader(req, res);
 });
 

@@ -86,7 +86,8 @@ function logout(req, res) {
 }
 
 function get(req, res) {
-    UserModel.get(req.params.id, function(err, data) {
+    console.log('CHECK', req.params.id);
+    UserModel.get({id: req.params.id}, function(err, data) {
         if(!err) {
             res.send(response('SUCCESS', data[0]));
         } else {
@@ -116,7 +117,8 @@ function update (req,res){
                        phone: req.body.phone,
                        skype: req.body.skype
                        };
-                   UserModel.update(req.cookies.userId, UpdateDate, function (req, res) { });
+                   UserModel.update(req.cookies.userId, UpdateDate, function (req, res) {
+                   });
                    console.log('The password changed successfully');
                }
                else

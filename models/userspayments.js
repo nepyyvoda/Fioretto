@@ -113,6 +113,7 @@ function get(id, callback) {
 }
 
 function history(obj, callback){
+
     execute('SELECT count(*) AS count FROM userspayments ' +
         'WHERE userspayments.login = ? ' +
         'AND userspayments.end_time BETWEEN ? AND ?',
@@ -147,7 +148,7 @@ function history(obj, callback){
                     'AND userspayments.login = ? ' +
                     'AND userspayments.end_time BETWEEN ? AND ? ' +
                     'LIMIT ?,?',
-                    [obj.login, obj.end_time_from, obj.end_time_to, obj.sizeof, obj.sized], function(err, data){
+                    [obj.login, obj.end_time_from, obj.end_time_to, obj.offset, obj.sized], function(err, data){
                         console.log("MODEL data - ", data);
                         if(data.length >= 0){
 

@@ -1,4 +1,6 @@
 <div class="container">
+    <script src="/scripts/interface.js"></script>
+    <script src="http://momentjs.com/downloads/moment-with-locales.js"></script>
 	<div class="row search_line">
 		<div class="col s12 m12">
 			<div class="card card_methods teal lighten-1">
@@ -9,7 +11,7 @@
                         </span>
 					</h5>
 				</div>
-				<div class="card-action card-action-line">
+				<div class="card-action card-action-line has-browser">
 
 
 					<!-- <div class="col m1 s12 search_button center-align ">
@@ -21,16 +23,17 @@
                             </ul>
                         </nav>
                     </div> -->
+
 					<div class="col s12 m4 l3 select_country proxy">
+                        <div class="relative-time hidden"></div>
 						<h6>Select country</h6>
 						<div class="filter_settings input-field">
 
 							<select name = "country" form="send">
-								<option value="">Auto</option>
+								<option value="{}">Auto</option>
 								<option value="{ua}">Ukraine</option>
 								<option value="{ru}">Russian Federation</option>
 								<option value="{us}">United States</option>
-								<option value="{uk}">Scotland</option>
 								<option value="{fr}">France</option>
 								<option value="{ro}">Romania</option>
 								<option value="{es}">Spain</option>
@@ -42,7 +45,6 @@
 								<option value="{pl}">Poland</option>
 								<option value="{se}">Sweden</option>
 								<option value="{ch}">Switzerland</option>
-								<option value="{an}">Netherland</option>
 							</select>
 
 						</div>
@@ -69,6 +71,43 @@
 					</div>
 				</div>
 
+                <div class="row hidden no-has-browser">
+                    <div class="col s12 m4">
+                        <div class="card blue darken-1">
+                            <div class="card-content white-text">
+                                <span class="card-title">Buy 1 DAY</span>
+                                <p id="pay-1-day"></p>
+                            </div>
+                            <div class="card-action">
+                                <a href="#">Buy</a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col s12 m4">
+                        <div class="card blue darken-1">
+                            <div class="card-content white-text">
+                                <span class="card-title">Buy 1 WEEK</span>
+                                <p id="pay-1-week"></p>
+                            </div>
+                            <div class="card-action">
+                                <a href="#">Buy</a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col s12 m4">
+                        <div class="card blue darken-1">
+                            <div class="card-content white-text">
+                                <span class="card-title">Buy 1 MONTH</span>
+                                <p id="pay-1-month"></p>
+                            </div>
+                            <div class="card-action">
+                                <a href="#">Buy</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
 			</div>
 		</div>
 

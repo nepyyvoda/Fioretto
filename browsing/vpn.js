@@ -13,18 +13,21 @@ var replaceAllRelByAbs = require('../utils/').replaceAllRelByAbs;
 var aTagLinkAppender = require('../utils/aTagLinkAppender.js').aTagLinkAppender;
 var iconv = require('iconv-lite');
 var fs = require('fs');
-var exec = require('sync-exec');
+var log = require('../logger')(module);
+var cp = require('child_process');
 
 var proxyHost = config.get('vpn:proxyHost');
 var proxyPort = config.get('vpn:proxyPort');
+var proxyControlPort = config.get('vpn:proxyControlPort');
 var torPath = config.get('vpn:torPath');
 var torConfigFileName = config.get('vpn:torConfigFileName');
 var servletPageLoaderPath = "/vpn?url=";
 var resourceLoaderPath = "/vpn/get?url=";
 var resourceLoaderController = "/vpn/get?";
 var countryRegexpTemplate = new RegExp("{.?.?}", "mi");
-var torDefaultTemplate = "SocksPort 9050 \n";
+var torDefaultTemplate = "SocksPort "+ proxyPort +"\nControlPort "+ proxyControlPort +"\n";
 var torCountryTemplate = "ExitNodes {country}\nStrictNodes 1 \n";
+var torProc;
 
 var regExpForUrl = new RegExp("(?:(?:https?|ftp):\/\/)(?:\S+(?::\S*)?@)?(?:(?!(?:10|127)(?:\.\d{1,3}){3})(?!(?:169\." +
     "254|192\.168)(?:\.\d{1,3}){2})(?!172\.(?:1[6-9]|2\d|3[0-1])(?:\.\d{1,3}){2})(?:[1-9]\d?|1\d\d|2[01]\d|22[0-3])(" +
@@ -83,266 +86,9 @@ var charsets = ["utf-8", "ucs2", "utf-16le", "utf-16", "ascii", "binary", "base6
     "viscii", "iso646cn", "iso646jp", "hproman8", "tis620", "shift_jis", "windows--31j", "windows-932", "euc-jp", "gb2312", "gbk",
     "gb18030", "windows-936", "euc-cn", "ks_c_5601", "windows-949", "euc-kr", "big5", "big5-hkscs", "windows-950"];
 
-var allAvailableCountries = ["default-{}",
-    "ascensionisland-{ac}",
-    "afghanistan-{af}",
-    "aland-{ax}",
-    "albania-{al}",
-    "algeria-{dz}",
-    "andorra-{ad}",
-    "angola-{ao}",
-    "anguilla-{ai}",
-    "antarctica-{aq}",
-    "antiguaandbarbuda-{ag}",
-    "argentinarepublic-{ar}",
-    "armenia-{am}",
-    "aruba-{aw}",
-    "australia-{au}",
-    "austria-{at}",
-    "azerbaijan-{az}",
-    "bahamas-{bs}",
-    "bahrain-{bh}",
-    "bangladesh-{bd}",
-    "barbados-{bb}",
-    "belarus-{by}",
-    "belgium-{be}",
-    "belize-{bz}",
-    "benin-{bj}",
-    "bermuda-{bm}",
-    "bhutan-{bt}",
-    "bolivia-{bo}",
-    "bosniaandherzegovina-{ba}",
-    "botswana-{bw}",
-    "bouvetisland-{bv}",
-    "brazil-{br}",
-    "britishindianoceanterr-{io}",
-    "britishvirginislands-{vg}",
-    "bruneidarussalam-{bn}",
-    "bulgaria-{bg}",
-    "burkinafaso-{bf}",
-    "burundi-{bi}",
-    "cambodia-{kh}",
-    "cameroon-{cm}",
-    "canada-{ca}",
-    "capeverde-{cv}",
-    "caymanislands-{ky}",
-    "centralafricanrepublic-{cf}",
-    "chad-{td}",
-    "chile-{cl}",
-    "people'srepublicofchina-{cn}",
-    "christmasislands-{cx}",
-    "cocosislands-{cc}",
-    "colombia-{co}",
-    "comoras-{km}",
-    "congo-{cg}",
-    "congo(democraticrepublic)-{cd}",
-    "cookislands-{ck}",
-    "costarica-{cr}",
-    "cotedivoire-{ci}",
-    "croatia-{hr}",
-    "cuba-{cu}",
-    "cyprus-{cy}",
-    "czechrepublic-{cz}",
-    "denmark-{dk}",
-    "djibouti-{dj}",
-    "dominica-{dm}",
-    "dominicanrepublic-{do}",
-    "easttimor-{tp}",
-    "ecuador-{ec}",
-    "egypt-{eg}",
-    "elsalvador-{sv}",
-    "equatorialguinea-{gq}",
-    "estonia-{ee}",
-    "ethiopia-{et}",
-    "falklandislands-{fk}",
-    "faroeislands-{fo}",
-    "fiji-{fj}",
-    "finland-{fi}",
-    "france-{fr}",
-    "francemetropolitan-{fx}",
-    "frenchguiana-{gf}",
-    "frenchpolynesia-{pf}",
-    "frenchsouthernterritories-{tf}",
-    "gabon-{ga}",
-    "gambia-{gm}",
-    "georgia-{ge}",
-    "germany-{de}",
-    "ghana-{gh}",
-    "gibralter-{gi}",
-    "greece-{gr}",
-    "greenland-{gl}",
-    "grenada-{gd}",
-    "guadeloupe-{gp}",
-    "guam-{gu}",
-    "guatemala-{gt}",
-    "guinea-{gn}",
-    "guinea-bissau-{gw}",
-    "guyana-{gy}",
-    "haiti-{ht}",
-    "heard&amp;mcdonaldisland-{hm}",
-    "honduras-{hn}",
-    "hongkong-{hk}",
-    "hungary-{hu}",
-    "iceland-{is}",
-    "india-{in}",
-    "indonesia-{id}",
-    "iran",
-    "islamicrepublicof-{ir}",
-    "iraq-{iq}",
-    "ireland-{ie}",
-    "isleofman-{im}",
-    "israel-{il}",
-    "italy-{it}",
-    "jamaica-{jm}",
-    "japan-{jp}",
-    "jordan-{jo}",
-    "kazakhstan-{kz}",
-    "kenya-{ke}",
-    "kiribati-{ki}",
-    "korea",
-    "dem.peoplesrepof-{kp}",
-    "republicof-{kr}",
-    "kuwait-{kw}",
-    "kyrgyzstan-{kg}",
-    "laopeople'sdem.republic-{la}",
-    "latvia-{lv}",
-    "lebanon-{lb}",
-    "lesotho-{ls}",
-    "liberia-{lr}",
-    "libyanarabjamahiriya-{ly}",
-    "liechtenstein-{li}",
-    "lithuania-{lt}",
-    "luxembourg-{lu}",
-    "macao-{mo}",
-    "macedonia-{mk}",
-    "madagascar-{mg}",
-    "malawi-{mw}",
-    "malaysia-{my}",
-    "maldives-{mv}",
-    "mali-{ml}",
-    "malta-{mt}",
-    "marshallislands-{mh}",
-    "martinique-{mq}",
-    "mauritania-{mr}",
-    "mauritius-{mu}",
-    "mayotte-{yt}",
-    "mexico-{mx}",
-    "micronesia-{fm}",
-    "moldavarepublicof-{md}",
-    "monaco-{mc}",
-    "mongolia-{mn}",
-    "montenegro-{me}",
-    "montserrat-{ms}",
-    "morocco-{ma}",
-    "mozambique-{mz}",
-    "myanmar-{mm}",
-    "namibia-{na}",
-    "nauru-{nr}",
-    "nepal-{np}",
-    "netherlandsantilles-{an}",
-    "netherlands",
-    "the-{nl}",
-    "newcaledonia-{nc}",
-    "newzealand-{nz}",
-    "nicaragua-{ni}",
-    "niger-{ne}",
-    "nigeria-{ng}",
-    "niue-{nu}",
-    "norfolkisland-{nf}",
-    "northernmarianaislands-{mp}",
-    "norway-{no}",
-    "oman-{om}",
-    "pakistan-{pk}",
-    "palau-{pw}",
-    "palestine-{ps}",
-    "panama-{pa}",
-    "papuanewguinea-{pg}",
-    "paraguay-{py}",
-    "peru-{pe}",
-    "philippines(republicofthe)-{ph}",
-    "pitcairn-{pn}",
-    "poland-{pl}",
-    "portugal-{pt}",
-    "puertorico-{pr}",
-    "qatar-{qa}",
-    "reunion-{re}",
-    "romania-{ro}",
-    "russianfederation-{ru}",
-    "rwanda-{rw}",
-    "samoa-{ws}",
-    "sanmarino-{sm}",
-    "saotome/principe-{st}",
-    "saudiarabia-{sa}",
-    "scotland-{uk}",
-    "senegal-{sn}",
-    "serbia-{rs}",
-    "seychelles-{sc}",
-    "sierraleone-{sl}",
-    "singapore-{sg}",
-    "slovakia-{sk}",
-    "slovenia-{si}",
-    "solomonislands-{sb}",
-    "somalia-{so}",
-    "somoa",
-    "gilbert",
-    "elliceislands-{as}",
-    "southafrica-{za}",
-    "southgeorgia",
-    "southsandwichislands-{gs}",
-    "sovietunion-{su}",
-    "spain-{es}",
-    "srilanka-{lk}",
-    "st.helena-{sh}",
-    "st.kittsandnevis-{kn}",
-    "st.lucia-{lc}",
-    "st.pierreandmiquelon-{pm}",
-    "thegrenadines-{vc}",
-    "sudan-{sd}",
-    "suriname-{sr}",
-    "svalbardandjanmayen-{sj}",
-    "swaziland-{sz}",
-    "sweden-{se}",
-    "switzerland-{ch}",
-    "syrianarabrepublic-{sy}",
-    "taiwan-{tw}",
-    "tajikistan-{tj}",
-    "tanzania-{tz}",
-    "thailand-{th}",
-    "togo-{tg}",
-    "tokelau-{tk}",
-    "tonga-{to}",
-    "trinidadandtobago-{tt}",
-    "tunisia-{tn}",
-    "turkey-{tr}",
-    "turkmenistan-{tm}",
-    "turksandcalcosislands-{tc}",
-    "tuvalu-{tv}",
-    "uganda-{ug}",
-    "ukraine-{ua}",
-    "unitedarabemirates-{ae}",
-    "unitedkingdom-{gb}",
-    "unitedkingdom-{uk}",
-    "unitedstates-{us}",
-    "unitedstatesminoroutl-{um}",
-    "uruguay-{uy}",
-    "uzbekistan-{uz}",
-    "vanuatu-{vu}",
-    "vaticancitystate-{va}",
-    "venezuela-{ve}",
-    "vietnam-{vn}",
-    "virginislands-{vi}",
-    "wallisandfutunaislands-{wf}",
-    "westernsahara-{eh}",
-    "yemen-{ye}",
-    "zambi-{zm}",
-    "zimbabwe-{zw}"
-];
-
-var availableCountries = [    "gefault-{}",
-    "ukraine-{ua}",
+var availableCountries = [ "ukraine-{ua}",
     "russianfederation-{ru}",
     "unitedstates-{us}",
-    "scotland-{uk}",
     "france-{fr}",
     "romania-{ro}",
     "spain-{es}",
@@ -353,24 +99,13 @@ var availableCountries = [    "gefault-{}",
     "germany-{de}",
     "poland-{pl}",
     "sweden-{se}",
-    "switzerland-{ch}",
-    "netherland-{an}"
+    "switzerland-{ch}"
 ];
 
 function searchStringInArray(str, strArray) {
 
     for (var j = 0; j < strArray.length; j++) {
         if (strArray[j].match(str)) return true;
-    }
-    return false;
-}
-
-function getCountryAbbreviation(str, strArray) {
-    for (var j = 0; j < strArray.length; j++) {
-
-        if (strArray[j].match(str)){
-            return strArray[j].match(countryRegexpTemplate);
-        }
     }
     return false;
 }
@@ -695,17 +430,69 @@ var postLoader = function (req, res) {
     });
 };
 
-var torCountryConfig = function (country) {
+var torStart = function (callback) {
 
+    torProc = cp.spawn('tor', ['-f', torPath + torConfigFileName]);
+    torProc.stdout.on('data', function(data) {
+        console.log(data.toString('utf-8'));
+        if(data.toString("utf-8").indexOf("Bootstrapped 100%: Done")>=0){
+            callback();
+        }
+    });
+    torProc.stderr.on('data', function(data) {
+        console.log(data.toString('utf-8'));
+    });
+
+    torProc.on('close', function(code) {
+        console.log("Tor is stop");
+    });
+    //callback();
+};
+
+var torStop = function () {
+    if(torProc != undefined && torProc != null) {
+        torProc.kill();
+        torProc = undefined;
+    }
+};
+
+var torCountryConfig = function (country,callback) {
+
+    if(!fs.existsSync(torPath)){
+        fs.mkdirSync(torPath);
+    }
+
+    if(!fs.existsSync(torPath + torConfigFileName)){
+        fs.writeFileSync(torPath + torConfigFileName, {flag: 'wx'});
+    }
+
+
+    var settings = torDefaultTemplate;
+
+    var configText = fs.readFileSync(torPath + torConfigFileName, {encoding: 'utf8'});
+
+    if (configText.indexOf(country) < 0 && country.length > 3) {
+        torStop();
+    } else {
+        callback();
+    }
 
     if (searchStringInArray(country.toLowerCase(), availableCountries)) {
-
-        var settings = torDefaultTemplate;
         settings = torCountryTemplate.replace(/\{country\}/gmi, country) + settings;
-        fs.writeFileSync(torPath + torConfigFileName, settings, 'utf8');
-
-        console.log(exec('sudo service tor restart'));
     }
+
+
+
+
+    fs.writeFileSync(torPath + torConfigFileName, settings, 'utf8');
+
+
+    if(torProc == undefined || torProc == null) {
+        torStart(function () {
+            callback();
+        });
+    }
+
 };
 
 module.exports.paigeLoader = paigeLoader;

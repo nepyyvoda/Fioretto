@@ -132,14 +132,15 @@ function updateScenariosList() {
         if(Object.keys(res.data).length > 0) {
             $('.empty').addClass('hidden');
             for(var i in res.data) {
+                console.log(res.data[i]);
                 var $template = $(".template");
                 var $tmp = null;
 
                 $tmp = $template.clone().removeClass("template").removeClass('hidden').addClass('list-row-clone');
                 $tmp.find('.name').text(res.data[i].nameScenario);
                 $tmp.find('.url').text(res.data[i].URL_target);
-                //$tmp.attr('data-id', res.data[i].id);
-                $tmp.find('.mode').text(res.data[i].mode === 1?'Boosted':'Standard');
+                $tmp.attr('data-id', res.data[i].id);
+                //res.data[i].mode;
                 //res.data[i].nameScenario;
                 $tmp.appendTo('#scenarios-list');
             }
@@ -174,13 +175,16 @@ function startScenario(el) {
     });
 }
 
-function updatePayment(){
+function updatePayment(offset){
+    var limit = 10;
+
     if(window.location.pathname === "/client_payment"){
-        var datePickerFromTo = {};
+        var requestData = {};
         var inputFrom = $('.datepicker').first().pickadate();
         var inputTo = $('.datepicker').last().pickadate();
         var pickerTo = inputTo.pickadate('picker');
         var pickerFrom = inputFrom.pickadate('picker');
+
 
         pickerTo.off('close');
         pickerFrom.off('close');
@@ -191,32 +195,38 @@ function updatePayment(){
             pickerFrom.set('select', current.setMonth(current.getMonth() - 1));
         }
 
-        datePickerFromTo.from = pickerFrom.get('select').pick;
-        datePickerFromTo.to = pickerTo.get('select').pick;
+        //PREPARE REQUEST
+        requestData.from = pickerFrom.get('select').pick;
+        requestData.to = pickerTo.get('select').pick;
+        if(typeof offset == "undefined"){
+            requestData.sizeof = offset * limit;
+        }
 
-        $.getJSON('/api/user/' + $.cookie('userId') + '/payments', datePickerFromTo,function(res){
+
+        $.getJSON('/api/user/' + $.cookie('userId') + '/payments', requestData,function(res){
             console.log(res);
             $('#payments-list').find('.list-row-clone').remove();
             console.log("COUNT = ",res.data.count);
-            if(Object.keys(res.data).length > 0) {
-                for(var i in res.data) {
-                    console.log(res.data[i]);
+            if(Object.keys(res.data.data).length > 0) {
+                for(var i in res.data.data) {
+                    console.log(res.data.data[i]);
                     var $template = $(".template");
                     var $tmp = null;
-                    var parsedDate =  new Date(res.data[i].end_time);
+                    var parsedDate =  new Date(res.data.data[i].end_time);
                     $tmp = $template.clone().removeClass("template").removeClass('hidden').addClass('list-row-clone');
                     $tmp.find('.date').text(parsedDate.toLocaleDateString() + " " +  parsedDate.toLocaleTimeString());
-                    $tmp.find('.transactionid').text(res.data[i].transactionID);
-                    $tmp.find('.serviceid').text(res.data[i].serv_name);
-                    $tmp.find('.paysystem').text(res.data[i].payservice_name);
-                    $tmp.find('.sum').text('$' + res.data[i].amount/100);
+                    $tmp.find('.transactionid').text(res.data.data[i].transactionID);
+                    $tmp.find('.serviceid').text(res.data.data[i].serv_name);
+                    $tmp.find('.paysystem').text(res.data.data[i].payservice_name);
+                    $tmp.find('.sum').text('$' + res.data.data[i].amount/100);
 
-                    $tmp.attr('data-id', res.data[i].id);
-                    //res.data[i].mode;
-                    //res.data[i].nameScenario;
-                    if(res.data[i].transactionTypeID === 2)
+                    $tmp.attr('data-id', res.data.data[i].id);
+                    if(res.data.data[i].transactionTypeID === 2)
                         $tmp.addClass("red").addClass("lighten-3");
                     $tmp.appendTo('#payments-list');
+
+                    //DRAW paginator
+
                 }
             } else {
                 console.log('LOL');

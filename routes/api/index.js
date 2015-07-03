@@ -8,6 +8,7 @@ var request = require('request');
 var User = require('../../controllers/user');
 var Scenarios = require('../../controllers/scenarios');
 var Payments = require('../../controllers/payments');
+var Services = require('../../controllers/services');
 
 function checkAuth(req, res, next) {
     var token = req.cookies.sid;
@@ -84,6 +85,11 @@ router.put('/user/:id', checkAuth, checkPermission, function(req, res) {
 
 router.get('/user/:id/payments/', checkAuth, function(req, res){
     Payments.history(req, res);
+});
+
+router.get('/user/:id/services/browser', checkAuth, function(req, res){
+    Services.availableBrowser(req, res);
+
 });
 
 module.exports = router;
