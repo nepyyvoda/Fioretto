@@ -7,7 +7,8 @@ var execute = require('../db').execute;
 function create(obj, callback){
     execute('INSERT INTO userservicesgrants (usersID, serviceID, active, start_time, end_time, deleted) VALUES (?, ?, ?, ?, ?, ?)',
         [obj.userid, obj.serviceid, obj.active, obj.start_time, obj.end_time, obj.deleted],
-        function(data) {
+        function(err, data) {
+
             callback(false, data);
         }
     );

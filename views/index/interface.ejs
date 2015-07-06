@@ -11,7 +11,7 @@
                         </span>
 					</h5>
 				</div>
-				<div class="card-action card-action-line has-browser">
+				<div class="card-action card-action-line has-browser hidden">
 
 
 					<!-- <div class="col m1 s12 search_button center-align ">
@@ -76,10 +76,10 @@
                         <div class="card blue darken-1">
                             <div class="card-content white-text">
                                 <span class="card-title">Buy 1 DAY</span>
-                                <p id="pay-1-day"></p>
+                                <p id="browser_day"></p>
                             </div>
                             <div class="card-action">
-                                <a href="#">Buy</a>
+                                <a id="buy_browser_day" href="#modalmy" class="modal-trigger day">Buy</a>
                             </div>
                         </div>
                     </div>
@@ -88,10 +88,10 @@
                         <div class="card blue darken-1">
                             <div class="card-content white-text">
                                 <span class="card-title">Buy 1 WEEK</span>
-                                <p id="pay-1-week"></p>
+                                <p id="browser_week"></p>
                             </div>
                             <div class="card-action">
-                                <a href="#">Buy</a>
+                                <a id="buy_browser_week" href="#modalmy" class="modal-trigger week">Buy</a>
                             </div>
                         </div>
                     </div>
@@ -100,15 +100,29 @@
                         <div class="card blue darken-1">
                             <div class="card-content white-text">
                                 <span class="card-title">Buy 1 MONTH</span>
-                                <p id="pay-1-month"></p>
+                                <p id="browser_month"></p>
                             </div>
                             <div class="card-action">
-                                <a href="#">Buy</a>
+                                <a id="buy_browser_month" href="#modalmy" class="modal-trigger">Buy</a>
                             </div>
                         </div>
                     </div>
                 </div>
-			</div>
+
+                <!-- Modal Structure -->
+                <div id="modalmy" class="modal">
+                    <div class="modal-content">
+                        <h4>Are u really want buy service?</h4>
+                        <p></p>
+                    </div>
+                    <div class="modal-footer">
+                        <a href="" class="modal-action modal-close waves-effect btn-flat">Cancel</a>
+                        <a id="buy_link" class="modal-action modal-close waves-effect btn-flat" data-send="">Agree</a>
+                    </div>
+                </div>
+
+
+            </div>
 		</div>
 
 	</div>

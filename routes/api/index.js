@@ -89,7 +89,14 @@ router.get('/user/:id/payments/', checkAuth, function(req, res){
 
 router.get('/user/:id/services/browser', checkAuth, function(req, res){
     Services.availableBrowser(req, res);
-
 });
+
+router.get('/services/:servicesid/price', checkAuth, function(req, res){
+    Services.priceServices(req, res);
+});
+
+router.post('/services/buy', checkAuth, function(req, res){
+    Services.buyService(req, res);
+})
 
 module.exports = router;

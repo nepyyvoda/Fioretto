@@ -4,6 +4,7 @@
 
 var UserModel = require('../models/user');
 var UserServiceGrants = require('../models/userservicegrant');
+var ServiceParams = require('../models/serviceparams');
 var response = require('../response');
 
 function availableBrowser(req, res){
@@ -35,7 +36,66 @@ function availableScenario(req, res){}
 function availableSMS(req, res){}
 
 function priceServices(req, res){
+    ServiceParams.selectByServices({servicesid: req.params.servicesid}, function(err, data){
+        if(!err){
+            res.send(response('SUCCESS', {err : 0, result: data}));
+        } else {
+            res.send(response('SUCCESS', {err : 1}))
+        }
+    });
+}
 
+
+
+function buyService(req, res){
+    UserModel.get({id : req.body.userid },  function(err, users) {
+        console.log('USER ', users);
+        ServiceParams.selectByName({name: req.body.name}, function(err, settingsserv){
+            if(!err){
+                var result = users[0].balance - settingsserv[0].value_price;
+                if(result > 0){
+                    console.log('settingsserv ', settingsserv[0]);
+                    UserServiceGrants.getActiveService({usersid: req.body.userid, serviceid: settingsserv[0].servicesID, end_time: (new Date())},
+                        function(err, data){
+                            console.log('DATA user ', data);
+                            if(!err){
+                                res.send(response('ERROR', {err : 1, message: 'U has active plan!'}));
+                            } else {
+                                console.log('Time : ' + settingsserv[0].value_duration);
+                                var duration = new Date(+(new Date()) + settingsserv[0].value_duration);
+                                console.log('Time_End : ' + duration);
+                                UserServiceGrants.create({
+                                        userid : req.body.userid,
+                                        serviceid :  settingsserv[0].servicesID,
+                                        active : 1,
+                                        start_time : (new Date()),
+                                        end_time : duration,
+                                        deleted : 0 },
+                                    function(err, data){
+                                        console.log('DATA user  ', data[0]);
+                                        UserModel.update({id: req.body.userid, data: {balance: result}}, function(err, data){
+                                            console.log('USER update balance ', data);
+                                            if(!err){
+                                                res.send(response('SUCCESS', {err : 0, data : data}));
+                                            }else{
+                                                res.send(response('SUCCESS', {err : 1}));
+                                            }
+                                        });
+                                    })
+                            }
+                        }
+                    );
+
+                }else{
+                    res.send(response('SUCCESS', {err : 1}));
+                }
+            } else {
+                res.send(response('SUCCESS', {err : 1}))
+            }
+        });
+    });
 }
 
 module.exports.availableBrowser = availableBrowser;
+module.exports.priceServices = priceServices;
+module.exports.buyService = buyService;

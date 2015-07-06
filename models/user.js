@@ -77,8 +77,8 @@ function remove(id, callback){
     });
 }
 
-function update(id, data, callback){
-    var formattedData = formatter(id, data, allowedUpdateColumns);
+function update(obj, callback){
+    var formattedData = formatter(obj.id, obj.data, allowedUpdateColumns);
     if(!formattedData) {
         callback (true, 'ILLEGAL_COLUMNS');
     }

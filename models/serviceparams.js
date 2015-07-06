@@ -41,6 +41,28 @@ function remove(obj, callback){
     });
 }
 
+function selectByServices(obj, callback){
+    execute('SELECT * FROM servicesettings WHERE servicesID = ?', [obj.servicesid], function(err, data){
+        if(data.length > 0){
+            callback (false, data);
+        } else {
+            callback (true, 'SERVICE_SETTINGS_NOT_FOUND')
+        }
+    });
+}
+
+function selectByName(obj, callback){
+    execute('SELECT * FROM servicesettings WHERE name = ?', [obj.name], function(err, data){
+        if(data.length > 0){
+            callback (false, data);
+        } else {
+            callback (true, 'SERVICE_SETTINGS_NOT_FOUND')
+        }
+    });
+}
+
 module.exports.create = create;
 module.exports.update = update;
 module.exports.remove = remove;
+module.exports.selectByServices = selectByServices;
+module.exports.selectByName = selectByName;
