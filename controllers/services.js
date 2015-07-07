@@ -4,6 +4,7 @@
 
 var UserModel = require('../models/user');
 var UserServiceGrants = require('../models/userservicegrant');
+var UserPayments = require('../models/userspayments');
 var ServiceParams = require('../models/serviceparams');
 var response = require('../response');
 
@@ -55,6 +56,7 @@ function buyService(req, res){
                 var result = users[0].balance - settingsserv[0].value_price;
                 if(result > 0){
                     console.log('settingsserv ', settingsserv[0]);
+
                     UserServiceGrants.getActiveService({usersid: req.body.userid, serviceid: settingsserv[0].servicesID, end_time: (new Date())},
                         function(err, data){
                             console.log('DATA user ', data);
@@ -64,6 +66,7 @@ function buyService(req, res){
                                 console.log('Time : ' + settingsserv[0].value_duration);
                                 var duration = new Date(+(new Date()) + settingsserv[0].value_duration);
                                 console.log('Time_End : ' + duration);
+
                                 UserServiceGrants.create({
                                         userid : req.body.userid,
                                         serviceid :  settingsserv[0].servicesID,
@@ -73,12 +76,35 @@ function buyService(req, res){
                                         deleted : 0 },
                                     function(err, data){
                                         console.log('DATA user  ', data[0]);
+
                                         UserModel.update({id: req.body.userid, data: {balance: result}}, function(err, data){
                                             console.log('USER update balance ', data);
                                             if(!err){
-                                                res.send(response('SUCCESS', {err : 0, data : data}));
+
+                                                UserPayments.create(req.body.userid,
+                                                    0,
+                                                    0,
+                                                    2,
+                                                    settingsserv[0].servicesID,
+                                                    new Date(),
+                                                    new Date(),
+                                                    2,
+                                                    0,
+                                                    'complete',
+                                                    0,
+                                                    0,
+                                                    settingsserv[0].value_price,
+                                                    0,
+                                                    0,
+                                                    0x0, function(err, retData){
+                                                        console.log(retData);
+                                                        if(!err)
+                                                            res.send(response('SUCCESS', {err : 0, data : retData}));
+                                                        else
+                                                            res.send(response('UNSUCCESS', {err : 1}));
+                                                    });
                                             }else{
-                                                res.send(response('SUCCESS', {err : 1}));
+                                                res.send(response('UNSUCCESS', {err : 1}));
                                             }
                                         });
                                     })
@@ -87,10 +113,10 @@ function buyService(req, res){
                     );
 
                 }else{
-                    res.send(response('SUCCESS', {err : 1}));
+                    res.send(response('UNSUCCESS', {err : 1}));
                 }
             } else {
-                res.send(response('SUCCESS', {err : 1}))
+                res.send(response('UNSUCCESS', {err : 1}))
             }
         });
     });
