@@ -1,48 +1,138 @@
 <div class="container">
-    <script src="http://code.jquery.com/jquery-latest.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap-theme.min.css">
     <script src="/scripts/pay.js"></script>
+    <div class="card card_methods teal lighten-1">
 
-    <span>
-        <input id="i_amount" type="number">
-            <!-- Button trigger modal -->
-        <button id="b_call_pay" type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal">
-        Pay
-        </button>
-    </span>
+        <div class="card-content client_payment white-text">
+            <h5 class="header section-title">
+                        <span><i class="small material-icons">payment </i>
+                                Service market
+                        </span>
+            </h5>
+        </div>
 
-
-
-
-    <!-- Modal -->
-    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                    <h4 class="modal-title" id="myModalLabel">Modal title</h4>
+        <div class="card-action card-action-line">
+            <h5 class="white-text">Buy browser</h5>
+            <div class="row no-has-browser">
+                <div class="col s12 m4">
+                    <div class="card blue darken-1">
+                        <div class="card-content white-text">
+                            <span class="card-title">Buy 1 DAY</span>
+                            <p id="browser_day"></p>
+                        </div>
+                        <div class="card-action">
+                            <a id="buy_browser_day" href="#modalbrowser" class="modal-trigger day">Buy</a>
+                        </div>
+                    </div>
                 </div>
-                <div class="modal-body">
-                    <p id='p_amount'/>
-                    <form method="post" action="https://www.sandbox.paypal.com/cgi-bin/webscr" class="paypal-button" target="_top">
-                        <div class="hide" id="errorBox"></div>
-                        <input type="hidden" name="button" value="buynow">
-                        <input type="hidden" name="item_name" value="Addition'">
-                        <input type="hidden" name="quantity" value="1">
-                        <input type="hidden" name="amount" value="">
-                        <input type="hidden" name="custom" value= '{"user": "test"}'>
-                        <input type="hidden" name="currency_code" value="RUB">
-                        <input type="hidden" name="env" value="www.sandbox">
-                        <input type="hidden" name="cmd" value="_xclick">
-                        <input type="hidden" name="business" value="E9H953PCMYUWE">
-                        <input type="hidden" name="bn" value="JavaScriptButton_buynow">
-                        <button type="submit" class="paypal-button large">Buy Now</button></form>
+
+                <div class="col s12 m4">
+                    <div class="card blue darken-1">
+                        <div class="card-content white-text">
+                            <span class="card-title">Buy 1 WEEK</span>
+                            <p id="browser_week"></p>
+                        </div>
+                        <div class="card-action">
+                            <a id="buy_browser_week" href="#modalbrowser" class="modal-trigger week">Buy</a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col s12 m4">
+                    <div class="card blue darken-1">
+                        <div class="card-content white-text">
+                            <span class="card-title">Buy 1 MONTH</span>
+                            <p id="browser_month"></p>
+                        </div>
+                        <div class="card-action">
+                            <a id="buy_browser_month" href="#modalbrowser" class="modal-trigger">Buy</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Modal Structure -->
+            <div id="modalbrowser" class="modal">
+                <div class="modal-content">
+                    <h4>Are u really want buy service?</h4>
+                    <p></p>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    <a href="" class="modal-action modal-close waves-effect btn-flat">Cancel</a>
+                    <a id="buy_link" class="modal-action modal-close waves-effect btn-flat" data-send="">Agree</a>
                 </div>
             </div>
         </div>
+
+        <!-- Has no available vote-->
+        <div class="card-action  card-action-line no-has-scenario">
+            <h5 class="white-text">Buy vote</h5>
+            <div class="row no-has-scenario">
+
+                <div class="col s12 m3">
+                    <div class="card blue darken-1">
+                        <div class="card-content white-text">
+                            <span class="card-title">Buy voting by TOR</span>
+                            <p id="scenario_tor"></p>
+                        </div>
+                        <div class="card-action">
+                            <a id="buy_scenario_tor" href="#modalmyscenario" class="modal-trigger day">Buy</a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col s12 m3">
+                    <div class="card blue darken-1">
+                        <div class="card-content white-text">
+                            <span class="card-title">Buy voting by PROXY</span>
+                            <p id="scenario_proxy"></p>
+                        </div>
+                        <div class="card-action">
+                            <a id="buy_scenario_proxy" href="#modalmyscenario" class="modal-trigger week">Buy</a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col s12 m3">
+                    <div class="card blue darken-1">
+                        <div class="card-content white-text">
+                            <span class="card-title">Buy voting by TOR + CAPTCHA</span>
+                            <p id="scenario_tor_captcha"></p>
+                        </div>
+                        <div class="card-action">
+                            <a id="buy_scenario_tor_captcha" href="#modalmyscenario" class="modal-trigger week">Buy</a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col s12 m3">
+                    <div class="card blue darken-1">
+                        <div class="card-content white-text">
+                            <span class="card-title">Buy voting by PROXY + CAPTCHA</span>
+                            <p id="scenario_proxy_captcha"></p>
+                        </div>
+                        <div class="card-action">
+                            <a id="buy_scenario_proxy_captcha" href="#modalmyscenario" class="modal-trigger week">Buy</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Modal Structure -->
+            <div id="modalmyscenario" class="modal">
+                <div class="modal-content">
+                    <h4>Enter count votes and accept your choice:</h4>
+                    <div class="input-field col s12">
+                        <input id="input_count" type="number" length="10">
+                        <label for="input_count">Input count: </label>
+                    </div>
+                </div>
+
+                <div class="modal-footer">
+                    <a href="" class="modal-action modal-close waves-effect btn-flat">Cancel</a>
+                    <a id="buy_link" class="modal-action modal-close waves-effect btn-flat" data-send="">Agree</a>
+                </div>
+            </div>
+        </div>
+
+
     </div>
 </div>

@@ -1,4 +1,5 @@
 <div class="container">
+    <script src="/scripts/scenario.js"></script>
     <div class="row">
         <div class="col s12 m12">
             <div class="card card_methods teal lighten-1">
@@ -9,7 +10,8 @@
                         </span>
                     </h5>
                 </div>
-                <div class="card-action  card-action-line">
+                <!--Scenarios available -->
+                <div class="card-action  card-action-line has-scenario">
                     <div class="row">
                         <p class="scenaries_head add">Add Voting URL</p>
                         <div class="left-align">
@@ -57,9 +59,82 @@
                                 </tr>
                             </tbody>
                         </table>
+                    </div>
                 </div>
 
-            </div>
+                <!-- Has no available vote-->
+                <div class="card-action  card-action-line hidden no-has-scenario">
+                    <h6 class="white-text">You hasn't available this service. But u can buy them!</h6>
+                    <a class="waves-effect waves-light btn blue-grey white-text">Buy service $</a>
+                    <!--<div class="row no-has-scenario">
+
+                        <div class="col s12 m3">
+                            <div class="card blue darken-1">
+                                <div class="card-content white-text">
+                                    <span class="card-title">Buy voting by TOR</span>
+                                    <p id="scenario_tor"></p>
+                                </div>
+                                <div class="card-action">
+                                    <a id="buy_scenario_tor" href="#modalmy" class="modal-trigger day">Buy</a>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col s12 m3">
+                            <div class="card blue darken-1">
+                                <div class="card-content white-text">
+                                    <span class="card-title">Buy voting by PROXY</span>
+                                    <p id="scenario_proxy"></p>
+                                </div>
+                                <div class="card-action">
+                                    <a id="buy_scenario_proxy" href="#modalmy" class="modal-trigger week">Buy</a>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col s12 m3">
+                            <div class="card blue darken-1">
+                                <div class="card-content white-text">
+                                    <span class="card-title">Buy voting by TOR + CAPTCHA</span>
+                                    <p id="scenario_tor_captcha"></p>
+                                </div>
+                                <div class="card-action">
+                                    <a id="buy_scenario_tor_captcha" href="#modalmy" class="modal-trigger week">Buy</a>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col s12 m3">
+                            <div class="card blue darken-1">
+                                <div class="card-content white-text">
+                                    <span class="card-title">Buy voting by PROXY + CAPTCHA</span>
+                                    <p id="scenario_proxy_captcha"></p>
+                                </div>
+                                <div class="card-action">
+                                    <a id="buy_scenario_proxy_captcha" href="#modalmy" class="modal-trigger week">Buy</a>
+                                </div>
+                            </div>
+                        </div>
+
+
+                    </div>
+                </div>
+
+                &lt;!&ndash; Modal Structure &ndash;&gt;
+                <div id="modalmy" class="modal">
+                    <div class="modal-content">
+                        <h4>Enter count votes and accept your choice:</h4>
+                        <div class="input-field col s12">
+                            <input id="input_count" type="number" length="10">
+                            <label for="input_count">Input count: </label>
+                        </div>
+                    </div>
+
+                    <div class="modal-footer">
+                        <a href="" class="modal-action modal-close waves-effect btn-flat">Cancel</a>
+                        <a id="buy_link" class="modal-action modal-close waves-effect btn-flat" data-send="">Agree</a>
+                    </div>-->
+                </div>
         </div>
     </div>
 </div>

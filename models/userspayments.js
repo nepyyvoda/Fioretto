@@ -119,7 +119,7 @@ function history(obj, callback){
         'AND userspayments.end_time BETWEEN ? AND ?',
         [obj.login, obj.end_time_from, obj.end_time_to],
         function(err, dataCount){
-            console.log("MODEL data count - ", err, dataCount);
+            //console.log("MODEL data count - ", err, dataCount);
 
             if(dataCount.length >= 0){
                 execute('SELECT ' +
@@ -149,7 +149,7 @@ function history(obj, callback){
                     'AND userspayments.end_time BETWEEN ? AND ? ' +
                     'LIMIT ?,?',
                     [obj.login, obj.end_time_from, obj.end_time_to, obj.offset, obj.sized], function(err, data){
-                        console.log("MODEL data - ", data);
+                        //console.log("MODEL data - ", data);
                         if(data.length >= 0){
 
                             callback (false, {data: data, count: dataCount[0].count});

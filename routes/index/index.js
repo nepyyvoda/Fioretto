@@ -93,7 +93,7 @@ router.get('/logout', checkAuth, function (req, res) {
     User.logout(req, res);
 });
 router.get('/pay', checkAuth, function (req, res) {
-    res.redirect('/profile');
+    res.render('index/pay', {title: 'Payment', name: req.path});
 });
 router.post('/pay/ipn', function (req, res) {
     Paypal.ipn_processor(req, res);

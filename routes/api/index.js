@@ -87,8 +87,12 @@ router.get('/user/:id/payments/', checkAuth, function(req, res){
     Payments.history(req, res);
 });
 
-router.get('/user/:id/services/browser', checkAuth, function(req, res){
+router.get('/user/:id/services/:servicesid', checkAuth, function(req, res){
     Services.availableBrowser(req, res);
+});
+
+router.get('/user/:id/services/voting', checkAuth, function(req, res){
+    Services.availableVoteManager(req, res);
 });
 
 router.get('/services/:servicesid/price', checkAuth, function(req, res){

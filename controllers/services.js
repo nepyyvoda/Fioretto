@@ -8,14 +8,17 @@ var UserPayments = require('../models/userspayments');
 var ServiceParams = require('../models/serviceparams');
 var response = require('../response');
 
+var servicesAvailable = [NaN,1,2,4];
+
 function availableBrowser(req, res){
+
     UserModel.get({id : req.params.id },  function(err, data) {
         console.log('AVAILABLEBROWSER ', data);
         if(!err) {
-            if((data[0].serviceAvailable[0] & 1) !== 0){
+            if((data[0].serviceAvailable[0] & servicesAvailable[req.params.servicesid]) !== 0){
                 //res.send(response('SUCCESS', {available : 1}));
 
-                UserServiceGrants.getActiveService({usersid: req.params.id, serviceid: 1, end_time: (new Date())},
+                UserServiceGrants.getActiveService({usersid: req.params.id, serviceid: req.params.servicesid, end_time: (new Date())},
                 function(err, data){
                     if(!err){
                         res.send(response('SUCCESS', {available : 1, end_time: (new Date(data[0].end_time))}));
@@ -45,8 +48,6 @@ function priceServices(req, res){
         }
     });
 }
-
-
 
 function buyService(req, res){
     UserModel.get({id : req.body.userid },  function(err, users) {
