@@ -79,6 +79,10 @@ router.delete('/scenarios/:id', checkAuth, function(req, res) {
     Scenarios.del(req, res);
 });
 
+router.post('/scenarios/:id/confirmation', function(req, res){
+    Scenarios.changeState(req, res);
+});
+
 router.put('/user/:id', checkAuth, checkPermission, function(req, res) {
     User.update(req, res);
 });
@@ -101,6 +105,6 @@ router.get('/services/:servicesid/price', checkAuth, function(req, res){
 
 router.post('/services/buy', checkAuth, function(req, res){
     Services.buyService(req, res);
-})
+});
 
 module.exports = router;
