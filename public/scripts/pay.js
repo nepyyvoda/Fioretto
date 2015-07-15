@@ -3,16 +3,41 @@
  */
 
 $(document).ready(function() {
-        $('#b_call_pay').click(function(e){
+    $.getJSON('/api/services/1/price', function(res){
+        if(res.status === 0){
+            if(res.data.err === 0){
+                for(var i in res.data.result){
+                    $('#' + res.data.result[i].name).text((res.data.result[i].value_price / 100) + ' $');
+                }
+            }
+        }
+    });
 
-            var amount = $('#i_amount').val();
-            console.log(amount);
-            if(amount === ''||amount <=0)
-                amount=0;
-            console.log('DATA', $("input[name='amount']"), amount, $.cookie("userId"));
-            $("input[name='amount']").val(amount);
-            $("input[name='custom']").val(JSON.stringify({userId: $.cookie("userId")}));
-            $('#p_amount').html('Amount is = ' + amount);
+    $('.modal-trigger').click(function(e){
+        console.log('click! modal ', e);
+        $('.buy-link').attr('data-send',e.currentTarget.id);
+    });
 
+    $('.modal').on('click', '.buy-link', function(e){
+
+        var reqData = {
+            userid: $.cookie('userId'),
+            name :  $('.buy-link').attr('data-send').slice(4),
+            count : $('#input_count').val() || 0
+        };
+
+        $.ajax({
+            url: '/api/services/buy',
+            method: "POST",
+            data: reqData,
+            async: false,
+            success: function(data){
+                console.log('yes!!', data);
+                updateUserInfo();
+            },
+            error: function(){
+                console.log('no!!');
+            }
         });
+    });
 });

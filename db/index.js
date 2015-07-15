@@ -38,6 +38,7 @@ function handleDisconnect() {
     connection.on('error', function(err) {
         console.log('SQL ERR', err);
         if(err.code === 'PROTOCOL_CONNECTION_LOST') {
+            console.log("DB : reconnect!");
             handleDisconnect();
         }
         if(err.fatal) {

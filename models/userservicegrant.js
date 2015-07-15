@@ -3,10 +3,17 @@
  */
 
 var execute = require('../db').execute;
+var formatter = require('./formatter/update');
+
+var allowedUpdateColumns = [
+    'active',
+    'control_option',
+    'deleted'
+];
 
 function create(obj, callback){
-    execute('INSERT INTO userservicesgrants (usersID, serviceID, active, start_time, end_time, deleted) VALUES (?, ?, ?, ?, ?, ?)',
-        [obj.userid, obj.serviceid, obj.active, obj.start_time, obj.end_time, obj.deleted],
+    execute('INSERT INTO userservicesgrants (usersID, serviceID, active, start_time, end_time, control_option, deleted) VALUES (?, ?, ?, ?, ?, ?, ?)',
+        [obj.userid, obj.serviceid, obj.active, obj.start_time, obj.end_time, obj.control_option, obj.deleted],
         function(err, data) {
 
             callback(false, data);
@@ -15,11 +22,17 @@ function create(obj, callback){
 }
 
 function update(obj, callback){
-    execute('UPDATE userservicesgrants SET ?? = ? WHERE `id` = ?', [obj.parametr, obj.value, obj.id], function(err, data){
-        if(data.length > 0){
+    var formattedData = formatter(obj.id, obj.data, allowedUpdateColumns);
+    if(!formattedData) {
+        callback (true, 'ILLEGAL_COLUMNS');
+    }
+    var queryTemplate = formattedData.template || '';
+    var queryData = formattedData.data || [];
+    execute('UPDATE userservicesgrants SET ' + queryTemplate + ' WHERE `id` = ?', queryData, function(err, data){
+        if(data.affectedRows > 0){
             callback (false, data);
         } else {
-            callback (true, 'USERSERVICEGRANTS_NOT_FOUND');
+            callback (true, 'USER_NOT_FOUND');
         }
     });
 }

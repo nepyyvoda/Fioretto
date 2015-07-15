@@ -95,89 +95,7 @@ function str_replace ( search, replace, subject ) {
     return subject;
 }
 
-function initScenario(el) {
-    var url = $('#scenario-url').val();
-    if(validateURL(url)) {
-        $.getJSON('/api/scenarios/init?url=' + encodeURIComponent($.trim(url)), function(res) {
-            if(res.status == 0) {
-                window.location = 'scenario/creating?url=' + encodeURIComponent($.trim(url)) + '&proxy=/vpn?url=' + $.trim(url);
-            }
-        })
-    }
-}
-
-function deleteScenario(el) {
-    var id = $(el).closest('.list-row-clone').attr('data-id');
-    $.ajax({
-        type: 'DELETE',
-        url: '/api/scenarios/' + id,
-        cache: false,
-        success: function(res) {
-            if(res.status === 0) {
-                alert('deleted');
-                updateScenariosList();
-            } else {
-                alert('Request cannot be handled');
-            }
-        },
-        complete: function() {
-
-        },
-        error: function(request, status, error) {
-        }
-    });
-}
-
-function updateScenariosList() {
-    $.getJSON('/api/scenarios', function(res) {
-        $('#scenarios-list').find('.list-row-clone').remove();
-        if(Object.keys(res.data).length > 0) {
-            $('.empty').addClass('hidden');
-            for(var i in res.data) {
-                console.log(res.data[i]);
-                var $template = $(".template");
-                var $tmp = null;
-
-                $tmp = $template.clone().removeClass("template").removeClass('hidden').addClass('list-row-clone');
-                $tmp.find('.name').text(res.data[i].nameScenario);
-                $tmp.find('.url').text(res.data[i].URL_target);
-                $tmp.attr('data-id', res.data[i].id);
-                //res.data[i].mode;
-                //res.data[i].nameScenario;
-                $tmp.appendTo('#scenarios-list');
-            }
-        } else {
-            $('#scenarios-list').append(
-                '<tr class="list-row-clone empty">'+
-                    '<td colspan="6">No scenarios to show</td>'+
-                '</tr>'
-            );
-        }
-    });
-}
-
-function startScenario(el) {
-    var id = $(el).closest('.list-row-clone').attr('data-id');
-    $.ajax({
-        type: 'POST',
-        url: '/api/scenarios/' + id + '/start',
-        cache: false,
-        success: function(res) {
-            if(res.status === 0) {
-                alert('started');
-            } else {
-                alert('Request cannot be handled');
-            }
-        },
-        complete: function() {
-
-        },
-        error: function(request, status, error) {
-        }
-    });
-}
-
-$(document).ready(function() {
+function updateUserInfo(){
     if($.cookie('userId')) {
         $.getJSON('/api/user/' + $.cookie('userId'), function(res) {
             if(res.status === 0) {
@@ -188,8 +106,13 @@ $(document).ready(function() {
             }
             //email
         });
-        updateScenariosList();
+        //updateScenariosList();
     }
+}
+
+$(document).ready(function() {
+    updateUserInfo();
+
     $('#login').submit(function(event) {
         event.preventDefault();
         var $form = $(event.currentTarget);
