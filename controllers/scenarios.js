@@ -148,6 +148,7 @@ function startScenario(req, res) {
                                                                 ip: config.get('workerServer:ip'),
                                                                 port: config.get('workerServer:port')
                                                             };
+                                                            neededDataForVoting.scenarioId = req.params.id;
                                                             console.log(neededDataForVoting);
                                                             scenarioClient.sendToNodeVoting(neededDataForVoting, res, sender);
 
