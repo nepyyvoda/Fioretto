@@ -50,9 +50,9 @@
     "zlib": "~1.0.5"
   },
   "devDependencies": {
+    "chai": "^3.0.0",
     "forever": "^0.14.1",
-    "mocha": "^2.2.5",
-    "should": "^7.0.2"
+    "mocha": "^2.2.5"
   },
   "keywords": [
     "Fiaretto"
