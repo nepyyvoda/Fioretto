@@ -13,7 +13,8 @@ var allowedUpdateColumns = [
     'deleted',
     'mode',
     'resolution',
-    'usersID'
+    'usersID',
+    'status'
 ];
 
 function create(nameScenario, scriptScenario, URL_target, mode, resolution, userID, countTotal, callback){
@@ -51,7 +52,7 @@ function update(id, data, callback){
     var queryTemplate = formattedData.template || '';
     var queryData = formattedData.data || [];
     execute('UPDATE usersscenarios SET ' + queryTemplate + ' WHERE `id` = ?', queryData, function(err, data){
-        if(data.length > 0){
+        if(!err){
             callback (false, data);
         } else {
             callback (true, 'SCENARIO_NOT_FOUND');

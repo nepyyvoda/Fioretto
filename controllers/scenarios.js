@@ -102,6 +102,7 @@ function startScenario(req, res) {
                 ip: config.get('workerServer:ip'),
                 port: config.get('workerServer:port')
             };
+            neededDataForVoting.scenarioId = req.params.id;
             console.log(neededDataForVoting);
             scenarioClient.sendToNodeVoting(neededDataForVoting, res, sender);
         }
@@ -121,6 +122,18 @@ function callSendError(msg, res){
     res.send(response('INTERNAL_SERVER_ERROR', data));
 }
 
+function changeState(req, res) {
+    ScenariosModel.update(req.params.id, {
+        status: req.body.status
+    }, function(err, data) {
+        if(!err) {
+            res.send(response('SUCCESS', data[0]));
+        } else {
+            res.send(response('INTERNAL_SERVER_ERROR', data));
+        }
+    });
+}
+
 module.exports.create = create;
 module.exports.rename = rename;
 module.exports.update = update;
@@ -128,3 +141,4 @@ module.exports.del = del;
 module.exports.getScenario = getScenario;
 module.exports.getScenarios = getScenarios;
 module.exports.startScenario = startScenario;
+module.exports.changeState = changeState;
