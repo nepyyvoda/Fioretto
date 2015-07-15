@@ -87,6 +87,30 @@ function updateScenariosList() {
                 $tmp.find('.name').text(res.data[i].nameScenario);
                 $tmp.find('.url').text(res.data[i].URL_target);
                 $tmp.find('.iter').text(res.data[i].countTotal);
+                $tmp.find('.mode').text(res.data[i].mode === 1?'Boosted':'Standard');
+
+                var statusText = '';
+                switch (res.data[i].status) {
+                    case 0:
+                        statusText = 'inactive';
+                        break;
+                    case 1:
+                        statusText = 'processing';
+                        break;
+                    case 2:
+                        statusText = 'performing';
+                        break;
+                    case 3:
+                        statusText = 'done';
+                        break;
+                    default :
+                        statusText = 'inactive';
+                }
+
+                if(res.data[i].status !== 0) {
+                    $tmp.find('.actions').children('.start').hide();
+                }
+                $tmp.find('.status').text(statusText);
                 $tmp.attr('data-id', res.data[i].id);
 
                 if(res.data[i].mode === 1)

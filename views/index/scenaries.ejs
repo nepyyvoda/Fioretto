@@ -33,9 +33,8 @@
                                     <!--<th data-field="name">Script parameters</th>-->
                                      <th data-field="iterations">Iterations</th>
                                     <th data-field="mode"> Speed Mode</th>
-                                    <!--<th data-field="price">Progress</th>-->
-                                    <th data-field="start">Scenario Running</th>
-                                    <th data-field="price">Delete  </th>
+                                    <th data-field="price">Status</th>
+                                    <th data-field="start">Actions</th>
                                 </tr>
                             </thead>
 
@@ -46,16 +45,17 @@
                                     <!--<td><a href="#settings_window" class="waves-effect waves-light btn modal-trigger">setting</a></td>-->
                                     <td class="iter"></td>
                                     <td class="mode"></td>
-                                    <td><a href="#" onclick="clickStrartScenario(this)" class="waves-effect waves-light btn">start</a></td>
+                                    <td class="status"></td>
+                                    <td class="actions">
+                                        <a href="#" onclick="clickStrartScenario(this)" class="waves-effect waves-light btn start">start</a>
+                                        <span class="delete_scenarie"><a href="#" onclick="deleteScenario(this)"> <i class="small mdi-navigation-close"></i></a></span>
+                                    </td>
 
                                     <!--<td>-->
                                         <!--<div class="progress progress_persent">-->
                                         <!--<div class="determinate center-align" style="width: 70%">70%</div>-->
                                         <!--</div>-->
                                     <!--</td>-->
-                                    <td class="delete_scenarie">
-                                        <a href="#" onclick="deleteScenario(this)"> <i class="small mdi-navigation-close"></i></a>
-                                    </td>
                                 </tr>
                             </tbody>
                         </table>
