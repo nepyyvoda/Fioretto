@@ -5,7 +5,7 @@
 var localDataObj = {};
 
 $(document).ready(function() {
-
+    updateScenariosList();
 });
 
 function clickStrartScenario(el){
