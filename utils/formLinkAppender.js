@@ -1,6 +1,3 @@
-/**
- * Created by anton.nepyyvoda on 08.01.2015.
- */
 function rel_to_abs(url, baseUrl, host) {
     if (baseUrl.slice(-1) == "/") {
         baseUrl = baseUrl.substring(0, baseUrl.length - 1);
@@ -179,33 +176,9 @@ function replaceAllRelByAbs(html, baseUrl, host) {
         });
     }
 
-    /* <meta http-equiv=refresh content="  ; url= " > */
-    cri("<meta" + any + att + "http-equiv\\s*=\\s*(?:\"" + ae("refresh") + "\"" + any + ">|'" + ae("refresh") + "'" + any + ">|" + ae("refresh") + "(?:" + ae(" ") + any + ">|>))", "content", ae("url") + s + ae("=") + s, "i");
 
-    cr("<" + any + att + "href\\s*=" + any + ">", "href");
-    /* Linked elements */
-    cr("<" + any + att + "src\\s*=" + any + ">", "src");
-    /* Embedded elements */
-
-    cr("<object" + any + att + "data\\s*=" + any + ">", "data");
-    /* <object data= > */
-    cr("<applet" + any + att + "codebase\\s*=" + any + ">", "codebase");
-    /* <applet codebase= > */
-
-    cr("<a" + any + att + "style\\s*=" + any + ">", "style");
-    // cr("<a"+any+att+"rel\\s*="+any+">", "rel");
-
-    cr("<span" + any + att + "style\\s*=" + any + ">", "style");
-    /* <applet codebase= > */
-    /* <param name=movie value= >*/
-    cr("<param" + any + att + "name\\s*=\\s*(?:\"" + ae("movie") + "\"" + any + ">|'" + ae("movie") + "'" + any + ">|" + ae("movie") + "(?:" + ae(" ") + any + ">|>))", "value");
-
-    cr(/<style[^>]*>(?:[^"']*(?:"[^"]*"|'[^']*'))*?[^'"]*(?:<\/style|$)/gi, "url", "\\s*\\(\\s*", "", "\\s*\\)");
-    /* <style> */
-    cri("<" + any + att + "style\\s*=" + any + ">", "style", ae("url") + s + ae("(") + s, 0, s + ae(")"), ae(")"));
-    /*< style=" url(...) " > */
-
+    cr("<form" + any + att + "action\\s*=" + any + ">", "action");
     return html;
 }
 
-module.exports.replaceAllRelByAbs = replaceAllRelByAbs;
+module.exports.formLinkApender = replaceAllRelByAbs;
