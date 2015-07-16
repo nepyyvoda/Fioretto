@@ -8,7 +8,7 @@ var Paypal = require('../../controllers/paypal');
 var User = require('../../controllers/user');
 var jwt = require('jsonwebtoken');
 var vpn = require('../../browsing/vpn');
-var Unblocker = require('../../browsing/node-unblocker/lib/unblocker');
+var Unblocker = require('../../browsing/lib/unblocker');
 
 function isLogged(sid, callback) {
     var token = sid;
