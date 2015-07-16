@@ -2,6 +2,7 @@ html{height: 100%}
 body{
 	background-color:#b2dfdb ;
 	height: 100%;
+	padding-left: 240px;
 }
 h1{font-size:48px;}
 .paypal, .webmoney, .mastercard{
@@ -269,4 +270,13 @@ ul.side-nav li.collapsible-header-services:hover, ul.side-nav li.active.collapsi
 }
 .content-center {
 	text-align: center;
+}
+
+
+
+
+@media only screen and (max-width: 992px){
+body {
+	padding-left: 0;
+}
 }
