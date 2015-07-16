@@ -67,13 +67,18 @@ var startTor = function () {
         var torProcess = cp.spawn('tor', ['-f', torConfigFilePath]);
 
         torProcess.stdout.on('data', function(data) {
+            console.log(data.toString('utf-8'))
             log.info(data.toString('utf-8'));
         });
 
         torProcess.stderr.on('data', function(data) {
+
+            console.log(data.toString('utf-8'))
             log.error(data.toString('utf-8'));
         });
         torProcess.on('close', function(code) {
+
+            console.log(data.toString('utf-8'))
             log.info("Tor close with code " + code)
         });
     }
