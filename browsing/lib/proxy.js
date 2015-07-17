@@ -30,7 +30,7 @@ function proxy(config) {
                     path: uri.path,
                     method: data.clientRequest.method,
                     headers: data.headers,
-                    timeout: 5000
+                    timeout: 60000
                 };
             }else {
 
@@ -40,7 +40,7 @@ function proxy(config) {
                     path: uri.path,
                     method: data.clientRequest.method,
                     headers: data.headers,
-                    timeout: 30000,
+                    timeout: 5000,
                     agent: data.agent
                 };
             }
