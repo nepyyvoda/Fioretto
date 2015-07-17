@@ -10,7 +10,7 @@ var fs = require('fs');
 var log = require('../logger')(module);
 var cp = require('child_process');
 var Socks = require('socks');
-var countryRegexp = new RegExp("{.?.?}","gmi");
+var countryRegexp = new RegExp("{.?.?}\/?","gmi");
 var noProxyNeededPattern = new RegExp("{n}","gmi");
 
 var getPortByCountry = function (pattern) {
@@ -84,10 +84,9 @@ var startTor = function () {
 
 function addProxySettings (request){
 
-    var url =decodeURIComponent( request.url).replace(countryRegexp , "");
+    var url =decodeURIComponent(request.url).replace(countryRegexp , "");
     var proxyHost = config.get('vpn:proxyHost');
     var country;
-
 
     if(decodeURIComponent(request.url).match(countryRegexp)){
         country = decodeURIComponent(request.url).match(countryRegexp);
