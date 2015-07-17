@@ -29,6 +29,7 @@ function proxy(config) {
                 path: uri.path,
                 method: data.clientRequest.method,
                 headers: data.headers,
+                timeout: 30000,
                 agent: data.agent
             };
 
