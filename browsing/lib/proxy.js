@@ -28,8 +28,8 @@ function proxy(config) {
                 port: uri.port,
                 path: uri.path,
                 method: data.clientRequest.method,
-                headers: data.headers,
-                agent: data.agent
+                headers: data.headers
+                //agent: data.agent
             };
 
             // what protocol to use for outgoing connections.
