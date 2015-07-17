@@ -93,31 +93,31 @@ function addProxySettings (request){
     if(decodeURIComponent(request.url).match(countryRegexp)){
         country = decodeURIComponent(request.url).match(countryRegexp);
         if(!country.toString().match(noProxyNeededPattern)){
-            var socksAgent = new Socks.Agent({
-                    proxy: {
-                        ipaddress: "127.0.0.1",
-                        port: getPortByCountry(country),
-                        type: 5,
-                    }},
-                false, // we are connecting to a HTTPS server, false for HTTP server
-                false // rejectUnauthorized option passed to tls.connect(). Only when secure is set to true
-            );
-            //request.agent = new SocksProxyAgent("socks://" + proxyHost + ":"+ getPortByCountry(country));
-            request.agent = socksAgent;
+            //var socksAgent = new Socks.Agent({
+            //        proxy: {
+            //            ipaddress: "127.0.0.1",
+            //            port: getPortByCountry(country),
+            //            type: 5,
+            //        }},
+            //    false, // we are connecting to a HTTPS server, false for HTTP server
+            //    false // rejectUnauthorized option passed to tls.connect(). Only when secure is set to true
+            //);
+            request.agent = new SocksProxyAgent("socks://" + proxyHost + ":"+ getPortByCountry(country));
+            //request.agent = socksAgent;
         }
     } else {
         country = "{}";
-        var socksAgent = new Socks.Agent({
-                proxy: {
-                    ipaddress: "127.0.0.1",
-                    port: getPortByCountry(country),
-                    type: 5,
-                }},
-            false, // we are connecting to a HTTPS server, false for HTTP server
-            false // rejectUnauthorized option passed to tls.connect(). Only when secure is set to true
-        );
-        //request.agent = new SocksProxyAgent("socks://" + proxyHost + ":"+ getPortByCountry(country));
-        request.agent = socksAgent;
+        //var socksAgent = new Socks.Agent({
+        //        proxy: {
+        //            ipaddress: "127.0.0.1",
+        //            port: getPortByCountry(country),
+        //            type: 5,
+        //        }},
+        //    false, // we are connecting to a HTTPS server, false for HTTP server
+        //    false // rejectUnauthorized option passed to tls.connect(). Only when secure is set to true
+        //);
+        request.agent = new SocksProxyAgent("socks://" + proxyHost + ":"+ getPortByCountry(country));
+        //request.agent = socksAgent;
     }
     request.url = url[0];
     request.headers.connection = "close";
