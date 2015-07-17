@@ -77,8 +77,6 @@ var startTor = function () {
             log.error(data.toString('utf-8'));
         });
         torProcess.on('close', function(code) {
-
-            console.log(data.toString('utf-8'))
             log.info("Tor close with code " + code)
         });
     }
