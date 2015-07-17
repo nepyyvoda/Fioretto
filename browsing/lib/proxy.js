@@ -22,16 +22,28 @@ function proxy(config) {
 
         if (!middlewareHandledRequest) {
             var uri = URL.parse(data.url);
+            var options ;
+            if(data.agent === undefined){
+                 options = {
+                    host: uri.hostname,
+                    port: uri.port,
+                    path: uri.path,
+                    method: data.clientRequest.method,
+                    headers: data.headers,
+                    timeout: 30000
+                };
+            }else {
 
-            var options = {
-                host: uri.hostname,
-                port: uri.port,
-                path: uri.path,
-                method: data.clientRequest.method,
-                headers: data.headers,
-                timeout: 30000,
-                agent: data.agent
-            };
+                 options = {
+                    host: uri.hostname,
+                    port: uri.port,
+                    path: uri.path,
+                    method: data.clientRequest.method,
+                    headers: data.headers,
+                    timeout: 30000,
+                    agent: data.agent
+                };
+            }
 
             // what protocol to use for outgoing connections.
             var proto = (uri.protocol == 'https:') ? https : http;

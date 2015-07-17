@@ -84,42 +84,24 @@ var startTor = function () {
 
 function addProxySettings (request){
 
-    var url = request.url.split('&');
+    var url =decodeURIComponent( request.url).replace(countryRegexp , "");
     var proxyHost = config.get('vpn:proxyHost');
     var country;
-
 
 
     if(decodeURIComponent(request.url).match(countryRegexp)){
         country = decodeURIComponent(request.url).match(countryRegexp);
         if(!country.toString().match(noProxyNeededPattern)){
-            var socksAgent = new Socks.Agent({
-                    proxy: {
-                        ipaddress: "127.0.0.1",
-                        port: getPortByCountry(country),
-                        type: 5,
-                    }},
-                false, // we are connecting to a HTTPS server, false for HTTP server
-                false // rejectUnauthorized option passed to tls.connect(). Only when secure is set to true
-            );
-            //request.agent = new SocksProxyAgent("socks://" + proxyHost + ":"+ getPortByCountry(country));
-            request.agent = socksAgent;
+
+            request.agent = new SocksProxyAgent("socks://" + proxyHost + ":"+ getPortByCountry(country));
+        }else {
+            request.agent = undefined;
         }
     } else {
         country = "{}";
-        var socksAgent = new Socks.Agent({
-                proxy: {
-                    ipaddress: "127.0.0.1",
-                    port: getPortByCountry(country),
-                    type: 5,
-                }},
-            false, // we are connecting to a HTTPS server, false for HTTP server
-            false // rejectUnauthorized option passed to tls.connect(). Only when secure is set to true
-        );
-        //request.agent = new SocksProxyAgent("socks://" + proxyHost + ":"+ getPortByCountry(country));
-        request.agent = socksAgent;
+        request.agent = new SocksProxyAgent("socks://" + proxyHost + ":"+ getPortByCountry(country));
     }
-    request.url = url[0];
+    request.url = url;
     request.headers.connection = "close";
 
 }
