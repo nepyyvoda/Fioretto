@@ -39,9 +39,9 @@ function clickStrartScenario(el){
 function initScenario(el) {
     var url = $('#scenario-url').val();
     if(validateURL(url)) {
-        $.getJSON('/api/scenarios/init?url=' + encodeURIComponent($.trim(url)), function(res) {
+        $.getJSON('/api/scenarios/init?url=' + encodeURIComponent($.trim(url)+'{n}'), function(res) {
             if(res.status == 0) {
-                window.location = 'scenario/creating?url=' + encodeURIComponent($.trim(url)) + '/vpn/' + $.trim(url) + '&{n}';
+                window.location = 'scenario/creating?url=' + encodeURIComponent($.trim(url)) + '&proxy=/vpn?url=' + $.trim(url);
             }
         })
     }
