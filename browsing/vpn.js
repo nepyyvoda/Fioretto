@@ -9,7 +9,7 @@ var SocksProxyAgent = require('socks-proxy-agent');
 var fs = require('fs');
 var log = require('../logger')(module);
 var cp = require('child_process');
-
+var Socks = require('socks');
 var countryRegexp = new RegExp("{.?.?}","gmi");
 var noProxyNeededPattern = new RegExp("{n}","gmi");
 
@@ -88,14 +88,36 @@ function addProxySettings (request){
     var proxyHost = config.get('vpn:proxyHost');
     var country;
 
+
+
     if(decodeURIComponent(request.url).match(countryRegexp)){
         country = decodeURIComponent(request.url).match(countryRegexp);
         if(!country.toString().match(noProxyNeededPattern)){
-            request.agent = new SocksProxyAgent("socks://" + proxyHost + ":"+ getPortByCountry(country));
+            var socksAgent = new Socks.Agent({
+                    proxy: {
+                        ipaddress: "127.0.0.1",
+                        port: getPortByCountry(country),
+                        type: 5,
+                    }},
+                false, // we are connecting to a HTTPS server, false for HTTP server
+                false // rejectUnauthorized option passed to tls.connect(). Only when secure is set to true
+            );
+            //request.agent = new SocksProxyAgent("socks://" + proxyHost + ":"+ getPortByCountry(country));
+            request.agent = socksAgent;
         }
     } else {
         country = "{}";
-        request.agent = new SocksProxyAgent("socks://" + proxyHost + ":"+ getPortByCountry(country));
+        var socksAgent = new Socks.Agent({
+                proxy: {
+                    ipaddress: "127.0.0.1",
+                    port: getPortByCountry(country),
+                    type: 5,
+                }},
+            false, // we are connecting to a HTTPS server, false for HTTP server
+            false // rejectUnauthorized option passed to tls.connect(). Only when secure is set to true
+        );
+        //request.agent = new SocksProxyAgent("socks://" + proxyHost + ":"+ getPortByCountry(country));
+        request.agent = socksAgent;
     }
     request.url = url[0];
     request.headers.connection = "close";
