@@ -9,7 +9,6 @@ var SocksProxyAgent = require('socks-proxy-agent');
 var fs = require('fs');
 var log = require('../logger')(module);
 var cp = require('child_process');
-var Socks = require('socks');
 var countryRegexp = new RegExp("{.?.?}\/?","gmi");
 var noProxyNeededPattern = new RegExp("{n}","gmi");
 

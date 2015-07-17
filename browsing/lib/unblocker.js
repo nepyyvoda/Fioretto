@@ -31,12 +31,10 @@ function Unblocker(config) {
             'text/html',
             'application/xml+xhtml',
             'application/xhtml+xml',
-            'text/css'
-            /*,
+            'text/css',
            'text/javascript',
            'application/javascript',
            'application/x-javascript'
-            */
         ]
     });
 
