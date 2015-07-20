@@ -1,9 +1,11 @@
 var URL = require('url'),
-    http = require('http'),
-    https = require('https'),
+    //http = require('http'),
+    //https = require('https'),
     _ = require('lodash'),
     contentTypes = require('./content-types.js'),
     debug = require('debug')('unblocker:proxy');
+var https = require('socks5-https-client');
+var http = require('socks5-http-client');
 
 
 function proxy(config) {
@@ -23,27 +25,28 @@ function proxy(config) {
         if (!middlewareHandledRequest) {
             var uri = URL.parse(data.url);
             var options ;
-            if(data.agent === undefined){
+            //if(data.agent === undefined){
                  options = {
                     host: uri.hostname,
                     port: uri.port,
                     path: uri.path,
                     method: data.clientRequest.method,
                     headers: data.headers,
+                     socksPort : data.socksPort,
                     timeout: 30000
                 };
-            }else {
-
-                 options = {
-                    host: uri.hostname,
-                    port: uri.port,
-                    path: uri.path,
-                    method: data.clientRequest.method,
-                    headers: data.headers,
-                    timeout: 30000,
-                    agent: data.agent
-                };
-            }
+            //}else {
+            //
+            //     options = {
+            //        host: uri.hostname,
+            //        port: uri.port,
+            //        path: uri.path,
+            //        method: data.clientRequest.method,
+            //        headers: data.headers,
+            //        timeout: 30000,
+            //        agent: data.agent
+            //    };
+            //}
 
             // what protocol to use for outgoing connections.
             var proto = (uri.protocol == 'https:') ? https : http;

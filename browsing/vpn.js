@@ -98,12 +98,17 @@ function addProxySettings (request){
         country = decodeURIComponent(request.url).match(countryRegexp);
         if(!country.toString().match(noProxyNeededPattern)){
             request.agent = getSocksAgent(proxyHost, country, uri.protocol);
+            request.socksPort = getPortByCountry(country);
+
         }else {
             request.agent = undefined;
+            request.socksPort = getPortByCountry(country);
+
         }
     } else {
         country = "{}";
         request.agent = getSocksAgent(proxyHost, country, uri.protocol);
+        request.socksPort = getPortByCountry(country);
     }
     request.url = url;
     request.headers.connection = "close";
