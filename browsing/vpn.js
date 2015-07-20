@@ -93,21 +93,20 @@ function addProxySettings (request){
     var url =decodeURIComponent(request.url).replace(countryRegexp , "");
     var proxyHost = config.get('vpn:proxyHost');
     var country;
-    var uri = URL.parse(url);
     if(decodeURIComponent(request.url).match(countryRegexp)){
         country = decodeURIComponent(request.url).match(countryRegexp);
         if(!country.toString().match(noProxyNeededPattern)){
-            request.agent = getSocksAgent(proxyHost, country, uri.protocol);
+            //request.agent = getSocksAgent(proxyHost, country, uri.protocol);
             request.socksPort = getPortByCountry(country);
 
         }else {
-            request.agent = undefined;
-            request.socksPort = getPortByCountry(country);
+            //request.agent = undefined;
+            request.socksPort = undefined;
 
         }
     } else {
         country = "{}";
-        request.agent = getSocksAgent(proxyHost, country, uri.protocol);
+        //request.agent = getSocksAgent(proxyHost, country, uri.protocol);
         request.socksPort = getPortByCountry(country);
     }
     request.url = url;

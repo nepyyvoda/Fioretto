@@ -1,11 +1,11 @@
 var URL = require('url'),
-    //http = require('http'),
-    //https = require('https'),
+    http = require('http'),
+    https = require('https'),
     _ = require('lodash'),
     contentTypes = require('./content-types.js'),
     debug = require('debug')('unblocker:proxy');
-var https = require('socks5-https-client');
-var http = require('socks5-http-client');
+var proxyHttps = require('socks5-https-client');
+var proxyHttp = require('socks5-http-client');
 
 
 function proxy(config) {
@@ -25,35 +25,36 @@ function proxy(config) {
         if (!middlewareHandledRequest) {
             var uri = URL.parse(data.url);
             var options ;
-            //if(data.agent === undefined){
+            var proto;
+            if(data.socksPort === undefined){
+
+                proto = (uri.protocol == 'https:') ? https : http;
+
                  options = {
                     host: uri.hostname,
                     port: uri.port,
                     path: uri.path,
                     method: data.clientRequest.method,
                     headers: data.headers,
-                     socksPort : data.socksPort,
                     timeout: 30000
                 };
-            //}else {
-            //
-            //     options = {
-            //        host: uri.hostname,
-            //        port: uri.port,
-            //        path: uri.path,
-            //        method: data.clientRequest.method,
-            //        headers: data.headers,
-            //        timeout: 30000,
-            //        agent: data.agent
-            //    };
-            //}
+            }else {
 
-            // what protocol to use for outgoing connections.
-            var proto = (uri.protocol == 'https:') ? https : http;
+                proto = (uri.protocol == 'https:') ? proxyHttps : proxyHttp;
 
-            console.log( data.url);
-            console.log(" Proto " + (uri.protocol == 'https:') ? "https" : "http");
+                 options = {
+                    host: uri.hostname,
+                    port: uri.port,
+                    path: uri.path,
+                    method: data.clientRequest.method,
+                    headers: data.headers,
+                    timeout: 30000,
+                     socksPort : data.socksPort
+                };
+            }
+
             debug('sending remote request: ', options);
+
             data.remoteRequest = proto.request(options, function(remoteResponse) {
                 data.remoteResponse = remoteResponse;
                 data.remoteResponse.on('error', next);
