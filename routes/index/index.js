@@ -9,6 +9,7 @@ var User = require('../../controllers/user');
 var jwt = require('jsonwebtoken');
 var vpn = require('../../browsing/vpn');
 var Unblocker = require('../../browsing/lib/unblocker');
+var timeout = require('connect-timeout');
 
 function isLogged(sid, callback) {
     var token = sid;
@@ -103,7 +104,7 @@ router.get('/scenaries', checkAuth, function (req, res) {
     res.render('index/scenaries', {title: 'Scenaries', name: req.path});
 });
 
-router.use(checkAuth, new Unblocker({prefix: '/vpn/',
+router.use(checkAuth, timeout('15s'), new Unblocker({prefix: '/vpn/',
     requestMiddleware: [
         vpn.addProxySettings
     ]}));

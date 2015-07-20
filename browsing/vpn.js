@@ -5,6 +5,9 @@
 var config = require('../config');
 
 var SocksProxyAgent = require('socks-proxy-agent');
+var ProxySocket = require('proxysocket');
+var wrapper = require('socks-wrapper')
+var ProxySocket = require('proxysocket');
 
 var fs = require('fs');
 var log = require('../logger')(module);
@@ -81,6 +84,20 @@ var startTor = function () {
     }
 };
 
+var getSocksAgent2 = function (proxyHost, country){
+    return new SocksProxyAgent("socks://" + proxyHost + ":"+ getPortByCountry(country));
+};
+
+//var getSocksAgent = function (proxyHost, country){
+//    return new ProxySocket(proxyHost, getPortByCountry(country));
+//};
+var getSocksAgent = function (proxyHost, country){
+    return new wrapper.HttpAgent(getPortByCountry(country), proxyHost);
+};
+var getSocksAgent4 = function (proxyHost, country){
+    return ProxySocket.createAgent(proxyHost,getPortByCountry(country) );
+};
+
 function addProxySettings (request){
 
     var url =decodeURIComponent(request.url).replace(countryRegexp , "");
@@ -91,13 +108,13 @@ function addProxySettings (request){
         country = decodeURIComponent(request.url).match(countryRegexp);
         if(!country.toString().match(noProxyNeededPattern)){
 
-            request.agent = new SocksProxyAgent("socks://" + proxyHost + ":"+ getPortByCountry(country));
+            request.agent = getSocksAgent(proxyHost, country);
         }else {
             request.agent = undefined;
         }
     } else {
         country = "{}";
-        request.agent = new SocksProxyAgent("socks://" + proxyHost + ":"+ getPortByCountry(country));
+        request.agent = getSocksAgent(proxyHost, country);
     }
     request.url = url;
     request.headers.connection = "close";
