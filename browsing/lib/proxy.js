@@ -48,8 +48,9 @@ function proxy(config) {
             // what protocol to use for outgoing connections.
             var proto = (uri.protocol == 'https:') ? https : http;
 
+            console.log( data.url);
+            console.log(" Proto " + (uri.protocol == 'https:') ? "https" : "http");
             debug('sending remote request: ', options);
-
             data.remoteRequest = proto.request(options, function(remoteResponse) {
                 data.remoteResponse = remoteResponse;
                 data.remoteResponse.on('error', next);

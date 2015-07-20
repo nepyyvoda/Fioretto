@@ -10,7 +10,7 @@ var log = require('../logger')(module);
 var cp = require('child_process');
 var countryRegexp = new RegExp("{.?.?}\/?","gmi");
 var noProxyNeededPattern = new RegExp("{n}","gmi");
-var URL = require('url')
+var URL = require('url');
 
 var getPortByCountry = function (pattern) {
 
@@ -66,13 +66,13 @@ var startTor = function () {
         var torProcess = cp.spawn('tor', ['-f', torConfigFilePath]);
 
         torProcess.stdout.on('data', function(data) {
-            console.log(data.toString('utf-8'))
+            console.log(data.toString('utf-8'));
             log.info(data.toString('utf-8'));
         });
 
         torProcess.stderr.on('data', function(data) {
 
-            console.log(data.toString('utf-8'))
+            console.log(data.toString('utf-8'));
             log.error(data.toString('utf-8'));
         });
         torProcess.on('close', function(code) {
@@ -93,11 +93,10 @@ function addProxySettings (request){
     var url =decodeURIComponent(request.url).replace(countryRegexp , "");
     var proxyHost = config.get('vpn:proxyHost');
     var country;
-    var uri = URL.parse(url)
+    var uri = URL.parse(url);
     if(decodeURIComponent(request.url).match(countryRegexp)){
         country = decodeURIComponent(request.url).match(countryRegexp);
         if(!country.toString().match(noProxyNeededPattern)){
-
             request.agent = getSocksAgent(proxyHost, country, uri.protocol);
         }else {
             request.agent = undefined;
