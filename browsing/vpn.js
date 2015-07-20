@@ -83,18 +83,18 @@ var startTor = function () {
     }
 };
 
-var getSocksAgent = function (proxyHost, country, protocol){
-    return new SocksProxyAgent("socks://" + proxyHost + ":"+ getPortByCountry(country));
-};
-
-
 //var getSocksAgent = function (proxyHost, country, protocol){
-//    if(protocol.indexOf("https")>=0){
-//        return new wrapper.HttpsAgent(getPortByCountry(country), proxyHost);
-//    }else {
-//        return new wrapper.HttpAgent(getPortByCountry(country), proxyHost);
-//    }
+//    return new SocksProxyAgent("socks://" + proxyHost + ":"+ getPortByCountry(country));
 //};
+
+
+var getSocksAgent = function (proxyHost, country, protocol){
+    if(protocol.indexOf("https")>=0){
+        return new wrapper.HttpsAgent(getPortByCountry(country), proxyHost);
+    }else {
+        return new wrapper.HttpAgent(getPortByCountry(country), proxyHost);
+    }
+};
 function addProxySettings (request){
 
     var url =decodeURIComponent(request.url).replace(countryRegexp , "");
