@@ -5,15 +5,14 @@
 var config = require('../config');
 
 var SocksProxyAgent = require('socks-proxy-agent');
-var ProxySocket = require('proxysocket');
 var wrapper = require('socks-wrapper')
-var ProxySocket = require('proxysocket');
 
 var fs = require('fs');
 var log = require('../logger')(module);
 var cp = require('child_process');
 var countryRegexp = new RegExp("{.?.?}\/?","gmi");
 var noProxyNeededPattern = new RegExp("{n}","gmi");
+var URL = require('url')
 
 var getPortByCountry = function (pattern) {
 
@@ -84,37 +83,35 @@ var startTor = function () {
     }
 };
 
-var getSocksAgent2 = function (proxyHost, country){
+var getSocksAgent = function (proxyHost, country, protocol){
     return new SocksProxyAgent("socks://" + proxyHost + ":"+ getPortByCountry(country));
 };
 
-//var getSocksAgent = function (proxyHost, country){
-//    return new ProxySocket(proxyHost, getPortByCountry(country));
-//};
-var getSocksAgent = function (proxyHost, country){
-    return new wrapper.HttpAgent(getPortByCountry(country), proxyHost);
-};
-var getSocksAgent4 = function (proxyHost, country){
-    return ProxySocket.createAgent(proxyHost,getPortByCountry(country) );
-};
 
+//var getSocksAgent = function (proxyHost, country, protocol){
+//    if(protocol.indexOf("https")>=0){
+//        return new wrapper.HttpsAgent(getPortByCountry(country), proxyHost);
+//    }else {
+//        return new wrapper.HttpAgent(getPortByCountry(country), proxyHost);
+//    }
+//};
 function addProxySettings (request){
 
     var url =decodeURIComponent(request.url).replace(countryRegexp , "");
     var proxyHost = config.get('vpn:proxyHost');
     var country;
-
+    var uri = URL.parse(url)
     if(decodeURIComponent(request.url).match(countryRegexp)){
         country = decodeURIComponent(request.url).match(countryRegexp);
         if(!country.toString().match(noProxyNeededPattern)){
 
-            request.agent = getSocksAgent(proxyHost, country);
+            request.agent = getSocksAgent(proxyHost, country, uri.protocol);
         }else {
             request.agent = undefined;
         }
     } else {
         country = "{}";
-        request.agent = getSocksAgent(proxyHost, country);
+        request.agent = getSocksAgent(proxyHost, country, uri.protocol);
     }
     request.url = url;
     request.headers.connection = "close";

@@ -104,7 +104,7 @@ router.get('/scenaries', checkAuth, function (req, res) {
     res.render('index/scenaries', {title: 'Scenaries', name: req.path});
 });
 
-router.use(checkAuth, timeout('15s'), new Unblocker({prefix: '/vpn/',
+router.use(checkAuth, timeout('10s'), new Unblocker({prefix: '/vpn/',
     requestMiddleware: [
         vpn.addProxySettings
     ]}));
