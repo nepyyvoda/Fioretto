@@ -9,7 +9,6 @@ var User = require('../../controllers/user');
 var jwt = require('jsonwebtoken');
 var vpn = require('../../browsing/vpn');
 var Unblocker = require('../../browsing/lib/unblocker');
-var timeout = require('connect-timeout');
 
 function isLogged(sid, callback) {
     var token = sid;
@@ -104,32 +103,10 @@ router.get('/scenaries', checkAuth, function (req, res) {
     res.render('index/scenaries', {title: 'Scenaries', name: req.path});
 });
 
-router.use(checkAuth, timeout('10s'), new Unblocker({prefix: '/vpn/',
+router.use(checkAuth, new Unblocker({prefix: '/vpn/',
     requestMiddleware: [
         vpn.addProxySettings
     ]}));
-
-//router.get('/vpn',checkAuth ,function (req, res) {
-//
-//    try {
-//
-//        vpn.paigeLoader(req, res, vpn.getPortByCountry(req.query.country));
-//
-//    }catch(err){
-//        console.log(err)
-//    }
-//});
-//
-//router.get('/vpn/get',checkAuth ,  function (req, res) {
-//    try {
-//        vpn.resourceLoader(req, res);
-//    }catch(err){
-//        console.log(err)
-//    }
-//});
-//router.post('/vpn/get', checkAuth, function (req, res) {
-//    vpn.postLoader(req, res);
-//});
 
 router.get('/scenario/creating', checkAuth, function (req, res) {
     res.render('scenario/generator', {
