@@ -9,6 +9,7 @@ var User = require('../../controllers/user');
 var Scenarios = require('../../controllers/scenarios');
 var Payments = require('../../controllers/payments');
 var Services = require('../../controllers/services');
+var MasterCard = require('../../controllers/mastercard');
 
 function checkAuth(req, res, next) {
     var token = req.cookies.sid;
@@ -34,12 +35,15 @@ function checkPermission(req, res, next) {
     }
     next();
 }
+
 router.post('/login', function (req, res) {
     User.login(req, res);
 });
+
 router.post('/registration', function(req, res) {
     User.register(req, res);
 });
+
 router.get('/user/:id', checkAuth, checkPermission, function(req, res) {
     User.get(req, res);
 });
@@ -48,6 +52,7 @@ router.get('/scenarios', checkAuth, function(req, res) {
     //get user scenarios
     Scenarios.getScenarios(req, res);
 });
+
 router.get('/scenarios/init', function(req, res) {
     var proxyId = uid(10);
     var proxyURL = '/proxy-'+proxyId;
@@ -105,6 +110,10 @@ router.get('/services/:servicesid/price', checkAuth, function(req, res){
 
 router.post('/services/buy', checkAuth, function(req, res){
     Services.buyService(req, res);
+});
+
+router.post('/payment/mastercard', checkAuth, function(req, res){
+    MasterCard.mc_pay_processor(req, res);
 });
 
 module.exports = router;

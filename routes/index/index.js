@@ -8,6 +8,7 @@ var Paypal = require('../../controllers/paypal');
 var User = require('../../controllers/user');
 var jwt = require('jsonwebtoken');
 var vpn = require('../../browsing/vpn');
+var Services = require('../../controllers/services');
 var Unblocker = require('../../browsing/lib/unblocker');
 
 function isLogged(sid, callback) {
@@ -32,6 +33,27 @@ function checkAuth(req, res, next) {
         next();
     });
 }
+
+function checkAvailableServiceBrowser(req, res, next){
+    //crutch!!!
+    var reqst = {
+        params : {
+            id : req.cookies.userId,
+            servicesid : 1
+        }
+    };
+
+    Services.availableBrowser(reqst, {send : function(obj){
+
+        if(obj.data.available === 1)
+            next();
+        else {
+            res.redirect('/pay');
+            return;
+        }
+    }});
+}
+
 /* GET home page. */
 router.get('/', function (req, res) {
     isLogged(req.cookies.sid, function (state) {
@@ -66,6 +88,7 @@ router.get('/login', function (req, res) {
         }
     });
 });
+
 router.get('/password_recovery', function (req, res) {
     isLogged(req.cookies.sid, function (state) {
         if (state === true) {
@@ -75,6 +98,7 @@ router.get('/password_recovery', function (req, res) {
         }
     });
 });
+
 router.get('/new_pass', function (req, res) {
     res.render('index/new_pass', {title: 'New password', layout: false, name: req.path});
 });

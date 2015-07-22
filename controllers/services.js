@@ -50,14 +50,14 @@ function priceServices(req, res){
 }
 
 function buyService(req, res){
-    var processingObject = {};
-    processingObject.userid = req.body.userid;
-    processingObject.name = req.body.name;
-    processingObject.count = req.body.count;
-    processingObject.user = {};
-    processingObject.result = {};
-    processingObject.settingsserv = {};
-
+    var processingObject = {
+        userid : req.body.userid,
+        name : req.body.name,
+        count : req.body.count,
+        user : {},
+        result : {},
+        settingsserv : {}
+    };
 
     UserModel.get({id : processingObject.userid },  function(err, users) {
         console.log('USER ', users);
@@ -94,54 +94,22 @@ function buyServiceBrowser(req, res, processingObject){
                 end_time: (new Date())},
             function(err, data){
                 console.log('DATA user ', data);
+                processingObject.duration = {
+                    for_new : new Date(+(new Date()) + processingObject.settingsserv.value_duration)
+                };
 
-                if(!err){
-                    res.send(response('ERROR', {err : 1, message: 'U has active plan!'}));
+                if (!err){
+                    processingObject.duration.for_current =  new Date(+(new Date(data[0].end_time)) + processingObject.settingsserv.value_duration);
+                    UserServiceGrants.update({id: data[0].id, data :{active: 0, control_option : (new Date()).getTime()}}, function(err, usgupd){
+                        if(!err){
+                            buyServiceBrowserProcessing(req, res, processingObject);
+                        } else {
+                            console.log('usgupd : ', usgupd);
+                            res.send(response('UNSUCCESS', {err : 1}));
+                        }
+                    });
                 } else {
-                    var duration = new Date(+(new Date()) + processingObject.settingsserv.value_duration);
-
-                    UserServiceGrants.create({
-                            userid : processingObject.userid,
-                            serviceid :  processingObject.settingsserv.servicesID,
-                            active : 1,
-                            start_time : (new Date()),
-                            end_time : duration,
-                            control_option : duration,
-                            deleted : 0 },
-                        function(err, data){
-                            console.log('DATA user  ', data[0]);
-
-                            UserModel.update({id: processingObject.userid, data: {balance: processingObject.result}}, function(err, data){
-                                console.log('USER update balance ', data);
-                                if(!err){
-
-                                    UserPayments.create(processingObject.userid,
-                                        0,
-                                        0,
-                                        2,
-                                        processingObject.settingsserv.servicesID,
-                                        new Date(),
-                                        new Date(),
-                                        2,
-                                        0,
-                                        'complete',
-                                        0,
-                                        0,
-                                        processingObject.settingsserv.value_price,
-                                        0,
-                                        0,
-                                        0x0, function(err, retData){
-                                            console.log(retData);
-                                            if(!err)
-                                                res.send(response('SUCCESS', {err : 0, data : retData}));
-                                            else
-                                                res.send(response('UNSUCCESS', {err : 1}));
-                                        });
-                                }else{
-                                    res.send(response('UNSUCCESS', {err : 1}));
-                                }
-                            });
-                        })
+                    buyServiceBrowserProcessing(req, res, processingObject);
                 }
             }
         );
@@ -149,6 +117,51 @@ function buyServiceBrowser(req, res, processingObject){
     }else{
         res.send(response('UNSUCCESS', {err : 1}));
     }
+}
+
+function buyServiceBrowserProcessing(req, res, processingObject){
+    UserServiceGrants.create({
+            userid : processingObject.userid,
+            serviceid :  processingObject.settingsserv.servicesID,
+            active : 1,
+            start_time : (new Date()),
+            end_time : processingObject.duration.for_current || processingObject.duration.for_new,
+            control_option : processingObject.duration.for_current || processingObject.duration.for_new,
+            deleted : 0 },
+        function(err, data){
+            console.log('DATA user  ', data[0]);
+
+            UserModel.update({id: processingObject.userid, data: {balance: processingObject.result}}, function(err, data){
+                console.log('USER update balance ', data);
+                if(!err){
+
+                    UserPayments.create(processingObject.userid,
+                        0,
+                        0,
+                        2,
+                        processingObject.settingsserv.servicesID,
+                        new Date(),
+                        new Date(),
+                        2,
+                        0,
+                        'complete',
+                        0,
+                        0,
+                        processingObject.settingsserv.value_price,
+                        0,
+                        0,
+                        0x0, function(err, retData){
+                            console.log(retData);
+                            if(!err)
+                                res.send(response('SUCCESS', {err : 0, data : retData}));
+                            else
+                                res.send(response('UNSUCCESS', {err : 1}));
+                        });
+                }else{
+                    res.send(response('UNSUCCESS', {err : 1}));
+                }
+            });
+        });
 }
 
 function buyServiceVote(req, res, processingObject){
