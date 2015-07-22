@@ -35,8 +35,8 @@ function history(req, res){
     else
         obj.offset = +obj.offset;
 
-    if(typeof obj.sized === "undefined" || obj.sized <= obj.offset)
-        obj.sized = +obj.offset + 10;
+    if(typeof obj.sized === "undefined")
+        obj.sized = 10;
     else
         obj.sized = +obj.sized;
     if(obj.end_time_from > obj.end_time_to) {

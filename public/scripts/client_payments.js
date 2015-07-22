@@ -2,9 +2,10 @@
  * Created by vitaliy on 09.07.15.
  */
 
-
+var pagActivation = true;
 function updatePayment(offset){
     var limit = 10;
+
 
     if(window.location.pathname === "/client_payment"){
         var requestData = {};
@@ -30,9 +31,11 @@ function updatePayment(offset){
             requestData.offset = (offset * limit) - limit;
         }
 
+        console.log('REQDATA : ', requestData);
+
         $.getJSON('/api/user/' + $.cookie('userId') + '/payments', requestData,function(res){
             $('#payments-list').find('.list-row-clone').remove();
-            $('pagination').attr('total', res.data.count);
+
             console.log(res.data.count);
             if(Object.keys(res.data.data).length > 0) {
                 for(var i in res.data.data) {
@@ -54,6 +57,11 @@ function updatePayment(offset){
                     //DRAW paginator
 
                 }
+
+                if(pagActivation){
+                    $($('.pagination')[0]).empty();
+                    pagination($('.pagination')[0], res.data.count, 10);
+                }
             } else {
                 var $template = $(".empty");
                 var $tmp = null;
@@ -62,55 +70,53 @@ function updatePayment(offset){
             }
         });
 
-        pickerTo.on('close', function(){updatePayment()});
-        pickerFrom.on('close', function(){updatePayment()});
+        pickerTo.on('close', function(){ pagActivation = true; updatePayment()});
+        pickerFrom.on('close', function(){ pagActivation = true; updatePayment()});
     }
 }
 
-function pagination(el, countEls, countPerPage, callback){
+function pagination(el, countEls, countPerPage){
+    /*    <li class="disabled li-temp-before hidden"><a href="#!"><i class="material-icons">chevron_left</i></a></li>
+     <li class="waves-effect li-temp hidden"><a href="#!"></a></li>
+     <li class="waves-effect li-temp-after hidden"><a href="#!"><i class="material-icons">chevron_right</i></a></li>*/
+
     var summaryPages = Math.ceil(countEls/countPerPage);
-    el.find('.li-temp-clone').remove();
 
     if(summaryPages <= 1){
         return;
     }
 
     //Builder
+    $(el).attr('count', summaryPages);
+    $(el).append('<li class="disabled"><a href="#!"><i class="material-icons prev">chevron_left</i></a></li>');
 
     for(var i = 1; i <= summaryPages; i++){
-        var $temp = $('.li-temp');
-        var $tmp = null;
-
-        $tmp = $temp.clone().removeClass('li-temp').removeClass('hidden').addClass('li-temp-clone');
-        $tmp.find('a').text(i);
+        var $temp = '<li class="waves-effect"><a href="#' + i + '">' + i + '</a></li>';
+        $temp = $($temp);
 
         if(i === 1){
-            var $tempRow = $('.li-temp-before');
-            var $tmpRow = $tempRow.clone().removeClass('li-temp-before').removeClass('hidden').addClass('li-temp-clone');
-            $tmpRow.appendTo(el);
-            $tmp.removeClass('waves-effect').addClass('active').addClass('li-temp-clone');
+            $temp.removeClass('waves-effect').addClass('active');
+            console.log($($temp));
         }
 
-        $tmp.appendTo(el);
-
-        if(i === summaryPages){
-            var $tempRow = $('.li-temp-after');
-            var $tmpRow = $tempRow.clone().removeClass('li-temp-before').removeClass('hidden').addClass('li-temp-clone');
-            $tmpRow.appendTo(el);
-        }
+        $(el).append($temp);
     }
 
-    el.off('click');
-    el.on('click', function(e){
+    $(el).append('<li class="waves-effect"><a href="#!"><i class="material-icons after">chevron_right</i></a></li>');
+
+    $(el).off('click');
+    $(el).on('click', function(e){
         //console.log($(e.target).prop('tagName'));
         switch($(e.target).prop('tagName')){
             case 'LI':
             case 'A':
+                designer($(e.target), 'PAGE');
                 console.log('A');
                 break;
             case 'I':
                 console.log('icon');
-                designer($(e.target), 'NEXT');
+                var command = $(e.target).hasClass('prev')?'PREV':'NEXT';
+                designer($(e.target), command);
                 break;
             default:
                 console.log('NOPE');
@@ -118,12 +124,46 @@ function pagination(el, countEls, countPerPage, callback){
     });
 
     var designer = function(el, command){
-        if(command === 'NEXT' || command === 'PREV'){
-            if(!$(el).closest('il').hasClass('disabled')){
-                console.log($(el).closest('ul').find('.active a').text());
-            }else
-                return;
+        var numberCurrent = +($(el).closest('ul').find('.active a').text());
+        var totalNumber = +($(el).closest('ul').attr('count'));
 
+        if(command === 'NEXT' || command === 'PREV'){
+            if(!$(el).closest('li').hasClass('disabled')){
+                if(numberCurrent > 1 || numberCurrent < totalNumber){
+                    switch (command){
+                        case 'NEXT':
+                            ($(el).closest('ul').find('a[href="#' + (numberCurrent + 1) + '"]')).click();
+                            break;
+                        case 'PREV':
+                            ($(el).closest('ul').find('a[href="#' + (numberCurrent - 1) + '"]')).click();
+                            break;
+                    }
+                } else {
+                    console.log('Last or first page');
+                }
+            }
+        } else if (command === 'PAGE'){
+            //Get neede element <a>
+            var nextTarget = $(el).closest('li').find('a');
+            //Deactivate previous
+            $(el).closest('ul').find('.active a').closest('li').removeClass('active').addClass('waves-effect');
+            //Activate current
+            $(nextTarget).closest('li').removeClass('waves-effect').addClass('active');
+
+            var current = +($(nextTarget)).text();
+
+            if(current !== 1 && current !== totalNumber){
+                $($(el).closest('ul').find('i')[0]).closest('li').removeClass('disabled').addClass('waves-effect');
+                $($(el).closest('ul').find('i')[1]).closest('li').removeClass('disabled').addClass('waves-effect');
+            } else if(current === 1){
+                $($(el).closest('ul').find('i')[0]).closest('li').removeClass('waves-effect').addClass('disabled');
+                $($(el).closest('ul').find('i')[1]).closest('li').removeClass('disabled').addClass('waves-effect');
+            } else if (current === totalNumber){
+                $($(el).closest('ul').find('i')[1]).closest('li').removeClass('waves-effect').addClass('disabled');
+                $($(el).closest('ul').find('i')[0]).closest('li').removeClass('disabled').addClass('waves-effect');
+            }
+            pagActivation = false;
+            updatePayment(current);
         }
     }
 }
