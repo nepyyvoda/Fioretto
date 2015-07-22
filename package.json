@@ -48,6 +48,8 @@
     "serve-favicon": "^2.2.0",
     "set-cookie-parser": "^1.0.1",
     "socks-wrapper": "^0.1.0",
+    "socks5-http-client": "~1.0.1",
+    "socks5-https-client": "~1.1.1",
     "through": "~2.3.4",
     "tld": "0.0.2",
     "uid": "0.0.2",
@@ -55,9 +57,7 @@
     "underscore": "^1.8.3",
     "url-parse": "~1.0.1",
     "uuid": "^2.0.1",
-    "winston": "^1.0.0",
-    "socks5-https-client": "~1.1.1",
-    "socks5-http-client": "~1.0.1"
+    "winston": "^1.0.0"
   },
   "devDependencies": {
     "chai": "^3.0.0",

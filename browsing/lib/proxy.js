@@ -23,48 +23,51 @@ function proxy(config) {
         });
 
         if (!middlewareHandledRequest) {
+
             var uri = URL.parse(data.url);
             var options ;
             var proto;
+
             if(data.socksPort === undefined){
 
                 proto = (uri.protocol == 'https:') ? https : http;
 
-                 options = {
+                options = {
                     host: uri.hostname,
                     port: uri.port,
                     path: uri.path,
                     method: data.clientRequest.method,
-                    headers: data.headers,
-                    timeout: 30000
+                    headers: data.headers
                 };
             }else {
 
                 proto = (uri.protocol == 'https:') ? proxyHttps : proxyHttp;
 
-                 options = {
+                options = {
                     host: uri.hostname,
                     port: uri.port,
                     path: uri.path,
                     method: data.clientRequest.method,
                     headers: data.headers,
-                    timeout: 30000,
-                     socksPort : data.socksPort
+                    socksPort : data.socksPort
                 };
             }
 
             debug('sending remote request: ', options);
+            try {
+                data.remoteRequest = proto.request(options, function (remoteResponse) {
+                    data.remoteResponse = remoteResponse;
+                    data.remoteResponse.on('error', next);
+                    proxyResponse(data);
+                });
 
-            data.remoteRequest = proto.request(options, function(remoteResponse) {
-                data.remoteResponse = remoteResponse;
-                data.remoteResponse.on('error', next);
-                proxyResponse(data);
-            });
+                data.remoteRequest.on('error', next);
 
-            data.remoteRequest.on('error', next);
-
-            // pass along POST data & let the remote server know when we're done sending data
-            data.stream.pipe(data.remoteRequest);
+                // pass along POST data & let the remote server know when we're done sending data
+                data.stream.pipe(data.remoteRequest);
+            }catch(error){
+                console.log(error);
+            }
         }
 
     }

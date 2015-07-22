@@ -3,14 +3,12 @@
  */
 
 var config = require('../config');
-var wrapper = require('socks-wrapper')
 
 var fs = require('fs');
 var log = require('../logger')(module);
 var cp = require('child_process');
 var countryRegexp = new RegExp("{.?.?}\/?","gmi");
 var noProxyNeededPattern = new RegExp("{n}","gmi");
-var URL = require('url');
 
 var getPortByCountry = function (pattern) {
 
@@ -81,33 +79,25 @@ var startTor = function () {
     }
 };
 
-var getSocksAgent = function (proxyHost, country, protocol){
-    if(protocol.indexOf("https")>=0){
-        return new wrapper.HttpsAgent(getPortByCountry(country), proxyHost);
-    }else {
-        return new wrapper.HttpAgent(getPortByCountry(country), proxyHost);
-    }
-};
 function addProxySettings (request){
 
     var url =decodeURIComponent(request.url).replace(countryRegexp , "");
     var proxyHost = config.get('vpn:proxyHost');
     var country;
+
     if(decodeURIComponent(request.url).match(countryRegexp)){
+
         country = decodeURIComponent(request.url).match(countryRegexp);
+
         if(!country.toString().match(noProxyNeededPattern)){
-            //request.agent = getSocksAgent(proxyHost, country, uri.protocol);
             request.socksPort = getPortByCountry(country);
 
         }else {
-            //request.agent = undefined;
             request.socksPort = undefined;
 
         }
     } else {
-        country = "{}";
-        //request.agent = getSocksAgent(proxyHost, country, uri.protocol);
-        request.socksPort = getPortByCountry(country);
+        request.socksPort = getPortByCountry("{}");
     }
     request.url = url;
     request.headers.connection = "close";
