@@ -133,7 +133,7 @@ router.use(checkAuth, new ProxyBrowsing({prefix: '/vpn/',
         vpn.addProxySettings
     ]}));
 
-router.use(checkAuth, new Unblocker({prefix: '/voting/manager/'}));
+router.use(checkAuth, new Unblocker({prefix: '/scenario-manager/'}));
 
 router.get('/scenario/creating', checkAuth, function (req, res) {
     res.render('scenario/generator', {
