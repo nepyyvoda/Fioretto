@@ -1,6 +1,4 @@
 var URL = require('url'),
-    http = require('http'),
-    https = require('https'),
     _ = require('lodash'),
     contentTypes = require('./content-types.js'),
     debug = require('debug')('unblocker:proxy');
@@ -26,36 +24,22 @@ function proxy(config) {
 
             var uri = URL.parse(data.url);
             var options ;
-            var proto;
+            var proto = (uri.protocol == 'https:') ? proxyHttps : proxyHttp;
 
-            if(data.socksPort === undefined){
+            if(uri.hostname === null || uri.hostname === undefined){
 
-                proto = (uri.protocol == 'https:') ? https : http;
+                return;
+            } else {
 
                 options = {
                     host: uri.hostname,
                     port: uri.port,
                     path: uri.path,
                     method: data.clientRequest.method,
-                    headers: data.headers
+                    headers: data.headers,
+                    timeout: 30000,
+                    socksPort: data.socksPort
                 };
-            }else {
-
-                proto = (uri.protocol == 'https:') ? proxyHttps : proxyHttp;
-                if(uri.hostname === null || uri.hostname === undefined){
-                    return;
-                }else {
-                    console.log(data.url)
-                    console.log(uri.hostname)
-                    options = {
-                        host: uri.hostname,
-                        port: uri.port,
-                        path: uri.path,
-                        method: data.clientRequest.method,
-                        headers: data.headers,
-                        socksPort: data.socksPort
-                    };
-                }
             }
 
             debug('sending remote request: ', options);

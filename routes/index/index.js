@@ -9,7 +9,8 @@ var User = require('../../controllers/user');
 var jwt = require('jsonwebtoken');
 var vpn = require('../../browsing/vpn');
 var Services = require('../../controllers/services');
-var Unblocker = require('../../browsing/lib/unblocker');
+var Unblocker = require('unblocker');
+var ProxyBrowsing = require('../../browsing/lib/unblocker');
 
 function isLogged(sid, callback) {
     var token = sid;
@@ -127,10 +128,12 @@ router.get('/scenaries', checkAuth, function (req, res) {
     res.render('index/scenaries', {title: 'Scenaries', name: req.path});
 });
 
-router.use(checkAuth, new Unblocker({prefix: '/vpn/',
+router.use(checkAuth, new ProxyBrowsing({prefix: '/vpn/',
     requestMiddleware: [
         vpn.addProxySettings
     ]}));
+
+router.use(checkAuth, new Unblocker({prefix: '/scenario-manager/'}));
 
 router.get('/scenario/creating', checkAuth, function (req, res) {
     res.render('scenario/generator', {

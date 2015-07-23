@@ -8,7 +8,6 @@ var fs = require('fs');
 var log = require('../logger')(module);
 var cp = require('child_process');
 var countryRegexp = new RegExp("{.?.?}\/?","gmi");
-var noProxyNeededPattern = new RegExp("{n}","gmi");
 
 var getPortByCountry = function (pattern) {
 
@@ -89,14 +88,10 @@ function addProxySettings (request){
 
         country = decodeURIComponent(request.url).match(countryRegexp);
 
-        if(!country.toString().match(noProxyNeededPattern)){
-            request.socksPort = getPortByCountry(country);
+        request.socksPort = getPortByCountry(country);
 
-        }else {
-            request.socksPort = undefined;
-
-        }
     } else {
+
         request.socksPort = getPortByCountry("{}");
     }
     request.url = url;
