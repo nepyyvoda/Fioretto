@@ -1,4 +1,5 @@
 {
+  "host": "http://fiaretto.com/",
   "port": 3010,
   "db": {
     "host": "localhost",
@@ -8,11 +9,18 @@
     "database": "filareto",
     "queryTimeout": 30000
   },
+  "mailer": {
+    "user": "fiorettosystem@gmail.com",
+    "pass": "z753951Z"
+  },
+  "workerServer": {
+    "ip": "193.110.162.230",
+    "port": 12445
+  },
   "vpn": {
     "proxyHost": "127.0.0.1",
     "fileName":"torrc",
-    "path":"/home/vitaliy/tor/",
-
+    "path":"/home/fioretto/cabinet/Fioretto/torbase/",
     "countries":{
       "default":{
         "pattern":"{}",
@@ -25,8 +33,59 @@
       "de":{
         "pattern":"{de}",
         "port":9062
+      },
+      "fr":{
+        "pattern":"{fr}",
+        "port":9063
+      },
+      "ua":{
+        "pattern":"{ua}",
+        "port":9064
+      },
+      "ru":{
+        "pattern":"{ru}",
+        "port":9065
+      },
+      "ro":{
+        "pattern":"{ro}",
+        "port":9066
+      },
+      "es":{
+        "pattern":"{es}",
+        "port":9067
+      },
+      "kr":{
+        "pattern":"{kr}",
+        "port":9068
+      },
+      "jp":{
+        "pattern":"{jp}",
+        "port":9069
+      },
+      "il":{
+        "pattern":"{il}",
+        "port":9070
+      },
+      "it":{
+        "pattern":"{it}",
+        "port":9071
+      },
+      "pl":{
+        "pattern":"{pl}",
+        "port":9072
+      },
+      "se":{
+        "pattern":"{se}",
+        "port":9073
+      },
+      "ch":{
+        "pattern":"{ch}",
+        "port":9074
       }
     }
   },
-  "loglvl": "info"
+  "loglvl": "info",
+  "mode": "debug"
 }
+
+                                  

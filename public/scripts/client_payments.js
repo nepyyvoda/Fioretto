@@ -44,7 +44,12 @@ function updatePayment(offset){
                     var parsedDate =  new Date(res.data.data[i].end_time);
                     $tmp = $template.clone().removeClass("template").removeClass('hidden').addClass('list-row-clone');
                     $tmp.find('.date').text(parsedDate.toLocaleDateString() + " " +  parsedDate.toLocaleTimeString());
-                    $tmp.find('.transactionid').text(res.data.data[i].transactionID);
+                    var trID = res.data.data[i].transactionID;
+
+                    if(trID === null || trID === "0")
+                        trID = '--';
+
+                    $tmp.find('.transactionid').text(trID);
                     $tmp.find('.serviceid').text(res.data.data[i].serv_name);
                     $tmp.find('.paysystem').text(res.data.data[i].payservice_name);
                     $tmp.find('.sum').text('$' + res.data.data[i].amount/100);

@@ -29,7 +29,5 @@ build/Release
 node_modules
 .idea
 config.json
-
-
-
 config/config.json
+config/config.local.json
