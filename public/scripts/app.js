@@ -244,8 +244,13 @@ $(document).ready(function() {
             }
         });
     });
-
+    function resizeIframe(obj) {
+        obj.style.height = obj.contentWindow.document.body.scrollHeight + 'px';
+    }
     $('iframe').on('load', function(e) {
+        resizeIframe($(e.currentTarget)[0]);
+        $('#iframe-loader').addClass('hidden');
+        $('#iframe-wrapper iframe').removeClass('hidden');
         $('iframe').contents().find('body').on('contextmenu click dblclick keypress', function(e) {
             xpath = XPath(e.target);
             console.log("EVENT : ",e);
