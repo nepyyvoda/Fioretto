@@ -280,3 +280,9 @@ body {
 	padding-left: 0;
 }
 }
+body.no-left-padding {
+	padding-left: 0;
+}
+#iframe-loader {
+	text-align: center;
+}
