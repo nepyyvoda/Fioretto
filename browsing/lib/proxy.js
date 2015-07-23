@@ -4,8 +4,7 @@ var URL = require('url'),
     _ = require('lodash'),
     contentTypes = require('./content-types.js'),
     debug = require('debug')('unblocker:proxy');
-var proxyHttps = require('socks5-https-client');
-var proxyHttp = require('socks5-http-client');
+
 
 
 function proxy(config) {
@@ -23,6 +22,10 @@ function proxy(config) {
         });
 
         if (!middlewareHandledRequest) {
+            try {
+
+                var proxyHttps = require('socks5-https-client');
+                var proxyHttp = require('socks5-http-client');
 
             var uri = URL.parse(data.url);
             var options ;
@@ -54,7 +57,7 @@ function proxy(config) {
             }
 
             debug('sending remote request: ', options);
-            try {
+
                 data.remoteRequest = proto.request(options, function (remoteResponse) {
                     data.remoteResponse = remoteResponse;
                     data.remoteResponse.on('error', next);
