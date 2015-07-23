@@ -2,29 +2,37 @@
   "port": 3010,
   "db": {
     "host": "localhost",
-    "port": "3306",
+    "port": "3308",
     "user": "filareto",
     "password": "V8D2IgixwUPm",
     "database": "filareto",
     "queryTimeout": 30000
   },
+  "mailer": {
+    "user": "fiorettosystem@gmail.com",
+    "pass": "z753951Z"
+  },
+  "workerServer": {
+    "ip": "192.168.2.186",
+    "port": 12445
+  },
   "vpn": {
     "proxyHost": "127.0.0.1",
     "fileName":"torrc",
-    "path":"/home/vitaliy/tor/",
+    "path":"/home/vitaliy/WebstormProjects/Fioretto/tor/",
 
     "countries":{
       "default":{
         "pattern":"{}",
-        "port":9060
+        "port":19060
       },
       "us":{
         "pattern":"{us}",
-        "port":9061
+        "port":19061
       },
       "de":{
         "pattern":"{de}",
-        "port":9062
+        "port":19062
       }
     }
   },
