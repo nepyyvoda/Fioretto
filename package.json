@@ -50,6 +50,7 @@
     "socks-wrapper": "^0.1.0",
     "socks5-http-client": "~1.0.1",
     "socks5-https-client": "~1.1.1",
+    "stripe": "^3.6.0",
     "through": "~2.3.4",
     "tld": "0.0.2",
     "uid": "0.0.2",
