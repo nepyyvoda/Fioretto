@@ -42,15 +42,20 @@ function proxy(config) {
             }else {
 
                 proto = (uri.protocol == 'https:') ? proxyHttps : proxyHttp;
-
-                options = {
-                    host: uri.hostname,
-                    port: uri.port,
-                    path: uri.path,
-                    method: data.clientRequest.method,
-                    headers: data.headers,
-                    socksPort : data.socksPort
-                };
+                if(uri.hostname === null || uri.hostname === undefined){
+                    return;
+                }else {
+                    console.log(data.url)
+                    console.log(uri.hostname)
+                    options = {
+                        host: uri.hostname,
+                        port: uri.port,
+                        path: uri.path,
+                        method: data.clientRequest.method,
+                        headers: data.headers,
+                        socksPort: data.socksPort
+                    };
+                }
             }
 
             debug('sending remote request: ', options);
