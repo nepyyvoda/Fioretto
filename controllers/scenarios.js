@@ -106,10 +106,10 @@ function startScenario(req, res) {
                                 UserServiceGrants.create({userid : user[0].id, serviceid : 2, active : 1, start_time : new Date(), end_time : new Date(), control_option : scenario.countTotal, deleted : 0}, function(err, usergrants){
                                     if(!err) {
                                         UserPayments.create(
-                                            user[0].id,
-                                            user[0].id,
-                                            0,
-                                            0,
+                                            user[0].id,     //sender
+                                            user[0].id,     //receiver
+                                            0,              //
+                                            2,              //payment system - internal = 2
                                             2,
                                             new Date(),
                                             new Date(),

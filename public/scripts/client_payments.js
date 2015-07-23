@@ -2,7 +2,7 @@
  * Created by vitaliy on 09.07.15.
  */
 
-var pagActivation = true;
+//var pagActivation = true;
 function updatePayment(offset){
     var limit = 10;
 
@@ -26,7 +26,7 @@ function updatePayment(offset){
 
         //PREPARE REQUEST
         requestData.from = pickerFrom.get('select').pick;
-        requestData.to = pickerTo.get('select').pick;
+        requestData.to = pickerTo.get('select').pick + 86399999;
         if(typeof offset !== "undefined"){
             requestData.offset = (offset * limit) - limit;
         }
@@ -58,7 +58,7 @@ function updatePayment(offset){
 
                 }
 
-                if(pagActivation){
+                if(typeof offset === "undefined"){
                     $($('.pagination')[0]).empty();
                     pagination($('.pagination')[0], res.data.count, 10);
                 }
@@ -67,11 +67,12 @@ function updatePayment(offset){
                 var $tmp = null;
                 $tmp = $template.clone().removeClass("empty").removeClass('hidden').addClass("list-row-clone");
                 $tmp.appendTo('#payments-list');
+                $($('.pagination')[0]).empty();
             }
         });
 
-        pickerTo.on('close', function(){ pagActivation = true; updatePayment()});
-        pickerFrom.on('close', function(){ pagActivation = true; updatePayment()});
+        pickerTo.on('close', function(){ updatePayment()});
+        pickerFrom.on('close', function(){ updatePayment()});
     }
 }
 

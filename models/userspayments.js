@@ -147,6 +147,7 @@ function history(obj, callback){
                     'AND userspayments.servicesID = services.id ' +
                     'AND userspayments.login = ? ' +
                     'AND userspayments.end_time BETWEEN ? AND ? ' +
+                    'ORDER BY userspayments.end_time DESC ' +
                     'LIMIT ?,?',
                     [obj.login, obj.end_time_from, obj.end_time_to, obj.offset, obj.sized], function(err, data){
                         //console.log("MODEL data - ", data);
