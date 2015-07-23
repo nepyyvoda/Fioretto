@@ -1,11 +1,25 @@
 /**
- * Created by anton.nepyyvoda on 03.04.2015.
+ * Created by vitaliy on 23.07.15.
  */
+var fs = require('fs');
 var nconf = require('nconf');
 var path = require('path');
 
-nconf.argv()
-    .env()
-    .file({file: path.join(__dirname, 'config.json')});
+try{
+    fs.openSync(path.join(__dirname, 'config.local.json'), 'r');
+    nconf.argv()
+        .env()
+        .file({file: path.join(__dirname, 'config.local.json')});
+} catch (err){
+    try{
+        fs.openSync(path.join(__dirname, 'config.json'), 'r');
+        nconf.argv()
+            .env()
+            .file({file: path.join(__dirname, 'config.json')});
+    } catch (err){
+        console.log(err);
+    }
+    console.log(err);
+}
 
 module.exports = nconf;
