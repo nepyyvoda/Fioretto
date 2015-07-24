@@ -11,6 +11,9 @@ var vpn = require('../../browsing/vpn');
 var Services = require('../../controllers/services');
 var Unblocker = require('unblocker');
 var ProxyBrowsing = require('../../browsing/lib/unblocker');
+var timeout = require('connect-timeout');
+
+var  timeoutTime = config.get('vpn:timeout');
 
 function isLogged(sid, callback) {
     var token = sid;
@@ -128,7 +131,7 @@ router.get('/scenaries', checkAuth, function (req, res) {
     res.render('index/scenaries', {title: 'Scenaries', name: req.path});
 });
 
-router.use(checkAuth, new ProxyBrowsing({prefix: '/vpn/',
+router.use(checkAuth, timeout(timeoutTime), new ProxyBrowsing({prefix: '/vpn/',
     requestMiddleware: [
         vpn.addProxySettings
     ]}));
