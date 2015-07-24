@@ -248,6 +248,7 @@ $(document).ready(function() {
         obj.style.height = obj.contentWindow.document.body.scrollHeight + 'px';
     }
     $('iframe').on('load', function(e) {
+        $('#iframe-warning').openModal();
         resizeIframe($(e.currentTarget)[0]);
         $('#iframe-loader').addClass('hidden');
         $('#iframe-wrapper iframe').removeClass('hidden');

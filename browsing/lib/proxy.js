@@ -37,7 +37,6 @@ function proxy(config) {
                     path: uri.path,
                     method: data.clientRequest.method,
                     headers: data.headers,
-                    timeout: 30000,
                     socksPort: data.socksPort
                 };
             }
@@ -45,15 +44,20 @@ function proxy(config) {
             debug('sending remote request: ', options);
             try {
                 data.remoteRequest = proto.request(options, function (remoteResponse) {
-                    data.remoteResponse = remoteResponse;
-                    data.remoteResponse.on('error', next);
-                    proxyResponse(data);
+                    if (remoteResponse) {
+                        data.remoteResponse = remoteResponse;
+                        data.remoteResponse.on('error', next);
+                        proxyResponse(data);
+                    } else {
+                        remoteResponse.abort();
+                    }
                 });
 
                 data.remoteRequest.on('error', next);
 
                 // pass along POST data & let the remote server know when we're done sending data
                 data.stream.pipe(data.remoteRequest);
+                data.remoteRequest.end()
             }catch(error){
                 console.log(error);
             }
@@ -62,8 +66,6 @@ function proxy(config) {
     }
 
     function proxyResponse(data) {
-
-        debug('proxying %s response for %s', data.remoteResponse.statusCode, data.url);
 
         // make a copy of the headers to fiddle with
         data.headers = _.cloneDeep(data.remoteResponse.headers);

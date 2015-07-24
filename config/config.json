@@ -1,6 +1,6 @@
 {
   "host": "http://fiaretto.com/",
-  "port": 3010,
+  "port": 80,
   "db": {
     "host": "localhost",
     "port": "3307",
@@ -21,6 +21,9 @@
     "proxyHost": "127.0.0.1",
     "fileName":"torrc",
     "path":"/home/fioretto/cabinet/Fioretto/torbase/",
+    "timeout":"30000s",
+    "environment" : "production",
+
     "countries":{
       "default":{
         "pattern":"{}",

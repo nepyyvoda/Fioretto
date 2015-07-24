@@ -8,7 +8,8 @@ var fs = require('fs');
 var log = require('../logger')(module);
 var cp = require('child_process');
 var countryRegexp = new RegExp("{.?.?}\/?","gmi");
-
+var commandToStartTor= "tor";
+var rootCommand = "sudo";
 var getPortByCountry = function (pattern) {
 
     var countryData = config.get('vpn:countries');
@@ -27,6 +28,9 @@ var startTor = function () {
     var countryData = config.get('vpn:countries');
     var torFileName = config.get('vpn:fileName');
     var torFolderPath = config.get('vpn:path');
+    if(config.get('vpn:environment').indexOf("production")>=0){
+        commandToStartTor = rootCommand + " " + commandToStartTor;
+    }
 
     //for(var country in countryData) {
     //
@@ -95,7 +99,7 @@ function addProxySettings (request){
         request.socksPort = getPortByCountry("{}");
     }
     request.url = url;
-    request.headers.connection = "close";
+    request.headers.connection = "keep-alive";
 
 }
 module.exports.startTor = startTor;
