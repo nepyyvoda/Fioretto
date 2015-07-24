@@ -28,54 +28,54 @@ var startTor = function () {
     var torFileName = config.get('vpn:fileName');
     var torFolderPath = config.get('vpn:path');
 
-    for(var country in countryData) {
-
-        var countryProperties = config.get('vpn:countries:' + country);
-
-        var port = countryProperties.port;
-        var pattern = countryProperties.pattern;
-        var fullPath = torFolderPath + country + "/" ;
-        var torConfigFilePath = fullPath + torFileName;
-
-        if (!fs.existsSync(torFolderPath)) {
-            fs.mkdirSync(torFolderPath);
-
-        }if (!fs.existsSync(fullPath)) {
-            fs.mkdirSync(fullPath);
-        }
-
-        if (!fs.existsSync(torConfigFilePath)) {
-            fs.writeFileSync(torConfigFilePath, {flag: 'wx'});
-        }
-
-        var settings;
-
-        if (pattern.match(/{}/gmi)) {
-            settings = "DataDirectory "+ fullPath +"\nSocksPort "
-                + port + "\n";
-        } else {
-            settings = "ExitNodes " + pattern + "\nStrictNodes 1\nDataDirectory "+ fullPath +"\nSocksPort "
-                + port + "\n";
-        }
-
-        fs.writeFileSync(torConfigFilePath, settings, 'utf8');
-
-        var torProcess = cp.spawn('tor', ['-f', torConfigFilePath]);
-
-        torProcess.stdout.on('data', function(data) {
-            console.log(data.toString('utf-8'));
-            log.info(data.toString('utf-8'));
-        });
-
-        torProcess.stderr.on('data', function(data) {
-
-            console.log(data.toString('utf-8'));
-            log.error(data.toString('utf-8'));
-        });
-        torProcess.on('close', function(code) {
-            log.info("Tor close with code " + code)
-        });
-    }
+    //for(var country in countryData) {
+    //
+    //    var countryProperties = config.get('vpn:countries:' + country);
+    //
+    //    var port = countryProperties.port;
+    //    var pattern = countryProperties.pattern;
+    //    var fullPath = torFolderPath + country + "/" ;
+    //    var torConfigFilePath = fullPath + torFileName;
+    //
+    //    if (!fs.existsSync(torFolderPath)) {
+    //        fs.mkdirSync(torFolderPath);
+    //
+    //    }if (!fs.existsSync(fullPath)) {
+    //        fs.mkdirSync(fullPath);
+    //    }
+    //
+    //    if (!fs.existsSync(torConfigFilePath)) {
+    //        fs.writeFileSync(torConfigFilePath, {flag: 'wx'});
+    //    }
+    //
+    //    var settings;
+    //
+    //    if (pattern.match(/{}/gmi)) {
+    //        settings = "DataDirectory "+ fullPath +"\nSocksPort "
+    //            + port + "\n";
+    //    } else {
+    //        settings = "ExitNodes " + pattern + "\nStrictNodes 1\nDataDirectory "+ fullPath +"\nSocksPort "
+    //            + port + "\n";
+    //    }
+    //
+    //    fs.writeFileSync(torConfigFilePath, settings, 'utf8');
+    //
+    //    var torProcess = cp.spawn('tor', ['-f', torConfigFilePath]);
+    //
+    //    torProcess.stdout.on('data', function(data) {
+    //        console.log(data.toString('utf-8'));
+    //        log.info(data.toString('utf-8'));
+    //    });
+    //
+    //    torProcess.stderr.on('data', function(data) {
+    //
+    //        console.log(data.toString('utf-8'));
+    //        log.error(data.toString('utf-8'));
+    //    });
+    //    torProcess.on('close', function(code) {
+    //        log.info("Tor close with code " + code)
+    //    });
+    //}
 };
 
 function addProxySettings (request){
