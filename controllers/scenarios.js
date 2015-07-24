@@ -38,7 +38,9 @@ function rename(req, res) {
 }
 
 function update(req, res) {
-    ScenariosModel.update(req.params.id, {}, function(err, data) {
+    console.log("REQ DATA -- ", req.body);
+
+    ScenariosModel.update(req.body.id, req.body.data, function(err, data) {
         if(!err) {
             res.send(response('SUCCESS', data[0]));
         } else {

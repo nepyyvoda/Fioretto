@@ -1,9 +1,8 @@
 /**
  * Created by vitaliy on 08.07.15.
  */
-
 var localDataObj = {};
-
+var scenarios = {};
 $(document).ready(function() {
     updateScenariosList();
 });
@@ -87,12 +86,14 @@ function updateScenariosList() {
                 $tmp.find('.name').text(res.data[i].nameScenario);
                 $tmp.find('.url').text(res.data[i].URL_target);
                 $tmp.find('.iter').text(res.data[i].countTotal);
-                $tmp.find('.mode').text(res.data[i].mode === 1?'Boosted':'Standard');
+                console.log('res.data[i].mode = ',res.data[i].mode);
+                $tmp.find('.mode').prop('checked', res.data[i].mode === 1?true:false);
 
                 var statusText = '';
                 switch (res.data[i].status) {
                     case 0:
                         statusText = 'inactive';
+                        addListener($tmp);
                         break;
                     case 1:
                         statusText = 'processing';
@@ -105,6 +106,7 @@ function updateScenariosList() {
                         break;
                     default :
                         statusText = 'inactive';
+                        addListener($tmp);
                 }
 
                 if(res.data[i].status !== 0) {
@@ -148,5 +150,62 @@ function startScenario(el) {
         },
         error: function(request, status, error) {
         }
+    });
+}
+
+function addListener(jQObject){
+
+    jQObject.find('.name').on('click', function(e){
+
+        var tr = $(e.currentTarget);
+        var text_value = tr.text();
+        tr.empty();
+        tr.append('<div class="input-field col s6"><input placeholder="Name" id="name_scenario" type="text" class="validate" value="' + text_value +'"></div>');
+        var input = tr.find(':text').focus();
+
+        input.focusout(function(e){
+            var text_value_2 = jQObject.find('#name_scenario').val();
+            tr.empty();
+
+            if(text_value_2.length > 0){
+                tr.text(text_value_2);
+                $.ajax({
+                    url: '/api/scenarios',
+                    type: "POST",
+                    data: {id : jQObject.attr('data-id'), data : {  nameScenario : text_value_2}},
+                    success: function(data){
+                        console.log('UPDATE RESULT : ', data);
+                    }
+                });
+            } else {
+                tr.text(text_value);
+            }
+        });
+    });
+
+    jQObject.find('.iter').on('click', function(e){
+        var tr = $(e.currentTarget);
+        var text_value = tr.text();
+        tr.empty();
+        tr.append('<div class="input-field col s6"><input placeholder="Count" id="count_iteration" type="text" length="4" class="validate numbersOnly" value="' + text_value +'"></div>');
+        var input = tr.find(':text').focus();
+
+        input.focusout(function(e){
+            var text_value_2 = jQObject.find('#count_iteration').val();
+            tr.empty();
+
+            if($.isNumeric(text_value_2)){
+                tr.text(text_value_2);
+                var obj = {};
+                obj.id = jQObject.attr('data-id');
+                obj.data = {countTotal : text_value_2};
+                console.log(JSON.stringify(obj));
+                $.post('/api/scenarios/' + jQObject.attr('data-id'), obj, function (response){
+                    console.log('response ', response);
+                }, 'json');
+            } else {
+                tr.text(text_value);
+            }
+        });
     });
 }
