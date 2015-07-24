@@ -41,7 +41,7 @@ function initScenario(el) {
     if(validateURL(url)) {
         $.getJSON('/api/scenarios/init?url=' + encodeURIComponent($.trim(url)+'{n}'), function(res) {
             if(res.status == 0) {
-                window.location = 'scenario/creating?url=' + encodeURIComponent($.trim(url)) + '&proxy=/vpn/' + $.trim(url)+ '{n}';
+                window.location = 'scenario/creating?url=' + encodeURIComponent($.trim(url)) + '&proxy=/scenario-manager/' + $.trim(url);
             }
         })
     }

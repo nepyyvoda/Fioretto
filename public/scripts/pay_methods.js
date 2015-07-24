@@ -5,6 +5,7 @@
 $(document).ready(function() {
     $('a.paypal').click(function(e){
         if($('input.amount').val() > 0) {
+            $('#refill_paypal').openModal();
             console.log('DATA', $("input[name='amount']"), $('input.amount').val(), $.cookie("userId"));
             $("input[name='amount']").val($('input.amount').val());
             $("input[name='custom']").val(JSON.stringify({userId: $.cookie("userId")}));
