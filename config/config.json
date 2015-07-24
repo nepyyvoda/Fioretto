@@ -1,6 +1,6 @@
 {
   "host": "http://fiaretto.com/",
-  "port": 3010,
+  "port": 80,
   "db": {
     "host": "localhost",
     "port": "3306",
