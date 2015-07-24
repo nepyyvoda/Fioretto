@@ -21,6 +21,7 @@
     "proxyHost": "127.0.0.1",
     "fileName":"torrc",
     "path":"/home/fioretto/cabinet/Fioretto/torbase/",
+    "timeout":"30000s",
     "countries":{
       "default":{
         "pattern":"{}",

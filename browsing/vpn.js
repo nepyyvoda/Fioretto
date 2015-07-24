@@ -95,7 +95,7 @@ function addProxySettings (request){
         request.socksPort = getPortByCountry("{}");
     }
     request.url = url;
-    request.headers.connection = "close";
+    request.headers.connection = "keep-alive";
 
 }
 module.exports.startTor = startTor;
