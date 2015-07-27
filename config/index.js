@@ -14,7 +14,7 @@ fs.stat(path.join(__dirname, 'config.local.json'), function(err, stats) {
             } else {
                 nconf.argv()
                     .env()
-                    .file({file: path.join(__dirname, 'config.local.json')});
+                    .file({file: path.join(__dirname, 'config.json')});
             }
         });
     } else {
