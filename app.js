@@ -9,6 +9,7 @@ var partials = require('express-partials');
 var path = require('path');
 var favicon = require('serve-favicon');
 var logger = require('morgan');
+var log = require('./logger')(module);
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 
@@ -41,6 +42,7 @@ app.use('/', index);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
+    log.warn(err.message);
     //var err = new Error('Not Found');
     //err.status = 404;
     //next(err);
@@ -53,6 +55,7 @@ app.use(function(req, res, next) {
 // will print stacktrace
 if (app.get('env') === 'development') {
     app.use(function(err, req, res, next) {
+        log.error(err.message);
         res.status(err.status || 500);
         console.log(err.message);
         res.render('error', {
@@ -67,7 +70,7 @@ if (app.get('env') === 'development') {
 // production error handler
 // no stacktraces leaked to user
 app.use(function(err, req, res, next) {
-    console.log(err.message);
+    log.error(err.message);
     res.status(err.status || 500);
     res.render('error', {
         message: err.message,

@@ -1,7 +1,4 @@
 <div class="container">
-    <script src="http://code.jquery.com/jquery-latest.min.js"></script>
-    <script src="https://checkout.stripe.com/checkout.js"></script>
-    <script src="/scripts/pay_methods.js"></script>
 	 <div class="row">
 		<div class="col s12 m12">
 			<div class="card card_methods teal lighten-1 valign center z-depth-2">
@@ -20,7 +17,7 @@
 								<div class="col s11 m6 l4 offset-s1 offset-m3 offset-l4">
 									<div class="">
 										<form class="col s6 m6 offset-m0 offset-s0 offset-l2">
-											<input placeholder="sum" type="text" class="white amount">
+											<input required placeholder="sum" type="number" min="0" class="white amount">
 										</form>
 										<select class="white col s5 m6 l4 browser-default currency">
 											<option value="1" selected>USD</option>
@@ -47,7 +44,7 @@
 							<input type="hidden" name="bn" value="JavaScriptButton_buynow">
 						</form>
 						<a class="teal accent-4 paypal btn-large" href="#refill_paypal"></a>
-						<a class="teal accent-4 webmoney btn-large modal-trigger" href="#refill"></a>
+						<a class="teal accent-4 webmoney btn-large" href="#refill"></a>
 						<a class="teal accent-4 mastercard btn-large"></a>
 					</div>
 			    </div>
