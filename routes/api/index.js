@@ -76,7 +76,7 @@ router.post('/scenarios/:id/start', checkAuth, function(req, res) {
     Scenarios.startScenario(req, res);
 });
 
-router.post('/scenarios/:id', checkAuth, function(req, res) {
+router.put('/scenarios/:id', checkAuth, function(req, res) {
     Scenarios.update(req, res);
 });
 

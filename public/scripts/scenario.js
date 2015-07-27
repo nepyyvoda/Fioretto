@@ -199,10 +199,19 @@ function addListener(jQObject){
                 var obj = {};
                 obj.id = jQObject.attr('data-id');
                 obj.data = {countTotal : text_value_2};
-                console.log(JSON.stringify(obj));
-                $.post('/api/scenarios/' + jQObject.attr('data-id'), obj, function (response){
-                    console.log('response ', response);
-                }, 'json');
+                $.ajax({
+                    url: '/api/scenarios/' + jQObject.attr('data-id'),
+                    method: 'PUT',
+                    data: JSON.stringify(obj),
+                    contentType: 'application/json',
+                    dataType: 'json',
+                    success: function (res){
+                        console.log('response ', res);
+                    },
+                    error: function() {
+                        console.log(arguments)
+                    }
+                });
             } else {
                 tr.text(text_value);
             }
