@@ -6,22 +6,20 @@ var nconf = require('nconf');
 var path = require('path');
 
 
-fs.stat(path.join(__dirname, 'config.local.json'), function(err, stats) {
+var stats = fs.statSync(path.join(__dirname, 'config.local.json'));
+if(!stats.isFile() && err) {
+    var stats = fs.statSync(path.join(__dirname, 'config.json'));
     if(!stats.isFile() && err) {
-        fs.stat(path.join(__dirname, 'config.json'), function(err, stats) {
-            if(!stats.isFile() && err) {
-                console.error('Config was not found!');
-            } else {
-                nconf.argv()
-                    .env()
-                    .file({file: path.join(__dirname, 'config.json')});
-            }
-        });
+        console.error('Config was not found!');
     } else {
         nconf.argv()
             .env()
-            .file({file: path.join(__dirname, 'config.local.json')});
+            .file({file: path.join(__dirname, 'config.json')});
     }
-});
+} else {
+    nconf.argv()
+        .env()
+        .file({file: path.join(__dirname, 'config.local.json')});
+}
 
 module.exports = nconf;
