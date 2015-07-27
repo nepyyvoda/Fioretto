@@ -94,7 +94,7 @@ function pagination(el, countEls, countPerPage){
 
     //Builder
     $(el).attr('count', summaryPages);
-    $(el).append('<li class="disabled"><a href="#!"><i class="material-icons prev">chevron_left</i></a></li>');
+    $(el).append('<li class="disabled"><a href="#!"><i class="material-icons prev"></i></a></li>');
 
     for(var i = 1; i <= summaryPages; i++){
         var $temp = '<li class="waves-effect"><a href="#' + i + '">' + i + '</a></li>';
@@ -108,7 +108,7 @@ function pagination(el, countEls, countPerPage){
         $(el).append($temp);
     }
 
-    $(el).append('<li class="waves-effect"><a href="#!"><i class="material-icons after">chevron_right</i></a></li>');
+    $(el).append('<li class="waves-effect"><a href="#!"><i class="material-icons after"></i></a></li>');
 
     $(el).off('click');
     $(el).on('click', function(e){

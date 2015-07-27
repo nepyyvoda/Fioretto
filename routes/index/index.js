@@ -52,7 +52,7 @@ function checkAvailableServiceBrowser(req, res, next){
         if(obj.data.available === 1)
             next();
         else {
-            res.redirect('/pay');
+            res.redirect('/subscription');
             return;
         }
     }});
@@ -121,8 +121,8 @@ router.get('/registration/:hash', function (req, res) {
 router.get('/logout', checkAuth, function (req, res) {
     User.logout(req, res);
 });
-router.get('/pay', checkAuth, function (req, res) {
-    res.render('index/pay', {title: 'Payment', name: req.path});
+router.get('/subscription', checkAuth, function (req, res) {
+    res.render('index/subscription', {title: 'Subscription', name: req.path});
 });
 router.post('/pay/ipn', function (req, res) {
     Paypal.ipn_processor(req, res);
