@@ -7,9 +7,9 @@ var path = require('path');
 
 
 fs.stat(path.join(__dirname, 'config.local.json'), function(err, stats) {
-    if(err) {
+    if(!stats.isFile() && err) {
         fs.stat(path.join(__dirname, 'config.json'), function(err, stats) {
-            if(err) {
+            if(!stats.isFile() && err) {
                 console.error('Config was not found!');
             } else {
                 nconf.argv()
