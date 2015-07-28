@@ -38,7 +38,11 @@ function login(login, password, callback) {
         console.log(arguments);
         var queryData = data || [];
         if(queryData.length > 0) {
-            callback(false, queryData);
+            if(queryData[0].password === password){
+                callback(false, queryData);
+            } else{
+                callback(true, 'USER_NOT_FOUND');
+            }
         } else {
             callback(true, 'USER_NOT_FOUND');
         }
