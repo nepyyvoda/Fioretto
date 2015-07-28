@@ -410,12 +410,15 @@ function changePassword(){
     requestData.confirm_password_new = (CryptoJS.SHA256(requestData.confirm_password_new)).toString();
 
      $.ajax({
-            type: 'post',
+            type: 'put',
             url: 'api/user/'+ $.cookie('userId'),
             contentType: 'application/json',
             data: JSON.stringify(requestData),
             cache: false,
             success: function(res) {
+                $('#password').val(null);
+                $('#password-new').val(null);
+                $('#confirm-password-new').val(null);
                 alert(res.message);
             },
             error: function(res, status, error) {

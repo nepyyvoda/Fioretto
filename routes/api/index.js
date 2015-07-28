@@ -87,7 +87,7 @@ router.post('/scenarios/:id/confirmation', function(req, res){
     Scenarios.changeState(req, res);
 });
 
-router.post('/user/:id', checkAuth, checkPermission, function(req, res) {
+router.put('/user/:id', checkAuth, checkPermission, function(req, res) {
     User.update(req, res);
 });
 
