@@ -2,7 +2,6 @@ var express = require('express');
 var router = express.Router();
 var jwt = require('jsonwebtoken');
 var response = require('../../response');
-var replaceAllRelByAbs = require('../../utils').replaceAllRelByAbs;
 var uid = require('uid');
 var request = require('request');
 var User = require('../../controllers/user');
@@ -88,7 +87,7 @@ router.post('/scenarios/:id/confirmation', function(req, res){
     Scenarios.changeState(req, res);
 });
 
-router.put('/user/:id', checkAuth, checkPermission, function(req, res) {
+router.post('/user/:id', checkAuth, checkPermission, function(req, res) {
     User.update(req, res);
 });
 

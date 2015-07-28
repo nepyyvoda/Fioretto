@@ -398,38 +398,27 @@ $(document).ready(function() {
 
 });
 
-function test(){
+function changePassword(){
     var requestData = {
         id: $.cookie('userId'),
-        email: $('#user-email').val(),
         password: $('#password').val(),
-        password_new: $('#password-new').val()
+        password_new: $('#password-new').val(),
+        confirm_password_new: $('#confirm-password-new').val()
     };
-
     requestData.password = (CryptoJS.SHA256(requestData.password)).toString();
     requestData.password_new = (CryptoJS.SHA256(requestData.password_new)).toString();
+    requestData.confirm_password_new = (CryptoJS.SHA256(requestData.confirm_password_new)).toString();
 
      $.ajax({
-            type: 'put',
-            url: '/api/users/'+ $.cookie('userId'),
-            dataType: "json",
+            type: 'post',
+            url: 'api/user/'+ $.cookie('userId'),
             contentType: 'application/json',
             data: JSON.stringify(requestData),
             cache: false,
-            beforeSend: function (request){
-
-            },
             success: function(res) {
-                if(res.status === 0){
-                    alert('Updated');
-                } else {
-                    alert('Request cannot be handled');
-                }
+                alert(res.message);
             },
-            complete: function() {
-
-            },
-            error: function(request, status, error) {
+            error: function(res, status, error) {
                 alert('Network error');
             }
         })
