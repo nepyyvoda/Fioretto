@@ -1,9 +1,9 @@
 var URL = require('url'),
     _ = require('lodash'),
+    https = require('socks5-https-client'),
+    http = require('socks5-http-client'),
     contentTypes = require('./content-types.js'),
     debug = require('debug')('unblocker:proxy');
-var proxyHttps = require('socks5-https-client');
-var proxyHttp = require('socks5-http-client');
 
 
 function proxy(config) {
@@ -24,13 +24,10 @@ function proxy(config) {
 
             var uri = URL.parse(data.url);
             var options ;
-            var proto = (uri.protocol == 'https:') ? proxyHttps : proxyHttp;
 
             if(uri.hostname === null || uri.hostname === undefined){
-
                 return;
             } else {
-
                 options = {
                     host: uri.hostname,
                     port: uri.port,
@@ -39,11 +36,13 @@ function proxy(config) {
                     headers: data.headers,
                     socksPort: data.socksPort
                 };
-            }
 
+            }
             debug('sending remote request: ', options);
-            try {
-                data.remoteRequest = proto.request(options, function (remoteResponse) {
+
+            var proto = (uri.protocol == 'https:') ? https : http;
+
+            data.remoteRequest = proto.request(options, function (remoteResponse) {
                     if (remoteResponse) {
                         data.remoteResponse = remoteResponse;
                         data.remoteResponse.on('error', next);
@@ -58,9 +57,7 @@ function proxy(config) {
                 // pass along POST data & let the remote server know when we're done sending data
                 data.stream.pipe(data.remoteRequest);
                 data.remoteRequest.end()
-            }catch(error){
-                console.log(error);
-            }
+
         }
 
     }

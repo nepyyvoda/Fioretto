@@ -105,7 +105,7 @@ function addProxySettings (request){
 
         request.socksPort = getPortByCountry("{}");
     }
-    request.url = url;
+    request.url = encodeURI(url);
     request.headers.connection = "keep-alive";
 
 }

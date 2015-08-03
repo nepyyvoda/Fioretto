@@ -31,10 +31,12 @@ function Unblocker(config) {
             'text/html',
             'application/xml+xhtml',
             'application/xhtml+xml',
-            'text/css',
-           'text/javascript',
-           'application/javascript',
-           'application/x-javascript'
+            'text/css'
+            /*,
+             'text/javascript',
+             'application/javascript',
+             'application/x-javascript'
+             */
         ]
     });
 
@@ -73,8 +75,8 @@ function Unblocker(config) {
             cookies.handleResponse,
             metaRobots
         ].concat(config.responseMiddleware, [
-            contentLength
-        ]);
+                contentLength
+            ]);
     }
 
     // todo: check if config.debug is enabled first
