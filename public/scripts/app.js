@@ -247,154 +247,247 @@ $(document).ready(function() {
     function resizeIframe(obj) {
         obj.style.height = obj.contentWindow.document.body.scrollHeight + 'px';
     }
+    function pushControlKeyEventChain(event) {
+        var keycode = (event.keyCode ? event.keyCode : event.which);
+        var pressed = '';
+        switch(keycode) {
+            case 8:
+                pressed = '{backspace}';
+                break;
+            case 9:
+                pressed = '{tab}';
+                break;
+            case 13:
+                pressed = '{enter}';
+                break;
+            case 37:
+                pressed = '{leftarrow}';
+                break;
+            case 39:
+                pressed = '{rightarrow}';
+                break;
+            case 46:
+                pressed = '{del}';
+                break;
+            default:
+                console.log('Unhandled '+ event.type, event);
+        }
+        if(pressed) {
+            pushEventChain(event, {
+                specSymbol: pressed
+            });
+        } else {
+            pushEventChain(event, {
+                keyCode: event.keyCode
+            });
+        }
+    }
+    function pushKeyEventChain(event) {
+        var pressed = String.fromCharCode(event.keyCode);
+        pushEventChain(event, {
+            data: pressed
+        });
+
+    }
+    function pushEventChain(event, param) {
+        param = param || {};
+        eventsChain.push($.extend(true, {
+            element: XPath(event.target),
+            action: event.type,
+            coordinates: {
+                pageX: event.pageX,
+                pageY: event.pageY
+            }
+        }, param));
+    }
     $('iframe').on('load', function(e) {
         $('#iframe-warning').openModal();
         resizeIframe($(e.currentTarget)[0]);
         $('#iframe-loader').addClass('hidden');
         $('#iframe-wrapper iframe').removeClass('hidden');
-        $('iframe').contents().find('body').on('contextmenu click dblclick keypress', function(e) {
-            xpath = XPath(e.target);
-            console.log("EVENT : ",e);
-
-            //?????? ???????: ?????????? ????? ?????? ?????????? ?????
-            if (captcha.working){
-
-                var element = $(e.target);
-                console.log("Coordinates : ", element.offset());
-                console.log("Size : ", element.height(), element.width());
-                console.log("TAG : ", element[0].tagName);
-
-                if(captcha.image){
-                    //Block bubbling event
-                    e.preventDefault();
-                    e.stopPropagation();
-
-                    if(element[0].tagName === 'IMG'){
-                        eventsChain.push({
-                            element: xpath,
-                            captcha: {type: 'img', position: element.offset(), size: {w: element.width(), h:element.height()}}
-                        });
-
-                        captcha.image = false;
-                        $('#captchaImage').trigger('statusChange', ['hasImg']);
-                    } else {
-                        alert('Sorry, but this is not image... Try again');
-                        return;
-                    }
-
-                }
-
-                if(captcha.input){
-
-                    if(element[0].tagName === 'INPUT'){
-                        eventsChain.push({
-                            element: xpath,
-                            captcha: {type: 'input'}
-                        });
-
-                        captcha.input = false;
-                        $('#captchaInput').addClass('disabled');
-                        $('#captchaInputStatus').addClass('hide');
-                        //???????? ????, ??? ???????? ?????? ?????? ? ??????
-                        captcha.working = false;
-                        $('#captchaActivate').trigger('click');
-
-                    } else {
-                        alert('Sorry, but this is not input... Try again');
-                        return;
-                    }
-                }
-            } else {
-                eventsChain.push({
-                    element: xpath,
-                    action: e.type
-                });
+        //$(window).on('scroll', function(e){
+        //    var pattern = new RegExp('[0-9]{0,}');
+        //    var windowOffset = parseInt( (pattern.exec($('#generator-panel').css('height')))[0] );
+        //    //eventsChain.push({
+        //    //    action: e.type,
+        //    //    scroll: $(window).scrollTop() - windowOffset
+        //    //});
+        //});
+        $('iframe').contents().find('body').on('contextmenu click dblclick paste keypress keydown keyup focus focusin focusout load', function(e) {
+            switch (e.type) {
+                case 'click':
+                    pushEventChain(e);
+                    break;
+                case 'dblclick':
+                    pushEventChain(e);
+                    break;
+                case 'paste':
+                    pushEventChain(e, {
+                        data: e.originalEvent.clipboardData.getData('Text')
+                    });
+                    break;
+                case 'keydown':
+                    pushControlKeyEventChain(e);
+                    break;
+                case 'keypress':
+                    console.log('keypress', e);
+                    pushKeyEventChain(e);
+                    break;
+                //case 'keyup':
+                //    pushKeyEventChain(e);
+                //    break;
+                case 'focus':
+                    pushEventChain(e);
+                    break;
+                case 'focusin':
+                    pushEventChain(e);
+                    break;
+                case 'focusout':
+                    pushEventChain(e);
+                    break;
+                default :
+                    console.log(e);
             }
 
-            $('body').append('<div class="qazwsxedcrfvtgb" style="position: absolute; border:1px solid black; left: ' + e.clientX + 'px; top: ' + parseInt(e.clientY + 165, 10) + 'px;">' + eventsChain.length + '</div>');
+            //console.log("EVENT : ",e);
+            //
+            ////?????? ???????: ?????????? ????? ?????? ?????????? ?????
+            //if (captcha.working){
+            //
+            //    var element = $(e.target);
+            //    console.log("Coordinates : ", element.offset());
+            //    console.log("Size : ", element.height(), element.width());
+            //    console.log("TAG : ", element[0].tagName);
+            //
+            //    if(captcha.image){
+            //        //Block bubbling event
+            //        e.preventDefault();
+            //        e.stopPropagation();
+            //
+            //        if(element[0].tagName === 'IMG'){
+            //            eventsChain.push({
+            //                element: xpath,
+            //                captcha: {type: 'img', position: element.offset(), size: {w: element.width(), h:element.height()}}
+            //            });
+            //
+            //            captcha.image = false;
+            //            $('#captchaImage').trigger('statusChange', ['hasImg']);
+            //        } else {
+            //            alert('Sorry, but this is not image... Try again');
+            //            return;
+            //        }
+            //
+            //    }
+            //
+            //    if(captcha.input){
+            //
+            //        if(element[0].tagName === 'INPUT'){
+            //            eventsChain.push({
+            //                element: xpath,
+            //                captcha: {type: 'input'}
+            //            });
+            //
+            //            captcha.input = false;
+            //            $('#captchaInput').addClass('disabled');
+            //            $('#captchaInputStatus').addClass('hide');
+            //            //???????? ????, ??? ???????? ?????? ?????? ? ??????
+            //            captcha.working = false;
+            //            $('#captchaActivate').trigger('click');
+            //
+            //        } else {
+            //            alert('Sorry, but this is not input... Try again');
+            //            return;
+            //        }
+            //    }
+            //} else {
+            //    eventsChain.push({
+            //        element: xpath,
+            //        action: e.type
+            //    });
+            //}
         });
     });
 
     //???? ???????????? ???????? ?????? ? ??????
-    $('#captchaActivate').on('click', function(e){
-
-        //????????? ?? ?????????? ?????? ?????? ?????
-        if($(this).hasClass('active')){
-
-            //??????? ????? ????????, ????, ??? ?????
-            if(captcha.working){
-                if (confirm('Are u really want abort build captcha scenario?') === true){
-                    console.log('Abort!');
-                    //Remove last CAPTCHA element from scenario
-                    if (eventsChain.length !== 0 && eventsChain[eventsChain.length - 1].captcha !== undefined && captcha.image){
-                        eventsChain.pop();
-                        console.log('Remove CAPTCHA object');
-                    } else {
-                        console.log('Error : Not Remove CAPTCHA object');
-                    }
-                    captcha.image = false;
-                    captcha.input = false;
-                    captcha.working = false;
-                    $('#captchaActivate').trigger('click');
-                }else{
-                    console.log('Continuous work');
-                    return;
-                }
-
-            } else {
-                $(this).removeClass('active');
-                //????????? ????????? ??????: ?????? ?????????? ?? ???? ??? ????????
-                $('#captchaImage').trigger('statusChange', ['disable']);
-                console.log("DISABLED");
-            }
-
-        } else {
-            $(this).addClass('active');
-            //???????? ????????? ?????? ?????? ??????????
-            $('#captchaImage').trigger('statusChange', ['enable']);
-            console.log("ENABLE");
-        }
-    });
-
-    $('#captchaImage').on('click', function(e){
-        //?????? ????? ??????. ??? ????????? ? ??? ?????? ?????? ?? ?????? - ???? ???????? ???????????? ??? ?????
-        $('#captchaImageStatus').removeClass('hide').text('Select image!');
-        captcha.working = true;
-        captcha.image = true;
-    });
-
-    //?????????. ?????? ??????????/?????????????? "???????" ????????
-    $('#captchaImage').on('statusChange', function(event, state){
-        console.log("HERE!", state);
-        switch (state){
-            case 'disable':
-                console.log("CaptchaImage : status disable");
-                $('#captchaImage').addClass('disabled');
-                $('#captchaImageStatus').addClass('hide');
-                $('#captchaInput').addClass('disabled');
-                $('#captchaInputStatus').addClass('hide');
-                break;
-            case 'enable':
-                console.log("CaptchaImage : status enable");
-                $('#captchaImage').removeClass('disabled');
-                break;
-            case 'hasImg':
-                console.log("CaptchaImage : status hasImg");
-                $('#captchaImageStatus').removeClass('hide').text('Image is selected!');
-                $('#captchaImageStatus').css('color', 'green');
-                $('#captchaImage').addClass('disabled');
-                $('#captchaInput').removeClass('disabled');
-                break;
-            default:
-                break;
-        }
-    });
-
-    $('#captchaInput').on('click', function(e){
-        //?????? ????? ??????. ??? ????????? ? ??? ?????? ?????? ?? ?????? - ???? ???????? ???????????? ??? ?????
-        $('#captchaInputStatus').removeClass('hide').text('Select input!');
-        captcha.input = true;
-    });
+    //$('#captchaActivate').on('click', function(e){
+    //
+    //    //????????? ?? ?????????? ?????? ?????? ?????
+    //    if($(this).hasClass('active')){
+    //
+    //        //??????? ????? ????????, ????, ??? ?????
+    //        if(captcha.working){
+    //            if (confirm('Are u really want abort build captcha scenario?') === true){
+    //                console.log('Abort!');
+    //                //Remove last CAPTCHA element from scenario
+    //                if (eventsChain.length !== 0 && eventsChain[eventsChain.length - 1].captcha !== undefined && captcha.image){
+    //                    eventsChain.pop();
+    //                    console.log('Remove CAPTCHA object');
+    //                } else {
+    //                    console.log('Error : Not Remove CAPTCHA object');
+    //                }
+    //                captcha.image = false;
+    //                captcha.input = false;
+    //                captcha.working = false;
+    //                $('#captchaActivate').trigger('click');
+    //            }else{
+    //                console.log('Continuous work');
+    //                return;
+    //            }
+    //
+    //        } else {
+    //            $(this).removeClass('active');
+    //            //????????? ????????? ??????: ?????? ?????????? ?? ???? ??? ????????
+    //            $('#captchaImage').trigger('statusChange', ['disable']);
+    //            console.log("DISABLED");
+    //        }
+    //
+    //    } else {
+    //        $(this).addClass('active');
+    //        //???????? ????????? ?????? ?????? ??????????
+    //        $('#captchaImage').trigger('statusChange', ['enable']);
+    //        console.log("ENABLE");
+    //    }
+    //});
+    //
+    //$('#captchaImage').on('click', function(e){
+    //    //?????? ????? ??????. ??? ????????? ? ??? ?????? ?????? ?? ?????? - ???? ???????? ???????????? ??? ?????
+    //    $('#captchaImageStatus').removeClass('hide').text('Select image!');
+    //    captcha.working = true;
+    //    captcha.image = true;
+    //});
+    //
+    ////?????????. ?????? ??????????/?????????????? "???????" ????????
+    //$('#captchaImage').on('statusChange', function(event, state){
+    //    console.log("HERE!", state);
+    //    switch (state){
+    //        case 'disable':
+    //            console.log("CaptchaImage : status disable");
+    //            $('#captchaImage').addClass('disabled');
+    //            $('#captchaImageStatus').addClass('hide');
+    //            $('#captchaInput').addClass('disabled');
+    //            $('#captchaInputStatus').addClass('hide');
+    //            break;
+    //        case 'enable':
+    //            console.log("CaptchaImage : status enable");
+    //            $('#captchaImage').removeClass('disabled');
+    //            break;
+    //        case 'hasImg':
+    //            console.log("CaptchaImage : status hasImg");
+    //            $('#captchaImageStatus').removeClass('hide').text('Image is selected!');
+    //            $('#captchaImageStatus').css('color', 'green');
+    //            $('#captchaImage').addClass('disabled');
+    //            $('#captchaInput').removeClass('disabled');
+    //            break;
+    //        default:
+    //            break;
+    //    }
+    //});
+    //
+    //$('#captchaInput').on('click', function(e){
+    //    //?????? ????? ??????. ??? ????????? ? ??? ?????? ?????? ?? ?????? - ???? ???????? ???????????? ??? ?????
+    //    $('#captchaInputStatus').removeClass('hide').text('Select input!');
+    //    captcha.input = true;
+    //});
 
 });
 
