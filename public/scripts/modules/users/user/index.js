@@ -3,7 +3,7 @@
  */
 "use strict";
 define(['jquery', 'knockout', 'libs/jquery.cookie', 'libs/sha256'], function($, ko, cookie, CryptoJS) {
-    function UserModel() {
+    return function () {
         var self = this;
         self.id = ko.observable();
         self.balance = ko.observable();
@@ -76,5 +76,4 @@ define(['jquery', 'knockout', 'libs/jquery.cookie', 'libs/sha256'], function($, 
             return false;
         }
     };
-    return UserModel;
 });

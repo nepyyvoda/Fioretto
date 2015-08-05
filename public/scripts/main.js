@@ -29,7 +29,7 @@ require([
         }
     }
     page('/login', function() {
-        require(['modules/user/index'], function(UserModel) {
+        require(['modules/users/user/index'], function(UserModel) {
             try {
                 ko.applyBindings(new UserModel(), $('#login')[0]);
             } catch(e) {
