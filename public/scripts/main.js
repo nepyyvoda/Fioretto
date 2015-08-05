@@ -7,9 +7,8 @@ require([
     'knockout',
     'require',
     'libs/bootstrap.min',
-    'libs/materialize.min',
     'libs/page'
-], function ($, ko, require, bootstrap, materialize, page) {
+], function ($, ko, require, bootstrap, page) {
     function activateViewModel(context, model) {
         if(Array.isArray(context)) {
             for(var iterator in context) {
@@ -30,8 +29,18 @@ require([
         }
     }
     page('/login', function() {
-        //user require('...') to use module
-        //activateViewModel([$('#login')[0], $('#profile-form')[0]], new UserModel());
+        require(['modules/user/index'], function(UserModel) {
+            try {
+                ko.applyBindings(new UserModel(), $('#login')[0]);
+            } catch(e) {
+                console.log('err');
+            }
+        });
+        //require(['modules/user/index'], function(UserModel) {
+        //    console.log('user model')
+        //    var CurrentUser = new UserModel();
+        //    //activateViewModel([$('#login')[0], $('#profile-form')[0]], CurrentUser);
+        //});
     });
     page.start();
     //page('/user/:user', show)

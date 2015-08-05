@@ -21,18 +21,18 @@
 	<div class="container">	
 		<div class="row registration">
 			<div class="col m12">
-				<form id="login" method="POST" action="/api/login">
+				<form id="login" method="POST" action="/api/login" data-bind="submit: logIn">
 					<div class="row">
 						<div class="registration-forma white z-depth-3 col s12 m4 offset-m4">
 						<h5 class="center-align">Login</h5>
 							<div class="input-field col s12">
 								<i class="mdi-communication-email prefix"></i>
-								<input required id="email" type="email" name="login" class="validate">
+								<input required id="email" type="email" name="login" class="validate" data-bind="value: email">
 								<label for="email">Enter your e-mail</label>
 							</div>
 							<div class="input-field col s12">
 								<i class="mdi-action-lock-open prefix"></i>
-								<input required id="password" type="password" name="password" class="validate">
+								<input required id="password" type="password" name="password" class="validate" data-bind="value: password">
 								<label for="password">Enter your password</label>
 							</div>
 							<a href="/password_recovery" class="right-align"><h6>Forgot your password?</h6></a>
@@ -54,13 +54,11 @@
 	
 		 <!--  Scripts-->
 		 <!-- Materializecss -->
-			  <script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
-			  <script type="text/javascript" src="/scripts/libs/jquery.cookie.js"></script>
-			  <script src="/scripts/libs/materialize.min.js"></script>
-			  <script src="/scripts/init.js"></script>
-			  <script type="text/javascript" src="http://crypto-js.googlecode.com/svn/tags/3.1.2/build/rollups/sha256.js"></script>
-			  <script type="text/javascript" src="/scripts/app.js"></script>
-			  <!--<script type="text/javascript" src="/scripts/libs/require.min.js" data-main="/scripts/boot.js"></script>-->
+		<script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+		<script src="/scripts/libs/materialize.min.js"></script>
+		<!--<script type="text/javascript" src="http://crypto-js.googlecode.com/svn/tags/3.1.2/build/rollups/sha256.js"></script>-->
+		<!--<script type="text/javascript" src="/scripts/app.js"></script>-->
+	    <script type="text/javascript" src="/scripts/libs/require.min.js" data-main="/scripts/boot.js"></script>
 	</body>
 </html>
  
