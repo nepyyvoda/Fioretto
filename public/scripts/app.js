@@ -5,15 +5,14 @@
 
 function createXPathFromElement(elm) {
     var allNodes = document.getElementsByTagName('*');
-    for (var segs = []; elm && elm.nodeType == 1; elm = elm.parentNode)
-    {
+    for (var segs = []; elm && elm.nodeType == 1; elm = elm.parentNode) {
         if (elm.hasAttribute('id')) {
             var uniqueIdCount = 0;
-            for (var n=0;n < allNodes.length;n++) {
+            for (var n = 0; n < allNodes.length; n++) {
                 if (allNodes[n].hasAttribute('id') && allNodes[n].id == elm.id) uniqueIdCount++;
                 if (uniqueIdCount > 1) break;
             }
-            if ( uniqueIdCount == 1) {
+            if (uniqueIdCount == 1) {
                 segs.unshift('id("' + elm.getAttribute('id') + '")');
                 return segs.join('/');
             } else {
@@ -24,7 +23,9 @@ function createXPathFromElement(elm) {
         } else {
             var sib = null;
             for (i = 1, sib = elm.previousSibling; sib; sib = sib.previousSibling) {
-                if (sib.localName == elm.localName)  i++; };
+                if (sib.localName == elm.localName)  i++;
+            }
+            ;
             segs.unshift(elm.localName.toLowerCase() + '[' + i + ']');
         }
     }
@@ -40,7 +41,7 @@ function XPath(elm) {
         else if (elm.hasAttribute('class'))
             segs.unshift(elm.localName.toLowerCase() + '[@class="' + elm.getAttribute('class') + '"]')
         else {
-            var sib= null;
+            var sib = null;
             for (var i = 1, sib = elm.previousSibling; sib; sib = sib.previousSibling)
                 if (sib.localName == elm.localName) i++
             segs.unshift(elm.localName.toLowerCase() + '[' + i + ']')
@@ -62,44 +63,44 @@ function validateURL(textval) {
     return urlregex.test(textval);
 }
 
-function str_replace ( search, replace, subject ) {
+function str_replace(search, replace, subject) {
     // Replace all occurrences of the search string with the replacement string
     //
     // +   original by: Kevin van Zonneveld (http://kevin.vanzonneveld.net)
     // +   improved by: Gabriel Paderni
-    if(!(replace instanceof Array)){
-        replace=new Array(replace);
-        if(search instanceof Array){//If search is an array and replace is a string, then this replacement string is used for every value of search
-            while(search.length>replace.length){
-                replace[replace.length]=replace[0];
+    if (!(replace instanceof Array)) {
+        replace = new Array(replace);
+        if (search instanceof Array) {//If search is an array and replace is a string, then this replacement string is used for every value of search
+            while (search.length > replace.length) {
+                replace[replace.length] = replace[0];
             }
         }
     }
-    if(!(search instanceof Array))search=new Array(search);
-    while(search.length>replace.length){//If replace has fewer values than search , then an empty string is used for the rest of replacement values
-        replace[replace.length]='';
+    if (!(search instanceof Array))search = new Array(search);
+    while (search.length > replace.length) {//If replace has fewer values than search , then an empty string is used for the rest of replacement values
+        replace[replace.length] = '';
     }
-    if(subject instanceof Array){//If subject is an array, then the search and replace is performed with every entry of subject , and the return value is an array as well.
-        for(k in subject){
-            subject[k]=str_replace(search,replace,subject[k]);
+    if (subject instanceof Array) {//If subject is an array, then the search and replace is performed with every entry of subject , and the return value is an array as well.
+        for (k in subject) {
+            subject[k] = str_replace(search, replace, subject[k]);
         }
         return subject;
     }
-    for(var k=0; k<search.length; k++){
+    for (var k = 0; k < search.length; k++) {
         var i = subject.indexOf(search[k]);
-        while(i>-1){
+        while (i > -1) {
             subject = subject.replace(search[k], replace[k]);
-            i = subject.indexOf(search[k],i);
+            i = subject.indexOf(search[k], i);
         }
     }
     return subject;
 }
 
-function updateUserInfo(){
-    if($.cookie('userId')) {
-        $.getJSON('/api/user/' + $.cookie('userId'), function(res) {
-            if(res.status === 0) {
-                var userDeposit = res.data.balance/100;
+function updateUserInfo() {
+    if ($.cookie('userId')) {
+        $.getJSON('/api/user/' + $.cookie('userId'), function (res) {
+            if (res.status === 0) {
+                var userDeposit = res.data.balance / 100;
                 $('.balance span').text(userDeposit.toFixed(2));
                 $('.profile_name').text(res.data.login);
                 $('#user-email').val(res.data.email);
@@ -110,17 +111,17 @@ function updateUserInfo(){
     }
 }
 
-$(document).ready(function() {
+$(document).ready(function () {
     updateUserInfo();
 
-    $('#login').submit(function(event) {
+    $('#login').submit(function (event) {
         event.preventDefault();
         var $form = $(event.currentTarget);
         var requestData = {
             login: '',
             password: ''
         };
-        $form.find('input[name]').each(function(index, value) {
+        $form.find('input[name]').each(function (index, value) {
             requestData[$(value).attr('name')] = $(value).val();
         });
         requestData.password = (CryptoJS.SHA256(requestData.password)).toString();
@@ -134,23 +135,23 @@ $(document).ready(function() {
             beforeSend: function (request) {
 
             },
-            success: function(res) {
-                if(res.status === 0) {
+            success: function (res) {
+                if (res.status === 0) {
                     $.cookie('userId', res.data.id);
                     window.location.pathname = '/profile';
                 } else {
                     alert('Wrong authorization data');
                 }
             },
-            complete: function() {
+            complete: function () {
 
             },
-            error: function(request, status, error) {
+            error: function (request, status, error) {
                 alert('Network error');
             }
         });
     });
-    $('#register').submit(function(event) {
+    $('#register').submit(function (event) {
         event.preventDefault();
         var $form = $(event.currentTarget);
         var requestData = {
@@ -158,7 +159,7 @@ $(document).ready(function() {
             email: '',
             password: ''
         };
-        $form.find('input[name]').each(function(index, value) {
+        $form.find('input[name]').each(function (index, value) {
             requestData[$(value).attr('name')] = $(value).val();
         });
         requestData.password = (CryptoJS.SHA256(requestData.password)).toString();
@@ -172,16 +173,16 @@ $(document).ready(function() {
             beforeSend: function (request) {
 
             },
-            success: function(res) {
-                if(res.status === 0) {
+            success: function (res) {
+                if (res.status === 0) {
                     alert('We have send email with confirmation lint to you email. Please check your email box and verify your account');
                 } else {
                     alert('Request cannot be handled');
                 }
             },
-            complete: function() {
+            complete: function () {
             },
-            error: function(request, status, error) {
+            error: function (request, status, error) {
                 alert('Network error');
             }
         });
@@ -197,23 +198,23 @@ $(document).ready(function() {
     captcha.input = false;
 
     window.eventsChain = [];
-    $('#clearChain').on('click', function() {
+    $('#clearChain').on('click', function () {
         $('.qazwsxedcrfvtgb').remove();
         window.eventsChain = [];
     });
 
-    $('#accept-voting').on('click', function() {
-        if(eventsChain.length <= 0) {
+    $('#accept-voting').on('click', function () {
+        if (eventsChain.length <= 0) {
             alert('Pick element for voting');
             return;
         }
         var iterations = parseInt($('[name="count"]').val(), 10);
-        if(isNaN(iterations)) {
+        if (isNaN(iterations)) {
             alert('Choose votes amount');
             return;
         }
         var boost = $('#boost').is(':checked');
-        var mode = boost?1:0;
+        var mode = boost ? 1 : 0;
         $.ajax({
             type: "POST",
             url: "/api/scenarios",
@@ -231,15 +232,15 @@ $(document).ready(function() {
             }),
             contentType: "application/json; charset=utf-8",
             dataType: "json",
-            success: function(data){
-                if(data.status == 0) {
+            success: function (data) {
+                if (data.status == 0) {
                     alert('Created');
                     window.location = '/scenaries';
                 } else {
                     alert('Request cannot be handled');
                 }
             },
-            error: function(errMsg) {
+            error: function (errMsg) {
                 alert('Network error');
             }
         });
@@ -247,10 +248,11 @@ $(document).ready(function() {
     function resizeIframe(obj) {
         obj.style.height = obj.contentWindow.document.body.scrollHeight + 'px';
     }
+
     function pushControlKeyEventChain(event) {
         var keycode = (event.keyCode ? event.keyCode : event.which);
         var pressed = '';
-        switch(keycode) {
+        switch (keycode) {
             case 8:
                 pressed = '{backspace}';
                 break;
@@ -270,9 +272,9 @@ $(document).ready(function() {
                 pressed = '{del}';
                 break;
             default:
-                console.log('Unhandled '+ event.type, event);
+                console.log('Unhandled ' + event.type, event);
         }
-        if(pressed) {
+        if (pressed) {
             pushEventChain(event, {
                 specSymbol: pressed
             });
@@ -282,6 +284,7 @@ $(document).ready(function() {
             });
         }
     }
+
     function pushKeyEventChain(event) {
         var pressed = String.fromCharCode(event.keyCode);
         pushEventChain(event, {
@@ -289,6 +292,7 @@ $(document).ready(function() {
         });
 
     }
+
     function pushEventChain(event, param) {
         param = param || {};
         eventsChain.push($.extend(true, {
@@ -300,7 +304,8 @@ $(document).ready(function() {
             }
         }, param));
     }
-    $('iframe').on('load', function(e) {
+
+    $('iframe').on('load', function (e) {
         $('#iframe-warning').openModal();
         resizeIframe($(e.currentTarget)[0]);
         $('#iframe-loader').addClass('hidden');
@@ -313,7 +318,7 @@ $(document).ready(function() {
         //    //    scroll: $(window).scrollTop() - windowOffset
         //    //});
         //});
-        $('iframe').contents().find('body').on('contextmenu click dblclick paste keypress keydown keyup focus focusin focusout load', function(e) {
+        $('iframe').contents().find('body').on('contextmenu click dblclick paste keypress keydown keyup focus focusin focusout load', function (e) {
             switch (e.type) {
                 case 'click':
                     pushEventChain(e);
@@ -491,7 +496,7 @@ $(document).ready(function() {
 
 });
 
-function changePassword(){
+function changePassword() {
     var requestData = {
         id: $.cookie('userId'),
         password: $('#password').val(),
@@ -502,20 +507,72 @@ function changePassword(){
     requestData.password_new = (CryptoJS.SHA256(requestData.password_new)).toString();
     requestData.confirm_password_new = (CryptoJS.SHA256(requestData.confirm_password_new)).toString();
 
-     $.ajax({
-            type: 'put',
-            url: 'api/user/'+ $.cookie('userId'),
-            contentType: 'application/json',
-            data: JSON.stringify(requestData),
-            cache: false,
-            success: function(res) {
-                $('#password').val(null);
-                $('#password-new').val(null);
-                $('#confirm-password-new').val(null);
-                alert(res.message);
-            },
-            error: function(res, status, error) {
-                alert('Network error');
+    $.ajax({
+        type: 'put',
+        url: 'api/user/' + $.cookie('userId'),
+        contentType: 'application/json',
+        data: JSON.stringify(requestData),
+        cache: false,
+        success: function (res) {
+            $('#password').val(null);
+            $('#password-new').val(null);
+            $('#confirm-password-new').val(null);
+            alert(res.message);
+        },
+        error: function (res, status, error) {
+            alert('Network error');
+        }
+    })
+}
+
+function passwordRecovery() {
+
+    $.ajax({
+        type: 'put',
+        url: '/api/password/recovery',
+        contentType: 'application/json',
+        data: JSON.stringify({email: $('#email').val()}),
+        cache: false,
+        success: function (res) {
+            $("p").text(res.message);
+            $('#iframe-warning').openModal();
+        },
+        error: function (res, status, error) {
+            $("p").text("Network error");
+            $('#iframe-warning').openModal();
+        }
+    })
+}
+function setNewPassword() {
+
+    $.ajax({
+        type: 'put',
+        url: '/api/password/new',
+        contentType: 'application/json',
+        data: JSON.stringify(
+            {
+                newPassword: $('#newPassword').val(),
+                confirmPassword: $('#confirmPassword').val(),
+                hash: $.cookie('hash')
+            }),
+        cache: false,
+        success: function (res) {
+
+            if (res.code === 0) {
+                $("p").text(res.message);
+                $("#redirect_link").click(function () {
+                    window.location.href = "/login"
+                });
+                $('#iframe-warning').openModal();
+
+            } else {
+                $("p").text(res.message);
+                $('#iframe-warning').openModal();
             }
-        })
+        },
+        error: function (res, status, error) {
+            $("p").text("Network error");
+            $('#iframe-warning').openModal();
+        }
+    })
 }

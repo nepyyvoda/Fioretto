@@ -92,7 +92,6 @@ router.get('/login', function (req, res) {
         }
     });
 });
-
 router.get('/password_recovery', function (req, res) {
     isLogged(req.cookies.sid, function (state) {
         if (state === true) {
@@ -102,9 +101,10 @@ router.get('/password_recovery', function (req, res) {
         }
     });
 });
-
-router.get('/new_pass', function (req, res) {
+router.get('/new_pass/:hash', function (req, res) {
+    res.cookie( 'hash', req.params.hash);
     res.render('index/new_pass', {title: 'New password', layout: false, name: req.path});
+    res.end();
 });
 router.get('/social_networks', function (req, res) {
     res.render('index/social_networks', {title: 'Social networks', layout: false, name: req.path});

@@ -91,6 +91,14 @@ router.put('/user/:id', checkAuth, checkPermission, function(req, res) {
     User.update(req, res);
 });
 
+router.put('/password/recovery', function(req,res){
+    User.passwordRecovery(req, res);
+});
+
+router.put('/password/new', function(req,res){
+    User.newPassword(req, res);
+});
+
 router.get('/user/:id/payments/', checkAuth, function(req, res){
     Payments.history(req, res);
 });

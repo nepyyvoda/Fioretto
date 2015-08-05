@@ -60,6 +60,17 @@ function activateUser(email, callback) {
     });
 }
 
+function checkUserExists(email, callback) {
+    execute('SELECT * FROM users WHERE `email` = ?', [email], function(err, data) {
+        var queryData = data || [];
+        if(queryData.length > 0) {
+            callback(false, queryData);
+        } else{
+            callback(true, 'USER_NOT_FOUND')
+        }
+    });
+}
+
 function deactivateUser(email, callback) {
     execute('UPDATE users SET (`active` = 0) WHERE `email` = ?', [email], function(err, data) {
         var queryData = data || [];
@@ -108,6 +119,17 @@ function getPassword(id, callback) {
     });
 }
 
+function updatePassword(email, password, callback){
+    execute('UPDATE users SET password = ? WHERE email =  ?', [password, email], function(err, data){
+        if(!err){
+            callback (false, data);
+
+        } else {
+            callback (true, data);
+        }
+    });
+}
+
 function get(obj, callback) {
     execute('SELECT * FROM users WHERE `id` = ?', [obj.id], function(err, data){
         if(data.length > 0){
@@ -123,6 +145,8 @@ module.exports.login = login;
 module.exports.activateUser = activateUser;
 module.exports.deactivateUser = deactivateUser;
 module.exports.remove = remove;
+module.exports.updatePassword = updatePassword;
+module.exports.checkUserExists = checkUserExists;
 module.exports.update = update;
 module.exports.getPassword = getPassword;
 module.exports.get = get;

@@ -47,6 +47,7 @@
     "request": "^2.55.0",
     "serve-favicon": "^2.2.0",
     "set-cookie-parser": "^1.0.1",
+    "sha256": "^0.2.0",
     "socks-wrapper": "^0.1.0",
     "socks5-http-client": "~1.0.1",
     "socks5-https-client": "~1.1.1",
