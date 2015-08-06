@@ -21,7 +21,8 @@ function login(req, res) {
             login: data[0].login,
             password: data[0].password,
             email: data[0].email,
-            id: data[0].id
+            id: data[0].id,
+            role: data[0].usersRoleID
         };
         var token = jwt.sign(profile, 'secret', {expiresInMinutes: 60 * 5});
         res.cookie('sid', token, {httpOnly: true});

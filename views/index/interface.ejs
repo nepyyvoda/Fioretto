@@ -8,41 +8,6 @@
             window.open( 'vpn/' + document.getElementById("search").value + document.getElementById("country").value);
 
         }
-
-		function getFlashVersion() {
-			// ie
-			try {
-				try {
-					// avoid fp6 minor version lookup issues
-					// see: http://blog.deconcept.com/2006/01/11/getvariable-setvariable-crash-internet-explorer-flash-6/
-					var axo = new ActiveXObject('ShockwaveFlash.ShockwaveFlash.6');
-					try {
-						axo.AllowScriptAccess = 'always';
-					}
-					catch(e) {
-						return '6,0,0';
-					}
-				}
-				catch(e) {}
-				return new ActiveXObject('ShockwaveFlash.ShockwaveFlash').GetVariable('$version').replace(/\D+/g, ',').match(/^,?(.+),?$/)[1];
-			}
-				// other browsers
-			catch(e) {
-				try {
-					if (navigator.mimeTypes["application/x-shockwave-flash"].enabledPlugin) {
-						return (navigator.plugins["Shockwave Flash 2.0"] || navigator.plugins["Shockwave Flash"]).description.replace(/\D+/g, ",").match(/^,?(.+),?$/)[1];
-					}
-				}
-				catch(e) {}
-			}
-			return false;
-
-		}
-
-		if( getFlashVersion()){
-			alert ("Please turn off the flash to ensure anonymity");
-		}
-
     </script>
 	<div class="row search_line">
 		<div class="col s12 m12">
@@ -117,10 +82,22 @@
                     <h6 class="white-text">You hasn't available this service. But u can buy them!</h6>
                     <a class="waves-effect waves-light btn blue-grey white-text" href="/pay">Buy service $</a>
                 </div>
-
+				<div id="iframe-warning" class="modal">
+					<div class="modal-content">
+						<h4>Warning</h4>
+						<p>Please turn off the flash to ensure anonymity.</p>
+					</div>
+					<div class="modal-footer">
+						<a id = "redirect_link" href="#!" class="modal-action modal-close waves-effect waves-green btn-flat ">Ok</a>
+					</div>
+				</div>
 
             </div>
 		</div>
+		<script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+		<script type="text/javascript" src="/scripts/libs/jquery.cookie.js"></script>
+		<script src="/scripts/libs/materialize.min.js"></script>
+		<script src="/scripts/init.js"></script>
 
 	</div>
 </div>
