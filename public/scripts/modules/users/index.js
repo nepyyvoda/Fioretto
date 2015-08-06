@@ -5,6 +5,9 @@ define(['jquery', 'knockout', './user/index'], function($, ko, UsrModel) {
     return function () {
         var self = this;
         self.users = ko.observableArray([]);
+        self.isLoading = ko.observable(false);
+        self.isError = ko.observable(false);
+        self.errorText = ko.observable(false);
         self.getUsers = function() {
             //get all users
         };

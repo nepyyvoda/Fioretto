@@ -13,6 +13,8 @@ define(['jquery', 'knockout', 'libs/jquery.cookie', 'libs/sha256'], function($, 
         self.passwordNew = ko.observable();
         self.passwordNewConfirm = ko.observable();
         self.isLoading = ko.observable(false);
+        self.isError = ko.observable(false);
+        self.errorText = ko.observable(false);
         self.passwordHash = ko.computed(function() {
             return (CryptoJS.SHA256(self.password())).toString();
         });

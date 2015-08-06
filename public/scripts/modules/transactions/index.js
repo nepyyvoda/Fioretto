@@ -9,6 +9,9 @@ define(['jquery', 'knockout', 'transaction/index'], function($, ko, TransactionM
         self.limit = ko.observable();
         self.from = ko.observable();
         self.to = ko.observable();
+        self.isLoading = ko.observable(false);
+        self.isError = ko.observable(false);
+        self.errorText = ko.observable(false);
         self.getList = function() {
 
         }

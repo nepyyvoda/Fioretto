@@ -9,6 +9,9 @@ require.config({
             deps: ['jquery'],
             exports: 'CryptoJS'
         },
+        'libs/jquery.cookie': {
+            deps: ['jquery']
+        },
         'libs/bootstrap.min': {
             deps: ['jquery']
         },

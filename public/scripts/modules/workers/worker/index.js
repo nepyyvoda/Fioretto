@@ -1,40 +1,28 @@
 /**
- * Created by anton.nepyyvoda on 05.08.2015.
+ * Created by anton.nepyyvoda on 06.08.2015.
  */
 define(['jquery', 'knockout'], function($, ko) {
     return function () {
         var self = this;
         self.id = ko.observable();
         self.name = ko.observable();
-        self.iterations = ko.observable();
-        self.script = ko.observable();
-        self.url = ko.observable();
-        self.mode = ko.observable();
-        self.resolution = ko.observable();
+        self.host = ko.observable();
+        self.port = ko.observable();
         self.status = ko.observable();
-
+        /*
+        * stack - array of scenarios
+        * */
+        self.stack = ko.observableArray();
         self.isLoading = ko.observable(false);
         self.isError = ko.observable(false);
-        self.errorText = ko.observable();
-        self.save = function(callback) {
-            var url = '/api/scenarios/create';
-            var method = 'POST';
-            if(self.id()) {
-                url = '/api/scenarios/' + self.id();
-                method = 'PUT';
-            }
+        self.errorText = ko.observable(false);
+        self.update = function(callback) {
             $.ajax({
-                type: method,
-                url: url,
+                type: 'PUT',
+                url: '/api/workers/' + self.id(),
                 contentType: 'application/json',
                 data: JSON.stringify({
-                    name: self.name(),
-                    iterations: self.iterations(),
-                    script: self.script(),
-                    url: self.url(),
-                    mode: self.mode(),
-                    resolution: self.resolution(),
-                    status: self.status()
+
                 }),
                 dataType: 'json',
                 cache: false,
@@ -70,12 +58,8 @@ define(['jquery', 'knockout'], function($, ko) {
                 }
             });
         };
-        self.remove = function() {
+        self.getInfo = function() {
 
-        };
-        self.activate = function() {
-
-        };
-
+        }
     };
 });
