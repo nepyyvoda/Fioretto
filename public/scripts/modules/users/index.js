@@ -22,6 +22,9 @@ define(['jquery', 'knockout', './user/index'], function($, ko, UsrModel) {
         };
         self.sendEmail = function() {
 
+        };
+        self.search = function() {
+
         }
     };
 });

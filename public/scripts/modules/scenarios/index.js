@@ -23,6 +23,9 @@ define(['jquery', 'knockout', './scenario/index', 'libs/jquery.cookie'], functio
                     //self.errorText('Network Error');
                 }
             });
+        };
+        self.search = function() {
+
         }
     };
 });
