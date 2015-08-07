@@ -11,17 +11,8 @@ var Services = require('../../controllers/services');
 var MasterCard = require('../../controllers/mastercard');
 var Tariffs = require('../../controllers/tariffs');
 
-var userAvailablePages = [
-    new RegExp("\/user\/[^/]*", "gmi"),
-    new RegExp("\/scenarios\/[^/]*", "gmi"),
-    new RegExp("\/services\/[^/]*", "gmi"),
-    new RegExp("\/payment\/[^/]*", "gmi")
-];
-var adminAvailablePages = [
-    new RegExp("\/user\/[^/]*", "gmi"),
-    new RegExp("\/scenarios\/[^/]*", "gmi"),
-    new RegExp("\/services\/[^/]*", "gmi"),
-    new RegExp("\/payment\/[^/]*", "gmi")
+var userUnavailableRouters = [
+    new RegExp("\/admin(\/)?[^]*", "gmi")
 ];
 
 
@@ -58,23 +49,20 @@ function checkUserRole(req, res, next) {
     jwt.verify(token, 'secret', function (err, decoded) {
 
         if (err || !decoded) {
-            res.cookie('sid', '', {httpOnly: true});
-            res.sendStatus(403)
+            //TODO: change 404 to 403
+            res.render('404', {title: 'Not Found', layout: false});
         } else {
-            var availablePages;
-            var isAllowed = false;
-            if (decoded.role === 1) {
-                availablePages = adminAvailablePages;
-            } else {
-                availablePages = userAvailablePages;
+            var isAllowed = true;
+            if (decoded.role !== 1) {
+                userUnavailableRouters.forEach(function (data) {
+                    if (path.match(data)) {
+                        isAllowed = false;
+                    }
+                });
             }
-            availablePages.forEach(function (data) {
-                if (path.match(data)) {
-                    isAllowed = true;
-                }
-            });
             if (!isAllowed) {
-                res.sendStatus(403);
+                //TODO: change 404 to 403
+                res.render('404', {title: 'Not Found', layout: false});
                 return;
             }
         }
@@ -170,45 +158,24 @@ router.post('/payment/mastercard', checkAuth, checkUserRole, function (req, res)
     MasterCard.mc_pay_processor(req, res);
 });
 
-//Admin router  s
+//Admin router
 
-//router.post('/admin/tariffs', checkAuth, checkUserRole, function (req, res) {
-//    Tariffs.create(req, res);
-//});
-//router.get('/admin/tariffs', checkAuth, checkUserRole, function (req, res) {
-//    Tariffs.getAll(req, res);
-//});
-//
-//router.get('/admin/tariffs/:key', checkAuth, checkUserRole, function (req, res) {
-//    Tariffs.getByKey(req, res);
-//});
-//
-//router.put('/admin/tariffs', checkAuth, checkUserRole, function (req, res) {
-//    Tariffs.update(req, res);
-//});
-//
-//router.delete('/admin/tariffs/:name', checkAuth, checkUserRole, function (req, res) {
-//    Tariffs.remove(req, res);
-//});
-
-//for testing without check auth and check role
-
-router.post('/admin/tariffs', function (req, res) {
+router.post('/admin/tariffs', checkAuth, checkUserRole, function (req, res) {
     Tariffs.create(req, res);
 });
-router.get('/admin/tariffs', function (req, res) {
+router.get('/admin/tariffs', checkAuth, checkUserRole, function (req, res) {
     Tariffs.getAll(req, res);
 });
 
-router.get('/admin/tariffs/:key' , function (req, res) {
+router.get('/admin/tariffs/:key', checkAuth, checkUserRole, function (req, res) {
     Tariffs.getByKey(req, res);
 });
 
-router.put('/admin/tariffs', function (req, res) {
+router.put('/admin/tariffs', checkAuth, checkUserRole, function (req, res) {
     Tariffs.update(req, res);
 });
 
-router.delete('/admin/tariffs/:name', function (req, res) {
+router.delete('/admin/tariffs/:name', checkAuth, checkUserRole, function (req, res) {
     Tariffs.remove(req, res);
 });
 

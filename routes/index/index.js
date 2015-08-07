@@ -15,35 +15,8 @@ var timeout = require('connect-timeout');
 
 var timeoutTime = config.get('vpn:timeout');
 
-var userAvailablePages = [
-    '/profile',
-    '/pay_methods',
-    '/social_networks',
-    '/interface',
-    '/client_payment',
-    '/logout',
-    '/subscription',
-    '/pay/ipn',
-    '/scenaries',
-    '/vpn/',
-    '/scenario-manager/',
-    '/scenario/creating'
-];
-var adminAvailablePages = [
-    '/profile',
-    '/pay_methods',
-    '/social_networks',
-    '/interface',
-    '/client_payment',
-    '/logout',
-    '/subscription',
-    '/pay/ipn',
-    '/scenaries',
-    '/vpn/',
-    '/scenario-manager/',
-    '/scenario/creating',
-    '/admin/payments',
-    '/admin/tariffs'
+var userUnavailablePages = [
+    new RegExp("\/admin(\/)?[^]*", "gmi")
 ];
 
 function isLogged(sid, callback) {
@@ -70,26 +43,32 @@ function checkAuth(req, res, next) {
 }
 
 function checkPermission(req, res, next) {
+
     var token = req.cookies.sid;
+    var path = req.path.toString();
+
     jwt.verify(token, 'secret', function (err, decoded) {
         if (err || !decoded) {
-            res.cookie('sid', '', {httpOnly: true});
+            //TODO: change 404 to 403
+            res.render('404', {title: 'Not Found', layout: false});
         } else {
             req.role = decoded.role;
-            var availablePages;
-            if (decoded.role === 1) {
-                availablePages = adminAvailablePages;
 
-            } else {
-                availablePages = userAvailablePages;
+            var isAllowed = true;
+            if (decoded.role !== 1) {
+                userUnavailablePages.forEach(function (data) {
+                    if (path.match(data)) {
+                        isAllowed = false;
+                    }
+                });
             }
-            if (availablePages.indexOf(req.path) < 0) {
-                res.cookie('sid', '', {httpOnly: true});
+            if (!isAllowed) {
+                //TODO: change 404 to 403
                 res.render('404', {title: 'Not Found', layout: false});
-            } else {
-                next()
+                return;
             }
         }
+        next();
     });
 }
 function checkAvailableServiceBrowser(req, res, next) {
