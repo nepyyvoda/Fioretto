@@ -9,6 +9,7 @@ var Scenarios = require('../../controllers/scenarios');
 var Payments = require('../../controllers/payments');
 var Services = require('../../controllers/services');
 var MasterCard = require('../../controllers/mastercard');
+var Tariffs = require('../../controllers/tariffs');
 
 var userAvailablePages = [
     new RegExp("\/user\/[^/]*", "gmi"),
@@ -62,7 +63,7 @@ function checkUserRole(req, res, next) {
         } else {
             var availablePages;
             var isAllowed = false;
-            if (decoded.role === 2) {
+            if (decoded.role === 1) {
                 availablePages = adminAvailablePages;
             } else {
                 availablePages = userAvailablePages;
@@ -167,6 +168,48 @@ router.post('/services/buy', checkAuth, checkUserRole, function (req, res) {
 
 router.post('/payment/mastercard', checkAuth, checkUserRole, function (req, res) {
     MasterCard.mc_pay_processor(req, res);
+});
+
+//Admin router  s
+
+//router.post('/admin/tariffs', checkAuth, checkUserRole, function (req, res) {
+//    Tariffs.create(req, res);
+//});
+//router.get('/admin/tariffs', checkAuth, checkUserRole, function (req, res) {
+//    Tariffs.getAll(req, res);
+//});
+//
+//router.get('/admin/tariffs/:key', checkAuth, checkUserRole, function (req, res) {
+//    Tariffs.getByKey(req, res);
+//});
+//
+//router.put('/admin/tariffs', checkAuth, checkUserRole, function (req, res) {
+//    Tariffs.update(req, res);
+//});
+//
+//router.delete('/admin/tariffs/:name', checkAuth, checkUserRole, function (req, res) {
+//    Tariffs.remove(req, res);
+//});
+
+//for testing without check auth and check role
+
+router.post('/admin/tariffs', function (req, res) {
+    Tariffs.create(req, res);
+});
+router.get('/admin/tariffs', function (req, res) {
+    Tariffs.getAll(req, res);
+});
+
+router.get('/admin/tariffs/:key' , function (req, res) {
+    Tariffs.getByKey(req, res);
+});
+
+router.put('/admin/tariffs', function (req, res) {
+    Tariffs.update(req, res);
+});
+
+router.delete('/admin/tariffs/:name', function (req, res) {
+    Tariffs.remove(req, res);
 });
 
 module.exports = router;

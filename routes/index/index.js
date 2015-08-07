@@ -125,7 +125,7 @@ router.get('/', function (req, res) {
     });
 });
 router.get('/profile', checkAuth, checkPermission, function (req, res) {
-    if(req.role === 2){
+    if(req.role === 1){
         //TODO:render page
         res.render('index/adminPage', {title: 'Profile', name: req.path, role: req.role});
     }
@@ -134,6 +134,7 @@ router.get('/profile', checkAuth, checkPermission, function (req, res) {
 router.get('/pay_methods', checkAuth, checkPermission, function (req, res) {
     res.render('index/pay_methods', {title: 'Pay methods', name: req.path, role: req.role});
 });
+
 router.get('/registration', function (req, res) {
     isLogged(req.cookies.sid, function (state) {
         if (state === true) {
@@ -213,5 +214,11 @@ router.get('/scenario/creating', checkAuth, function (req, res) {
 router.get('/admin/payments', checkAuth, checkPermission, function (req, res) {
     res.render('admin/payments', {title: 'Payments', name: req.path, role: req.role});
 });
+
+//Admin routers
+router.get('/admin/tariffs', checkAuth, checkPermission, function(req, res){
+    res.render('admin/tariffs',{title: 'Tariffs', name: req.path, role: req.role})
+});
+
 
 module.exports = router;
