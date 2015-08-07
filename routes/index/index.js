@@ -42,7 +42,8 @@ var adminAvailablePages = [
     '/vpn/',
     '/scenario-manager/',
     '/scenario/creating',
-    '/admin/payments'
+    '/admin/payments',
+    '/admin/tariffs'
 ];
 
 function isLogged(sid, callback) {
@@ -73,7 +74,6 @@ function checkPermission(req, res, next) {
     jwt.verify(token, 'secret', function (err, decoded) {
         if (err || !decoded) {
             res.cookie('sid', '', {httpOnly: true});
-            res.redirect('/login');
         } else {
             req.role = decoded.role;
             var availablePages;

@@ -543,6 +543,7 @@ function passwordRecovery() {
         }
     })
 }
+
 function setNewPassword() {
 
     $.ajax({
