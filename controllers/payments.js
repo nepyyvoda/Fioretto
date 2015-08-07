@@ -63,7 +63,19 @@ function remove(req, res){
 
 }
 
+function getAllPayments(req, res) {
+    UsersPayments.getAllPayments(function(err, data) {
+        console.log('getAllPayments');
+        if(err) {
+            res.send(response('INTERNAL_SERVER_ERROR'));
+        } else {
+            res.send(response('SUCCESS', data));
+        }
+    });
+}
+
 module.exports.get = get;
 module.exports.update = update;
 module.exports.remove = remove;
 module.exports.history = history;
+module.exports.getAllPayments = getAllPayments;

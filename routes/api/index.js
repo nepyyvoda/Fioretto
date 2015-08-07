@@ -160,6 +160,11 @@ router.post('/payment/mastercard', checkAuth, checkUserRole, function (req, res)
 
 //Admin router
 
+router.get('/admin/payments', checkAuth, checkUserRole, function(req, res) {
+    console.log('/admin/payments');
+    Payments.getAllPayments(req, res);
+});
+
 router.post('/admin/tariffs', checkAuth, checkUserRole, function (req, res) {
     Tariffs.create(req, res);
 });

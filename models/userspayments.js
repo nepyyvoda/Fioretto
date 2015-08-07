@@ -165,7 +165,34 @@ function history(obj, callback){
     );
 }
 
+function getAllPayments(callback) {
+    execute('SELECT ' +
+    'login, ' +
+    'sourceID, ' +
+    'receiverID, ' +
+    'servicesPaymentID, ' +
+    'servicesID,' +
+    'start_time, ' +
+    'end_time,' +
+    'transactionTypeID, ' +
+    'statusPaymentID,' +
+    'textStatus,' +
+    'transactionID, ' +
+    'currencyID, ' +
+    'amount, ' +
+    'paymentSchemeID, ' +
+    'commission ' +
+    'FROM userspayments', [], function(err, data){
+        if(!err) {
+            callback (false, data);
+        } else {
+            callback (true, 'USER_NOT_FOUND');
+        }
+    });
+}
+
 module.exports.create = create;
 module.exports.update = update;
 module.exports.remove = remove;
 module.exports.history = history;
+module.exports.getAllPayments = getAllPayments;

@@ -42,6 +42,24 @@ require([
         //    //activateViewModel([$('#login')[0], $('#profile-form')[0]], CurrentUser);
         //});
     });
+    page('/admin/payments', function() {
+        require(['modules/transactions/index'], function(TransactionsModel) {
+            try {
+                ko.applyBindings(new TransactionsModel(), $('#admin-payments')[0]);
+            } catch(e) {
+                console.log('err', e);
+            }
+        });
+    });
+    page('/admin/tariffs', function() {
+        require(['modules/tariffs/index'], function(TariffsModel) {
+            try {
+                ko.applyBindings(new TariffsModel(), $('#tariffs-table')[0]);
+            } catch(e) {
+                console.log('err');
+            }
+        });
+    });
     page.start();
     //page('/user/:user', show)
     //page('/user/:user/edit', edit)

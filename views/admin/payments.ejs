@@ -1,5 +1,5 @@
 <div class="container">
-    <div class="row">
+    <div id="admin-payments" class="row">
         <input type="">
         <table>
             <thead>
@@ -12,14 +12,25 @@
                     <th>Amount</th>
                 </tr>
             </thead>
-            <tbody data-bind="foreach: payments">
+            <tbody data-bind="foreach: transactions">
                 <tr>
-                    <td data-bind="text"></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
+
+                    <!--self.serviceId = ko.observable(data.servicesID);-->
+                    <!--self.amount = ko.observable(data.amount);-->
+                    <!--self.currency = ko.observable();-->
+                    <!--self.type = ko.observable(data.transactionTypeID);-->
+                    <!--self.transactionId = ko.observable(data.transactionID);-->
+                    <!--self.commission = ko.observable(data.commission);-->
+                    <!--self.performDate = ko.observable(data.end_time);-->
+                    <!--self.userId = ko.observable(data.login);-->
+                    <!--self.status = ko.observable(data.textStatus);-->
+
+                    <td data-bind="text: performDate"></td>
+                    <td data-bind="text: transactionId"></td>
+                    <td data-bind="text: currency"></td>
+                    <td data-bind="text: serviceId"></td>
+                    <td data-bind="text: type"></td>
+                    <td data-bind="text: amount"></td>
                 </tr>
             </tbody>
         </table>

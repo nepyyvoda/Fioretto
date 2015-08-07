@@ -1,7 +1,7 @@
 /**
  * Created by anton.nepyyvoda on 05.08.2015.
  */
-define(['jquery', 'knockout', 'transaction/index'], function($, ko, TransactionModel) {
+define(['jquery', 'knockout', './transaction/index'], function($, ko, TransactionModel) {
     return function () {
         var self = this;
         self.transactions = ko.observableArray();
@@ -17,6 +17,18 @@ define(['jquery', 'knockout', 'transaction/index'], function($, ko, TransactionM
         };
         self.search = function() {
 
-        }
+        };
+        self.getAllTransactions = function() {
+            $.getJSON('/api/admin/payments', function(res) {
+                if(res.status === 0) {
+                    for(var iterator in res.data) {
+                        self.transactions.push(new TransactionModel(res.data[iterator]));
+                    }
+                } else {
+                    console.log('Error');
+                }
+            });
+        };
+        self.getAllTransactions();
     };
 });
