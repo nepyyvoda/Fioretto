@@ -41,7 +41,8 @@ var adminAvailablePages = [
     '/scenaries',
     '/vpn/',
     '/scenario-manager/',
-    '/scenario/creating'
+    '/scenario/creating',
+    '/admin/payments'
 ];
 
 function isLogged(sid, callback) {
@@ -76,7 +77,7 @@ function checkPermission(req, res, next) {
         } else {
             req.role = decoded.role;
             var availablePages;
-            if (decoded.role === 2) {
+            if (decoded.role === 1) {
                 availablePages = adminAvailablePages;
 
             } else {
@@ -207,6 +208,10 @@ router.get('/scenario/creating', checkAuth, function (req, res) {
         layout: false,
         role: req.role
     });
+});
+
+router.get('/admin/payments', checkAuth, checkPermission, function (req, res) {
+    res.render('admin/payments', {title: 'Payments', name: req.path, role: req.role});
 });
 
 module.exports = router;
