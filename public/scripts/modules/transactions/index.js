@@ -1,8 +1,7 @@
 /**
  * Created by anton.nepyyvoda on 05.08.2015.
  */
-define(['jquery', 'knockout', './transaction/index', 'datatables'], function($, ko, TransactionModel, datatables) {
-    //console.log(datatables dataTable);
+define(['jquery', 'knockout', './transaction/index'], function($, ko, TransactionModel) {
     function GetParams() {
         var self = this;
         self.params = [];
@@ -65,7 +64,10 @@ define(['jquery', 'knockout', './transaction/index', 'datatables'], function($, 
 
             $.getJSON('/api/admin/payments' + par.get(), function(res) {
                 if(res.status === 0) {
-
+                    self.transactions([]);
+                    for(var iterator in res.data) {
+                        self.transactions.push(new TransactionModel(res.data[iterator]));
+                    }
                 } else {
                     console.log('Error');
                 }
@@ -74,6 +76,7 @@ define(['jquery', 'knockout', './transaction/index', 'datatables'], function($, 
         self.getAllTransactions = function() {
             $.getJSON('/api/admin/payments', function(res) {
                 if(res.status === 0) {
+                    self.transactions([]);
                     for(var iterator in res.data) {
                         self.transactions.push(new TransactionModel(res.data[iterator]));
                     }

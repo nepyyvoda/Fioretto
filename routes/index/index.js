@@ -105,8 +105,7 @@ router.get('/', function (req, res) {
 });
 router.get('/profile', checkAuth, checkPermission, function (req, res) {
     if(req.role === 1){
-        //TODO:render page
-        res.render('index/adminPage', {title: 'Profile', name: req.path, role: req.role});
+        res.redirect('/admin/payments');
     }
     res.render('index/profile', {title: 'Profile', name: req.path, role: req.role});
 });
