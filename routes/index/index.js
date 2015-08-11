@@ -51,6 +51,7 @@ function checkPermission(req, res, next) {
         if (err || !decoded) {
             //TODO: change 404 to 403
             res.render('404', {title: 'Not Found', layout: false});
+            return;
         } else {
             req.role = decoded.role;
 

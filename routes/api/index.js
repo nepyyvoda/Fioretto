@@ -51,6 +51,7 @@ function checkUserRole(req, res, next) {
         if (err || !decoded) {
             //TODO: change 404 to 403
             res.render('404', {title: 'Not Found', layout: false});
+            return;
         } else {
             var isAllowed = true;
             if (decoded.role !== 1) {
