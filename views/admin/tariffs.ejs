@@ -1,5 +1,19 @@
 <div class="container">
-    <div class="row">
+
+    <div id="admin-tariffs" class="row">
+        <div class="container" data-bind="visible: isLoading">
+            <h2>Loading</h2>
+        </div>
+
+        <div id="iframe-warning" class="modal-window" data-bind="visible: isError">
+            <div class="modal-content">
+                <p id="myID" data-bind="text: errorText">Error occurs</p>
+            </div>
+            <div class="modal-footer">
+                <a href="" class="modal-action modal-close waves-effect waves-green btn-flat "
+                   data-bind="click : hideErrorMessage">Ok</a>
+            </div>
+        </div>
         <table>
             <thead>
             <tr>
@@ -11,16 +25,34 @@
                 <th>Duration</th>
             </tr>
             </thead>
-            <tbody data-bind="foreach: payments">
+            <tbody data-bind="foreach: tariffs">
             <tr>
-                <td data-bind="text"></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
+                <td id="nm" data-bind="text: id"></td>
+                <td>
+                    <input type="text"
+                           data-bind="value: serviceId, event: {change: $parent.updateValue(id, serviceId, 'servicesID')}"/>
+                </td>
+                <td>
+                    <input type="text" data-bind="value: name, event: {change: $parent.updateValue(id, name, 'name')}"/>
+                </td>
+                <td>
+                    <input type="text"
+                           data-bind="value: price, event: {change: $parent.updateValue(id, price, 'value_price')}"/>
+                </td>
+
+                <td>
+                    <input class="mode" type="checkbox"
+                           data-bind="checked: active, attr: { id: 'active_' + id }, click: $root.updateActiveStatus(id, active)"/>
+                    <label data-bind="attr: { for: 'active_' + id }"></label>
+                </td>
+                <td>
+                    <input type="text"
+                           data-bind="value: duration, event: {change: $parent.updateValue(id, duration, 'value_duration')}"/>
+                </td>
             </tr>
             </tbody>
         </table>
+
+
     </div>
 </div>

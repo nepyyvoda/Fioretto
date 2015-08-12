@@ -54,9 +54,10 @@ require([
     page('/admin/tariffs', function() {
         require(['modules/tariffs/index'], function(TariffsModel) {
             try {
-                ko.applyBindings(new TariffsModel(), $('#tariffs-table')[0]);
+                ko.applyBindings(new TariffsModel(), $('#admin-tariffs')[0]);
+
             } catch(e) {
-                console.log('err');
+                console.log(e);
             }
         });
     });
