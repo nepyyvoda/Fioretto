@@ -286,3 +286,6 @@ body.no-left-padding {
 #iframe-loader {
 	text-align: center;
 }
+table .col {
+	word-wrap: break-word;
+}
