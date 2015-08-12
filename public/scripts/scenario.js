@@ -7,7 +7,7 @@ $(document).ready(function() {
     updateScenariosList();
 });
 
-function clickStrartScenario(el){
+function clickStartScenario(el){
     console.log(el);
 
     $.getJSON('/api/services/2/price', function(res){
