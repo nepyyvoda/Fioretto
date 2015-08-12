@@ -155,18 +155,12 @@ router.get('/interface', checkAuth, checkPermission, function (req, res) {
 router.get('/client_payment', checkAuth, checkPermission, function (req, res) {
     res.render('index/client_payment', {title: 'Client Payment', name: req.path, role: req.role});
 });
-router.get('/registration/:hash', function (req, res) {
-    User.registerConfirm(req, res);
-});
-router.get('/logout', checkAuth, checkPermission, function (req, res) {
-    User.logout(req, res);
-});
+router.get('/registration/:hash', User.registerConfirm);
+router.get('/logout', checkAuth, checkPermission, User.logout);
 router.get('/subscription', checkAuth, checkPermission, function (req, res) {
     res.render('index/subscription', {title: 'Subscription', name: req.path, role: req.role});
 });
-router.post('/pay/ipn', function (req, res) {
-    Paypal.ipn_processor(req, res);
-});
+router.post('/pay/ipn', Paypal.ipn_processor);
 router.get('/scenaries', checkAuth, checkPermission, function (req, res) {
     res.render('index/scenaries', {title: 'Scenaries', name: req.path, role: req.role});
 });
