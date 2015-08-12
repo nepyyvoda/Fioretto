@@ -318,7 +318,7 @@ $(document).ready(function () {
         //    //    scroll: $(window).scrollTop() - windowOffset
         //    //});
         //});
-        $('iframe').contents().find('body').on('contextmenu click dblclick paste keypress keydown keyup focus focusin focusout load', function (e) {
+        $('iframe').contents().find('body').on('contextmenu click dblclick paste keypress keydown keyup focus focusin focusout load change', function (e) {
             switch (e.type) {
                 case 'click':
                     pushEventChain(e);
@@ -349,6 +349,13 @@ $(document).ready(function () {
                     break;
                 case 'focusout':
                     pushEventChain(e);
+                    break;
+                case 'change':
+                    if(e.target.nodeName === 'SELECT') {
+                        pushEventChain(e, {
+                            position: $(e.currentTarget).find('option:selected').index()
+                        });
+                    }
                     break;
                 default :
                     console.log(e);
