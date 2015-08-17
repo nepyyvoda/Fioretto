@@ -16,7 +16,8 @@ function getLogger(module) {
             //}),
             new (winston.transports.File)({
                 //level: config.get('loglvl'),
-                filename: 'log.log'
+                filename: 'log.log',
+                label: path
             })
         ]
     });
