@@ -305,112 +305,115 @@ $(document).ready(function () {
         }, param));
     }
 
-    setTimeout(function() {
-        $('#iframe-warning').openModal();
-        resizeIframe($('iframe')[0]);
-        $('#iframe-loader').addClass('hidden');
-        $('#iframe-wrapper iframe').removeClass('hidden');
-        $('iframe').contents().find('body').on('contextmenu click dblclick paste keypress keydown keyup focus focusin focusout load change', function (e) {
-            switch (e.type) {
-                case 'click':
-                    pushEventChain(e);
-                    break;
-                case 'dblclick':
-                    pushEventChain(e);
-                    break;
-                case 'paste':
-                    pushEventChain(e, {
-                        data: e.originalEvent.clipboardData.getData('Text')
-                    });
-                    break;
-                case 'keydown':
-                    pushControlKeyEventChain(e);
-                    break;
-                case 'keypress':
-                    console.log('keypress', e);
-                    pushKeyEventChain(e);
-                    break;
-                //case 'keyup':
-                //    pushKeyEventChain(e);
-                //    break;
-                case 'focus':
-                    pushEventChain(e);
-                    break;
-                case 'focusin':
-                    pushEventChain(e);
-                    break;
-                case 'focusout':
-                    pushEventChain(e);
-                    break;
-                case 'change':
-                    if(e.target.nodeName === 'SELECT') {
-                        pushEventChain(e, {
-                            position: $(e.currentTarget).find('option:selected').index()
-                        });
-                    }
-                    break;
-                default :
-                    console.log(e);
-            }
 
-            //console.log("EVENT : ",e);
-            //
-            ////?????? ???????: ?????????? ????? ?????? ?????????? ?????
-            //if (captcha.working){
-            //
-            //    var element = $(e.target);
-            //    console.log("Coordinates : ", element.offset());
-            //    console.log("Size : ", element.height(), element.width());
-            //    console.log("TAG : ", element[0].tagName);
-            //
-            //    if(captcha.image){
-            //        //Block bubbling event
-            //        e.preventDefault();
-            //        e.stopPropagation();
-            //
-            //        if(element[0].tagName === 'IMG'){
-            //            eventsChain.push({
-            //                element: xpath,
-            //                captcha: {type: 'img', position: element.offset(), size: {w: element.width(), h:element.height()}}
-            //            });
-            //
-            //            captcha.image = false;
-            //            $('#captchaImage').trigger('statusChange', ['hasImg']);
-            //        } else {
-            //            alert('Sorry, but this is not image... Try again');
-            //            return;
-            //        }
-            //
-            //    }
-            //
-            //    if(captcha.input){
-            //
-            //        if(element[0].tagName === 'INPUT'){
-            //            eventsChain.push({
-            //                element: xpath,
-            //                captcha: {type: 'input'}
-            //            });
-            //
-            //            captcha.input = false;
-            //            $('#captchaInput').addClass('disabled');
-            //            $('#captchaInputStatus').addClass('hide');
-            //            //???????? ????, ??? ???????? ?????? ?????? ? ??????
-            //            captcha.working = false;
-            //            $('#captchaActivate').trigger('click');
-            //
-            //        } else {
-            //            alert('Sorry, but this is not input... Try again');
-            //            return;
-            //        }
-            //    }
-            //} else {
-            //    eventsChain.push({
-            //        element: xpath,
-            //        action: e.type
-            //    });
-            //}
-        });
-    }, 3000);
+    if(window.location.pathname === '/scenario/creating') {
+        setTimeout(function() {
+            $('#iframe-warning').openModal();
+            resizeIframe($('iframe')[0]);
+            $('#iframe-loader').addClass('hidden');
+            $('#iframe-wrapper iframe').removeClass('hidden');
+            $('iframe').contents().find('body').on('contextmenu click dblclick paste keypress keydown keyup focus focusin focusout load change', function (e) {
+                switch (e.type) {
+                    case 'click':
+                        pushEventChain(e);
+                        break;
+                    case 'dblclick':
+                        pushEventChain(e);
+                        break;
+                    case 'paste':
+                        pushEventChain(e, {
+                            data: e.originalEvent.clipboardData.getData('Text')
+                        });
+                        break;
+                    case 'keydown':
+                        pushControlKeyEventChain(e);
+                        break;
+                    case 'keypress':
+                        console.log('keypress', e);
+                        pushKeyEventChain(e);
+                        break;
+                    //case 'keyup':
+                    //    pushKeyEventChain(e);
+                    //    break;
+                    case 'focus':
+                        pushEventChain(e);
+                        break;
+                    case 'focusin':
+                        pushEventChain(e);
+                        break;
+                    case 'focusout':
+                        pushEventChain(e);
+                        break;
+                    case 'change':
+                        if(e.target.nodeName === 'SELECT') {
+                            pushEventChain(e, {
+                                position: $(e.currentTarget).find('option:selected').index()
+                            });
+                        }
+                        break;
+                    default :
+                        console.log(e);
+                }
+
+                //console.log("EVENT : ",e);
+                //
+                ////?????? ???????: ?????????? ????? ?????? ?????????? ?????
+                //if (captcha.working){
+                //
+                //    var element = $(e.target);
+                //    console.log("Coordinates : ", element.offset());
+                //    console.log("Size : ", element.height(), element.width());
+                //    console.log("TAG : ", element[0].tagName);
+                //
+                //    if(captcha.image){
+                //        //Block bubbling event
+                //        e.preventDefault();
+                //        e.stopPropagation();
+                //
+                //        if(element[0].tagName === 'IMG'){
+                //            eventsChain.push({
+                //                element: xpath,
+                //                captcha: {type: 'img', position: element.offset(), size: {w: element.width(), h:element.height()}}
+                //            });
+                //
+                //            captcha.image = false;
+                //            $('#captchaImage').trigger('statusChange', ['hasImg']);
+                //        } else {
+                //            alert('Sorry, but this is not image... Try again');
+                //            return;
+                //        }
+                //
+                //    }
+                //
+                //    if(captcha.input){
+                //
+                //        if(element[0].tagName === 'INPUT'){
+                //            eventsChain.push({
+                //                element: xpath,
+                //                captcha: {type: 'input'}
+                //            });
+                //
+                //            captcha.input = false;
+                //            $('#captchaInput').addClass('disabled');
+                //            $('#captchaInputStatus').addClass('hide');
+                //            //???????? ????, ??? ???????? ?????? ?????? ? ??????
+                //            captcha.working = false;
+                //            $('#captchaActivate').trigger('click');
+                //
+                //        } else {
+                //            alert('Sorry, but this is not input... Try again');
+                //            return;
+                //        }
+                //    }
+                //} else {
+                //    eventsChain.push({
+                //        element: xpath,
+                //        action: e.type
+                //    });
+                //}
+            });
+        }, 3000);
+    }
 
     //???? ???????????? ???????? ?????? ? ??????
     //$('#captchaActivate').on('click', function(e){
