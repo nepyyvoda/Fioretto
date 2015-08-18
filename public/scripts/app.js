@@ -305,19 +305,11 @@ $(document).ready(function () {
         }, param));
     }
 
-    $('iframe').on('load', function (e) {
+    setTimeout(function() {
         $('#iframe-warning').openModal();
-        resizeIframe($(e.currentTarget)[0]);
+        resizeIframe($('iframe')[0]);
         $('#iframe-loader').addClass('hidden');
         $('#iframe-wrapper iframe').removeClass('hidden');
-        //$(window).on('scroll', function(e){
-        //    var pattern = new RegExp('[0-9]{0,}');
-        //    var windowOffset = parseInt( (pattern.exec($('#generator-panel').css('height')))[0] );
-        //    //eventsChain.push({
-        //    //    action: e.type,
-        //    //    scroll: $(window).scrollTop() - windowOffset
-        //    //});
-        //});
         $('iframe').contents().find('body').on('contextmenu click dblclick paste keypress keydown keyup focus focusin focusout load change', function (e) {
             switch (e.type) {
                 case 'click':
@@ -418,7 +410,7 @@ $(document).ready(function () {
             //    });
             //}
         });
-    });
+    }, 3000);
 
     //???? ???????????? ???????? ?????? ? ??????
     //$('#captchaActivate').on('click', function(e){
