@@ -21,6 +21,15 @@ function scriptBuildFromOneObject(data){
             var action = {};
             obj.xpath = data.eventsChain[i].element;
             action.method = data.eventsChain[i].action;
+
+            if(data.eventsChain[i].data !== 'undefined')
+                action.data = data.eventsChain[i].data;
+
+            if(data.eventsChain[i].specSymbol !== 'undefined')
+                action.data = data.eventsChain[i].specSymbol;
+
+            if(data.eventsChain[i].position !== 'undefined')
+                obj.position = data.eventsChain[i].position;
             obj.action = action;
 
             job.push(obj);
@@ -35,7 +44,7 @@ function scriptBuildFromOneObject(data){
         superObject.script = script;
         superObject.resolution = JSON.parse(data.resolution);
 
-        console.log("MSCRIPT : ", superObject);
+        console.log("MSCRIPT : ", JSON.stringify(superObject));
 
         return JSON.stringify(superObject);
     }else{

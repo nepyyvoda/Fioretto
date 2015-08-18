@@ -15,7 +15,7 @@ function availableBrowser(req, res){
     UserModel.get({id : req.params.id },  function(err, data) {
         console.log('AVAILABLEBROWSER ', data);
         if(!err) {
-            if((data[0].serviceAvailable[0] & servicesAvailable[req.params.servicesid]) !== 0){
+            if((data[0].serviceAvailable[0] && servicesAvailable[req.params.servicesid]) !== 0){
                 //res.send(response('SUCCESS', {available : 1}));
 
                 UserServiceGrants.getActiveService({usersid: req.params.id, serviceid: req.params.servicesid, end_time: (new Date())},
