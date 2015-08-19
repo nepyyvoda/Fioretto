@@ -161,9 +161,15 @@ router.post('/payment/mastercard', checkAuth, checkUserRole, function (req, res)
 
 //Admin router
 
-router.get('/admin/payments', checkAuth, checkUserRole, function(req, res) {
-    console.log('/admin/payments');
-    Payments.getAllPayments(req, res);
+router.get('/admin/payments/', function (req, res) {
+
+    var filter = typeof req.query.filter === "undefined" ? {} : JSON.parse(decodeURI(req.query.filter));
+    var order = typeof req.query.order === "undefined" ? {} : JSON.parse(decodeURI(req.query.order));
+
+    Payments.getPayments({
+        "filter": filter,
+        "order": order
+    }, res);
 });
 
 router.post('/admin/tariffs', checkAuth, checkUserRole, function (req, res) {
@@ -171,10 +177,6 @@ router.post('/admin/tariffs', checkAuth, checkUserRole, function (req, res) {
 });
 router.get('/admin/tariffs', checkAuth, checkUserRole, function (req, res) {
     Tariffs.getAll(req, res);
-});
-
-router.get('/admin/tariffs/:key', checkAuth, checkUserRole, function (req, res) {
-    Tariffs.getByKey(req, res);
 });
 
 router.put('/admin/tariffs', checkAuth, checkUserRole, function (req, res) {

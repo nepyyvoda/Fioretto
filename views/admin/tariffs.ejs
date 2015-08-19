@@ -1,9 +1,6 @@
 <div class="container">
 
     <div id="admin-tariffs" class="row">
-        <div class="container" data-bind="visible: isLoading">
-            <h2>Loading</h2>
-        </div>
 
         <div id="iframe-warning" class="modal-window" data-bind="visible: isError">
             <div class="modal-content">
@@ -27,7 +24,7 @@
             </thead>
             <tbody data-bind="foreach: tariffs">
             <tr>
-                <td id="nm" data-bind="text: id"></td>
+                <td id="nm" data-bind="text: $index()+1"></td>
                 <td>
                     <input type="text"
                            data-bind="value: serviceId, event: {change: $parent.updateValue(id, serviceId, 'servicesID')}"/>

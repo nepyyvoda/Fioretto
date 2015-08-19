@@ -105,9 +105,9 @@ router.get('/', function (req, res) {
     });
 });
 router.get('/profile', checkAuth, checkPermission, function (req, res) {
-    if(req.role === 1){
-        res.redirect('/admin/payments');
-    }
+    //if(req.role === 1){
+    //    res.redirect('/admin/payments');
+    //}
     res.render('index/profile', {title: 'Profile', name: req.path, role: req.role});
 });
 router.get('/pay_methods', checkAuth, checkPermission, function (req, res) {

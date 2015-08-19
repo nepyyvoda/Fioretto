@@ -1,37 +1,191 @@
 <div class="container">
     <div id="admin-payments" class="row">
+        <div id="iframe-warning" class="modal-window" data-bind="visible: isError">
+            <div class="modal-content">
+                <p id="myID" data-bind="text: errorText">Error occurs</p>
+            </div>
+            <div class="modal-footer">
+                <a href="" class="modal-action modal-close waves-effect waves-green btn-flat "
+                   data-bind="click : $root.hideErrorMessage">Ok</a>
+            </div>
+        </div>
+
+
         <table id="payments-admin">
             <thead>
-                <tr>
-                    <th>Date</th>
-                    <th>Transaction</th>
-                    <th>User ID</th>
-                    <th>Service ID</th>
-                    <th>Direction</th>
-                    <th>Amount</th>
-                </tr>
+            <tr>
+
+                <th>Id</th>
+                <th data-bind="click: $root.getOrderPayments('login')">User ID</th>
+                <th data-bind="click: $root.getOrderPayments('transactionID')">Transaction</th>
+                <th data-bind="click: $root.getOrderPayments('servicesPaymentID')">Services Payment ID</th>
+                <th data-bind="click: $root.getOrderPayments('servicesID')">Services ID</th>
+                <th data-bind="click: $root.getOrderPayments('amount')">Amount</th>
+                <th data-bind="click: $root.getOrderPayments('transactionTypeID')">Transaction Type ID</th>
+                <th data-bind="click: $root.getOrderPayments('textStatus')">Text Status</th>
+                <th data-bind="click: $root.getOrderPayments('statusPaymentID')">Status Payment ID</th>
+                <th data-bind="click: $root.getOrderPayments('commission')">Commission</th>
+                <th data-bind="click: $root.getOrderPayments('end_time')">End Time</th>
+                <th data-bind="click: $root.getOrderPayments('deleted')">Deleted</th>
+            </tr>
             </thead>
+
+            <tr>
+                <th></th>
+                <th>From
+                    <input data-bind="value: login_min= ko.observable () "/>
+                    To
+                    <input data-bind="value: login_max = ko.observable ()"/>
+
+                    <div class="sum">
+                        <a class="btn teal lighten-4"
+                           data-bind="click: $root.getFilteredPayments('login',login_min(), login_max() )">Filter</a>
+                        <a class="btn teal lighten-4"
+                           data-bind="click: $root.deleteFilter('login') ">Disable</a>
+                    </div>
+
+
+
+                </th>
+                <th>From
+                    <input data-bind="value: transactionID_min= ko.observable () "/>
+                    To
+                    <input data-bind="value: transactionID_max= ko.observable ()"/>
+
+                    <div class="sum">
+                        <a class="btn teal lighten-4"
+                           data-bind="click: $root.getFilteredPayments('transactionID',transactionID_min(), transactionID_max() )">Filter</a>
+                        <a class="btn teal lighten-4"
+                           data-bind="click: $root.deleteFilter('transactionID') ">Disable</a>
+                    </div>
+                </th>
+                <th>From
+                    <input data-bind="value: servicesPaymentID_min= ko.observable ()"/>
+                    To
+                    <input data-bind="value: servicesPaymentID_max= ko.observable ()"/>
+
+                    <div class="sum">
+                        <a class="btn teal lighten-4"
+                           data-bind="click: $root.getFilteredPayments('servicesPaymentID',servicesPaymentID_min(), servicesPaymentID_max() )">Filter</a>
+                        <a class="btn teal lighten-4"
+                           data-bind="click: $root.deleteFilter('servicesPaymentID') ">Disable</a>
+                    </div>
+                </th>
+                <th>From
+                    <input data-bind="value: servicesID_min= ko.observable ()"/>
+                    To
+                    <input data-bind="value: servicesID_max= ko.observable ()"/>
+
+                    <div class="sum">
+                        <a class="btn teal lighten-4"
+                           data-bind="click: $root.getFilteredPayments('servicesID',servicesID_min(), servicesID_max() )">Filter</a>
+                        <a class="btn teal lighten-4"
+                           data-bind="click: $root.deleteFilter('servicesID') ">Disable</a>
+                    </div>
+                </th>
+                <th>From
+                    <input data-bind="value: amount_min= ko.observable ()"/>
+                    To
+                    <input data-bind="value: amount_max= ko.observable ()"/>
+
+                    <div class="sum">
+                        <a class="btn teal lighten-4"
+                           data-bind="click: $root.getFilteredPayments('amount',amount_min()*100, amount_max()*100 )">Filter</a>
+                        <a class="btn teal lighten-4"
+                           data-bind="click: $root.deleteFilter('amount') ">Disable</a>
+                    </div>
+                </th>
+                <th>
+                    <input data-bind="value: transactionTypeID= ko.observable ()"/>
+
+                    <div class="sum">
+                        <a class="btn teal lighten-4"
+                           data-bind="click: $root.getFilteredPayments('transactionTypeID',transactionTypeID() === 'income'? 1:2, transactionTypeID() === 'income'? 1:2)">Filter</a>
+                        <a class="btn teal lighten-4"
+                           data-bind="click: $root.deleteFilter('transactionTypeID') ">Disable</a>
+                    </div>
+                </th>
+                <th>
+                    <input data-bind="value: textStatus= ko.observable ()"/>
+
+                    <div class="sum">
+                        <a class="btn teal lighten-4"
+                           data-bind="click: $root.getFilteredPayments('textStatus',textStatus(), textStatus())">Filter</a>
+                        <a class="btn teal lighten-4"
+                           data-bind="click: $root.deleteFilter('textStatus') ">Disable</a>
+                    </div>
+                </th>
+                <th>From
+                    <input data-bind="value: statusPaymentID_min= ko.observable ()"/>
+                    To
+                    <input data-bind="value: statusPaymentID_max= ko.observable ()"/>
+
+                    <div class="sum">
+                        <a class="btn teal lighten-4"
+                           data-bind="click: $root.getFilteredPayments('statusPaymentID',statusPaymentID_min(), statusPaymentID_max ())">Filter</a>
+                        <a class="btn teal lighten-4"
+                           data-bind="click: $root.deleteFilter('statusPaymentID') ">Disable</a>
+                    </div>
+                </th>
+                <th>From
+                    <input data-bind="value: commission_min= ko.observable ()"/>
+                    To
+                    <input data-bind="value: commission_max= ko.observable ()"/>
+
+                    <div class="sum">
+                        <a class="btn teal lighten-4"
+                           data-bind="click: $root.getFilteredPayments('commission',commission_min(), commission_max() )">Filter</a>
+                        <a class="btn teal lighten-4"
+                           data-bind="click: $root.deleteFilter('commission') ">Disable</a>
+                    </div>
+                </th>
+                <th>From
+                    <input data-bind="value: end_time_min= ko.observable ()"/>
+                    To
+                    <input data-bind="value: end_time_max= ko.observable ()"/>
+
+                    <div class="sum">
+                        <a class="btn teal lighten-4"
+                           data-bind="click: $root.getFilteredPayments('end_time',end_time_min(), end_time_max() )">Filter</a>
+                        <a class="btn teal lighten-4"
+                           data-bind="click: $root.deleteFilter('end_time') ">Disable</a>
+                    </div>
+                </th>
+                <th>From
+                    <input data-bind="value: deleted_min= ko.observable ()"/>
+                    To
+                    <input data-bind="value: deleted_max= ko.observable ()"/>
+
+                    <div class="sum">
+                        <a class="btn teal lighten-4"
+                           data-bind="click: $root.getFilteredPayments('deleted',deleted_min(), deleted_max ())">Filter</a>
+                        <a class="btn teal lighten-4"
+                           data-bind="click: $root.deleteFilter('deleted') ">Disable</a>
+                    </div>
+                </th>
+
+            </tr>
             <tbody data-bind="foreach: transactions">
-                <tr>
-
-                    <!--self.serviceId = ko.observable(data.servicesID);-->
-                    <!--self.amount = ko.observable(data.amount);-->
-                    <!--self.currency = ko.observable();-->
-                    <!--self.type = ko.observable(data.transactionTypeID);-->
-                    <!--self.transactionId = ko.observable(data.transactionID);-->
-                    <!--self.commission = ko.observable(data.commission);-->
-                    <!--self.performDate = ko.observable(data.end_time);-->
-                    <!--self.userId = ko.observable(data.login);-->
-                    <!--self.status = ko.observable(data.textStatus);-->
-
-                    <td data-bind="text: performDate"></td>
-                    <td data-bind="text: transactionId"></td>
-                    <td data-bind="text: userId"></td>
-                    <td data-bind="text: serviceId"></td>
-                    <td data-bind="text: type() == 1?'income':'outcome'"></td>
-                    <td data-bind="text: (amount()/100).toFixed(2) + ' ' + currencyPrintable()"></td>
-                </tr>
+            <tr>
+                <td data-bind="text: $index() + 1"></td>
+                <td data-bind="text: userId"></td>
+                <td data-bind="text: transactionId"></td>
+                <td data-bind="text: servicesPaymentID"></td>
+                <td data-bind="text: serviceId"></td>
+                <td data-bind="text: amountFormatting() + ' ' + currencyPrintable() "></td>
+                <td data-bind="text: type() == 1 ? 'income' : 'outcome'"></td>
+                <td data-bind="text: status()"></td>
+                <td data-bind="text: statusPaymentID"></td>
+                <td data-bind="text: commission"></td>
+                <td data-bind="text: performDatePrintable"></td>
+                <td>
+                    <input class="mode" type="checkbox"
+                           data-bind="checked: deleted, attr: { id: 'deleted_' + id() }, enable: false"/>
+                    <label data-bind="attr: { for: 'deleted_' + id()}"></label>
+                </td>
+            </tr>
             </tbody>
         </table>
     </div>
+
 </div>

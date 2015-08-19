@@ -4,27 +4,6 @@
             <div class="nav-wrapper">
                 <a href="#" class="button-collapse top-nav full hide-on-large-only " data-activates="slide-out"> <i
                             class="mdi-navigation-menu white-text"></i> </a>
-                <% if(role === 1){ %>
-                <ul id="nav-mobile" class="right">
-                    <li><a href="/profile"><span class="profile_name"></span></a></li>
-                    <li class="balance"><a href="/pay_methods"><span></span> $</a></li>
-                    <li><a href="/logout">Log out</a></li>
-                </ul>
-
-                <ul id="slide-out" class="side-nav fixed collection left_navbar">
-
-                    <li class="collection-item avatar">
-                        <i class="mdi-social-person circle teal lighten-1"></i>
-                        <span class="title profile_name">Title</span>
-                    </li>
-                    <li class="no-padding <% if(name === '/admin/payments'){ %>active<% } %>">
-                        <a href="/admin/payments" class="collapsible-header">Payments</a>
-                    </li>
-                    <li class="no-padding <% if(name === '/admin/tariffs'){ %>active<% } %>">
-                        <a href="/admin/tariffs" class="collapsible-header">Tariffs</a>
-                    </li>
-                </ul>
-                <% }else{ %>
                 <ul id="nav-mobile" class="right">
                     <li><a href="/profile"><span class="profile_name"></span></a></li>
                     <li class="balance"><a href="/pay_methods"><span></span> $</a></li>
@@ -68,15 +47,25 @@
                         </ul>
                     </li>
 
+
+
                     <li class="no-padding <% if(name === '/client_payment'){ %>active<% } %>"><a href="/client_payment"
                                                                                                  class="collapsible-header">Payments
                             History</a></li>
                     <li class="no-padding <% if(name === '/subscription'){ %>active<% } %>"><a href="/subscription"
                                                                                                class="collapsible-header">Subscription</a>
                     </li>
-
+                    <% if(role === 1){ %>
+                    <li><a>Admin pages</a></li>
+                    <li class="no-padding <% if(name === '/admin/payments'){ %>active<% } %>">
+                        <a href="/admin/payments" class="collapsible-header">Payments</a>
+                    </li>
+                    <li class="no-padding <% if(name === '/admin/tariffs'){ %>active<% } %>">
+                        <a href="/admin/tariffs" class="collapsible-header">Tariffs</a>
+                    </li>
+                    <% } %>
                 </ul>
-                <% } %>
+
 
 
             </div>

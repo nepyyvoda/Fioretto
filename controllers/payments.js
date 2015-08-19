@@ -56,16 +56,7 @@ function history(req, res){
 }
 
 function update(req, res){
-
-}
-
-function remove(req, res){
-
-}
-
-function getAllPayments(req, res) {
-    UsersPayments.getAllPayments(function(err, data) {
-        console.log('getAllPayments');
+    UsersPayments.update(req.body, function(err, data) {
         if(err) {
             res.send(response('INTERNAL_SERVER_ERROR'));
         } else {
@@ -74,8 +65,24 @@ function getAllPayments(req, res) {
     });
 }
 
+function remove(req, res){
+
+}
+
+
+function getPayments(req, res){
+
+    UsersPayments.getPayments(req.filter, req.order, function (err, data) {
+        if(err) {
+            res.send(response('INTERNAL_SERVER_ERROR'));
+        } else {
+            res.send(response('SUCCESS', data));
+        }
+    })
+}
+
 module.exports.get = get;
 module.exports.update = update;
 module.exports.remove = remove;
 module.exports.history = history;
-module.exports.getAllPayments = getAllPayments;
+module.exports.getPayments = getPayments;
