@@ -44,9 +44,9 @@ function mc_pay_processor(req, res){
                         UsersPayments.create(
                             process_obj.userId,     //login
                             process_obj.userId,     //sender
-                            3,                      //system payment id
-                            4,                      //system receive = '0'
-                            0,                      //service, charge user amount
+                            4,                      //system payment id
+                            3,                      //system receive = '4'
+                            4,                      //service, charge user amount
                             new Date(pay_data.created*1000),  //date created
                             new Date(pay_data.created*1000),  //date end
                             1,                      //type pay income = 1
